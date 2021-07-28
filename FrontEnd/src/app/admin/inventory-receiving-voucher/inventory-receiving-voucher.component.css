@@ -1,0 +1,42 @@
+.row {
+    margin-left: -25px;
+    margin-right: -25px;
+}
+
+.focus-label {
+    font-weight: 500;
+}
+
+.modal-wrapper {
+    display: block !important;
+}
+
+.modal-body {
+    padding: 2rem 4rem 3rem 4rem;
+}
+
+.modal-wrapper.modal {
+    visibility: hidden;
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    z-index: -9;
+}
+
+.modal-wrapper.modal.show {
+    visibility: visible;
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    z-index: 1050;
+}
+
+.modal-wrapper .modal-dialog {
+    max-width: 880px;
+}
+
+.floating,
+.focused {
+    height: 35px;
+    padding: 6px 12px 6px;
+}

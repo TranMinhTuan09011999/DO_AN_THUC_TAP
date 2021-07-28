@@ -1,0 +1,113 @@
+<!-- main -->
+<div id="wrapper-site">
+    <div class="container">
+        <div class="row">
+            <div id="content-wrapper" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 onecol">
+                <div id="main">
+                    <div id="content" class="page-content">
+                        <div class="register-form text-center">
+                            <h1 class="text-center title-page">Create Account</h1>
+                            <form action="#" id="customer-form" class="js-customer-form" [formGroup]="this.dataForm" (ngSubmit)="onSubmit()">
+                                <div>
+                                    <div class="form-group">
+                                        <div>
+                                            <input class="form-control" name="email" type="email" placeholder="Email" formControlName="email">
+                                        </div>
+                                        <div *ngIf="submitted && f.email.errors">
+                                            <div *ngIf="f.email.errors.required" class="errors"> * Email is required</div>
+                                            <div *ngIf="f.email.errors.pattern" class="errors"> * Format email is wrong (Ex: tmtuan@gmail.com)</div>
+                                            <div *ngIf="f.email.errors.emailExists" class="errors"> * That email already exists</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <input class="form-control" name="firstname" type="text" placeholder="First name" formControlName="firstname">
+                                        </div>
+                                        <div *ngIf="submitted && f.firstname.errors">
+                                            <div *ngIf="f.firstname.errors.required" class="errors"> * Firstname is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <input class="form-control" name="lastname" type="text" placeholder="Last name" formControlName="lastname">
+                                        </div>
+                                        <div *ngIf="submitted && f.lastname.errors">
+                                            <div *ngIf="f.lastname.errors.required" class="errors"> * Lastname is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label" for="radio1">
+                                              <input type="radio" class="form-check-input" id="radio1" name="gender" value="0" formControlName="gender" checked>Male
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label" for="radio2">
+                                              <input type="radio" class="form-check-input" id="radio2" name="gender" value="1" formControlName="gender">Female
+                                            </label>
+                                        </div>
+                                        <div *ngIf="submitted && f.gender.errors">
+                                            <div *ngIf="f.gender.errors.required" class="errors"> * Gender is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="phone">
+                                            <button type="button" class="btn btn-default" aria-expanded="false"><span class="type-text">Phone</span> </button>
+                                            <input type="text" name="phone" class="form-control" placeholder="(+84) 1111 111 111" formControlName="phone" />
+                                        </div>
+                                        <div *ngIf="submitted && f.phone.errors">
+                                            <div *ngIf="f.phone.errors.required" class="errors"> * Phone is required</div>
+                                            <div *ngIf="f.phone.errors.pattern" class="errors"> * Phone have to 10 digits (Ex: 0377730290)</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group phone">
+                                            <button type="button" class="btn btn-default" aria-expanded="false"><span class="type-text">Birthday</span> </button>
+                                            <input type="date" class="form-control" id="birthday" name="birthday" [ngModel]="birthday | date:'yyyy-MM-dd'" formControlName="birthday">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <input class="form-control" name="Address" type="Address" placeholder="Address" formControlName="address">
+                                        </div>
+                                        <div *ngIf="submitted && f.address.errors">
+                                            <div *ngIf="f.address.errors.required" class="errors"> * Address is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <div class="input-group js-parent-focus">
+                                                <input class="form-control js-child-focus js-visible-password" name="password" type="password" placeholder="Password" formControlName="password">
+                                            </div>
+                                            <div *ngIf="submitted && f.password.errors">
+                                                <div *ngIf="f.password.errors.required" class="errors"> * Password is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <div class="input-group js-parent-focus">
+                                                <input class="form-control js-child-focus js-visible-password" name="repeat password" type="password" placeholder="Repeat Password" formControlName="pwdd">
+                                            </div>
+                                            <div *ngIf="submitted && f.pwdd.errors">
+                                                <div *ngIf="f.pwdd.errors.required" class="errors"> * Repeat password is required</div>
+                                                <div *ngIf="f.pwdd.errors?.MustMatch" class="errors"> * Password does not match!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div>
+                                        <button class="btn btn-primary" data-link-action="sign-in" type="submit">
+                                            Create Account
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

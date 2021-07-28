@@ -1,0 +1,52 @@
+.form-group {
+    text-align: left;
+}
+
+.form-group .radio-inline {
+    margin-right: 2rem;
+}
+
+.form-group .radio-inline input {
+    margin-right: 0.4rem;
+}
+
+#datepicker {
+    width: 180px;
+    margin: 0 20px 20px 0px;
+}
+
+#datepicker>span:hover {
+    cursor: pointer;
+}
+
+.input-group-addon {
+    background-color: #e9ecef;
+    padding: 6px 6px;
+}
+
+.fa-birthday-cake {
+    font-size: 1.5rem;
+    color: #276b92;
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+.btn-default {
+    float: left;
+}
+
+.phone .form-control {
+    width: 10rem;
+}
+
+.phone .type-text {
+    font-size: 0.9rem;
+    color: #6c7781;
+}
+
+.errors {
+    color: red;
+    margin-left: 10px;
+}
