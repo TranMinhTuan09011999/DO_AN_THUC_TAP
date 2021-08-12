@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.Collection;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -21,11 +22,11 @@ public class Employee extends Auditable<String>{
 
     @Id
     @NotBlank(message = "employeeId is required")
-    @Column(name = "TEN", nullable = false)
+    @Column(name = "MANV", nullable = false)
     private String id;
 
     @NotBlank(message = "firstname is required")
-    @Column(name = "firstname", nullable = false)
+    @Column(name = "TEN", nullable = false)
     private String firstname;
 
     @NotBlank(message = "lastname is required")
@@ -50,4 +51,30 @@ public class Employee extends Auditable<String>{
     @Email
     @Column(name = "EMAIL", nullable = false)
     private String email;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Order> orders;
+
+    @OneToMany(mappedBy = "deliveryEmployee", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Order> ordersOfDeliveryEmployee;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<WarehouseReceipt> warehouseReceipts;
+
+    public Employee(String id, String firstname, String lastname, Integer gender, Date birthday, String address, String phone, String email) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+    }
 }

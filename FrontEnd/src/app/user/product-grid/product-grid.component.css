@@ -1,4 +1,8 @@
-.cateItem {
-    color: #403e3e;
-    text-decoration: none;
-}
+    .cateItem {
+        color: #403e3e;
+        text-decoration: none;
+    }
+    
+    [class~=rating] [class~=star-content] [class~=star]:after {
+        content: url(/assets/img/product/star.png);
+    }

@@ -11,5 +11,6 @@ public class ColorDTO {
     private static final long serialVersionUID = 1L;
 
     private Integer colorId;
+    private String colorCode;
     private String colorName;
 }

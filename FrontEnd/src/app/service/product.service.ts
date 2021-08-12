@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Product } from '../model/product';
+import { ProductWithRoomIdAndCategoryId } from '../model/product-with-room-id-and-category-id';
 import { ProductRequest } from '../request/product-request';
 
 const API_URL = 'http://localhost:8080/api/';
@@ -27,6 +28,13 @@ export class ProductService {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);
     return this.http.get<Product[]>(API_URL + 'admin/' + 'product', { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  getProductWithRoomIdAndCategoryId(roomId: number, categoryId: string): Observable<ProductWithRoomIdAndCategoryId[]> {
+    return this.http.get<ProductWithRoomIdAndCategoryId[]>(API_URL + 'customer/' + roomId + '/' + categoryId)
                   .pipe(
                     retry(3), 
                     catchError(this.handleError));

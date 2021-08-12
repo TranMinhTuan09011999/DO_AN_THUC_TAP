@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Size } from '../model/size';
+import { SizeByProductId } from '../model/size-by-product-id';
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -17,6 +18,21 @@ export class SizeService {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);
     return this.http.get<Size[]>(API_URL + 'admin/' + 'size', { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  getSizeBySizeId(token: String, sizeId: number): Observable<Size> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.get<Size>(API_URL + 'admin/size/' + sizeId, { headers: headers})
+                  .pipe( 
+                    catchError(this.handleError));
+  }
+
+  getSizeByProductId(productId: string, sizeId: number): Observable<SizeByProductId[]> {
+    return this.http.get<SizeByProductId[]>(API_URL + 'customer/size/' + productId + '/' + sizeId)
                   .pipe(
                     retry(3), 
                     catchError(this.handleError));

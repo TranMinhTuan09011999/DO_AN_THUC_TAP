@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.Collection;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -50,4 +51,20 @@ public class Customer extends Auditable<String>{
     @Email
     @Column(name = "EMAIL", nullable = false)
     private String email;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Order> orders;
+
+    public Customer(String id, String firstname, String lastname, Integer gender, Date birthday, String address, String phone, String email) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+    }
 }

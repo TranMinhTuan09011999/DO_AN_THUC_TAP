@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Room } from '../model/room';
 
@@ -11,7 +11,14 @@ const API_URL = 'http://localhost:8080/api/';
 })
 export class RoomService {
 
+  private roomId = new BehaviorSubject(0);
+  currentRoomId = this.roomId.asObservable();
+
   constructor(private http: HttpClient) { }
+
+  changeRoomId(roomId: number){
+    this.roomId.next(roomId);
+  }
 
   getRoom(token: String): Observable<any> {
     let tokenStr = 'Bearer ' + token;

@@ -19,6 +19,8 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.classBodyService.currentClass.subscribe(classBody => this.classBody = classBody);
     this.pageService.currentPage.subscribe(page => this.page = page);
+    console.log(this.classBody)
+    console.log(this.page)
   }
   ngAfterContentChecked() {
 

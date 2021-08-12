@@ -600,41 +600,8 @@
                                             <!-- <div class="btn dropdown-toggle toggle-cate-child-vertical hidden-md-up mr-auto">Select category</div> -->
                                             <div class="cate-child-vertical">
                                                 <ul class="d-flex align-items-start flex-column">
-                                                    <li>
-                                                        <a href="" (click)="$event.preventDefault();toProductGrid()">SIDE TABLE</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-grid-sidebar-left.html">FIREPLACE</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-grid-sidebar-left.html">FLOOR LAMP</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-grid-sidebar-left.html">OTTOMAN</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-grid-sidebar-left.html">ARMCHAIR</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-grid-sidebar-left.html">CUSHION</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-grid-sidebar-left.html">DRESSING TABLE</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-grid-sidebar-left.html">WALL CLOCK</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-grid-sidebar-left.html">BEDSIDE TABLE</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-grid-sidebar-left.html">PICTURE</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-grid-sidebar-left.html">WINDOW</a>
-                                                    </li>
-                                                    <li class="last float-right">
-                                                        <a href="product-grid-sidebar-left.html">View all</a>
+                                                    <li *ngFor="let category of categories">
+                                                        <a href="" (click)="$event.preventDefault();toProductGrid(category.room.name, category.categoryName, category.room.roomId, category.categoryId)" *ngIf="category.room.name == room">{{category.categoryName}}</a>
                                                     </li>
                                                 </ul>
                                             </div>

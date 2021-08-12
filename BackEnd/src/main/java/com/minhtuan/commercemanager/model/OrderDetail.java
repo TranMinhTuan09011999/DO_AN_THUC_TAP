@@ -21,11 +21,21 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderDetailId;
 
-    @NotBlank(message = "price is required")
     @Column(name = "GIA", nullable = false)
     private Double price;
 
-    @NotBlank(message = "quantity is required")
     @Column(name = "SOLUONG", nullable = false)
     private Integer quantity;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MAPD", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MACTSP", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private ProductDetail productDetail;
 }

@@ -1,0 +1,55 @@
+@media screen and (max-width: 767px) {
+    .header-action {
+        display: none;
+    }
+}
+
+.container-fluid {
+    max-width: 1140px;
+}
+
+.page .section-body {
+    margin-top: 3rem;
+}
+
+.nav-tabs {
+    color: rgb(154, 160, 172);
+    user-select: none;
+    transition: all 0.3s ease-in-out 0s;
+    margin: 0px -0.75rem;
+}
+
+.page-header-tab {
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+}
+
+.nav-link,
+.nav-item {
+    min-width: 7rem;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease 0s;
+}
+
+.nav-tabs .nav-item {
+    position: relative;
+}
+
+.nav-tabs .nav-link {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, .09);
+    display: block;
+    text-align: center;
+}
+
+.nav-tabs .nav-link.active {
+    color: rgb(231, 76, 60);
+    border-color: rgb(231, 76, 60);
+}

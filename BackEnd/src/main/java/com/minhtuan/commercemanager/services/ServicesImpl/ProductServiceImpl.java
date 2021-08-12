@@ -1,6 +1,7 @@
 package com.minhtuan.commercemanager.services.ServicesImpl;
 
 import com.minhtuan.commercemanager.dto.CategoryDTO;
+import com.minhtuan.commercemanager.dto.ProductConditionDTO;
 import com.minhtuan.commercemanager.dto.ProductDTO;
 import com.minhtuan.commercemanager.dto.ProviderDTO;
 import com.minhtuan.commercemanager.maper.ProductMapper;
@@ -84,5 +85,11 @@ public class ProductServiceImpl implements ProductService {
         List<Product> productList = productRepository.findAllByOrderByProductIdDesc();
         List<ProductDTO> productDTOList = productList.stream().map(product -> productMapper.toDTO(product)).collect(Collectors.toList());
         return productDTOList;
+    }
+
+    @Override
+    public List<ProductConditionDTO> getProductWithCondition(String categoryId, Integer roomId) {
+        List<ProductConditionDTO> productConditionDTOList = productRepository.getProductWithCategoryIdAndRoomId(categoryId,roomId).stream().map(ProductConditionDTO::new).collect(Collectors.toList());
+        return productConditionDTOList;
     }
 }

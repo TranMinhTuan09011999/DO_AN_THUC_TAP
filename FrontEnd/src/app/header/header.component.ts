@@ -1,6 +1,5 @@
 import { AuthService } from './../service/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../service/cart.service';
 import { TokenStorageService } from '../service/token-storage.service';
 import { CountService } from '../service/count.service';
 import { Router } from '@angular/router';
@@ -20,7 +19,7 @@ export class HeaderComponent implements OnInit {
   count!: number;
   nameUser: string = "";
 
-  constructor(private router: Router, private tokenStorageService: TokenStorageService, private cartService: CartService, private countService: CountService) {
+  constructor(private router: Router, private tokenStorageService: TokenStorageService, private countService: CountService) {
    }
 
   ngOnInit(): void {
@@ -30,20 +29,6 @@ export class HeaderComponent implements OnInit {
     {
       this.nameUser = user.lastname + " " + user.firstname;
     }
-  }
-
-  countCartById(){
-    this.token = this.tokenStorageService.getToken();
-    const user = this.tokenStorageService.getUser();
-    this.cartService.countCartById(this.token, user.id)
-          .subscribe(
-            (data) => {
-              this.count = data;
-            },
-            error => {
-              console.log(error);
-            }
-          );
   }
 
   isLoggedIn():boolean{

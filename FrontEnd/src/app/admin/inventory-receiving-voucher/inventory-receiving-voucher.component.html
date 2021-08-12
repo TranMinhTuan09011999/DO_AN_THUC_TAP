@@ -68,14 +68,14 @@
                                 <th class="text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr data-toggle="modal" data-target="#exampleModalCenter">
+                        <tbody *ngFor="let warehouseReceipt of warehouseReceipts">
+                            <tr data-toggle="modal" data-target="#exampleModalCenter" (click)="showWarehouseReceiptDetail(warehouseReceipt.warehouseReceiptId)">
                                 <td>
-                                    <strong>PN00001</strong>
+                                    <strong>{{warehouseReceipt.warehouseReceiptId}}</strong>
                                 </td>
-                                <td>TRAN MINH TUAN</td>
-                                <td>22-07-2021</td>
-                                <td>$125654</td>
+                                <td>{{warehouseReceipt.lastname}} {{warehouseReceipt.firstname}}</td>
+                                <td>{{warehouseReceipt.dateOfIssue}}</td>
+                                <td>{{warehouseReceipt.amount}}</td>
                                 <td class="text-right">
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -123,24 +123,22 @@
                                 <thead>
                                     <tr>
                                         <th>Product Code</th>
-                                        <th>Name of product</th>
-                                        <th class="text-center">Size</th>
+                                        <th>Size</th>
                                         <th>Color</th>
                                         <th class="text-center">Quantity</th>
                                         <th>Price</th>
                                         <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody *ngFor="let warehouseReceiptDetail of warehouseReceiptDetails">
                                     <tr>
                                         <td>
-                                            <strong>PN00001</strong>
+                                            <strong>{{warehouseReceiptDetail.productId}}</strong>
                                         </td>
-                                        <td>Bàn Gồ</td>
-                                        <td class="text-center">S</td>
-                                        <td>Blue</td>
-                                        <td class="text-center">15</td>
-                                        <td>$584</td>
+                                        <td>{{warehouseReceiptDetail.size}}</td>
+                                        <td>{{warehouseReceiptDetail.color}}</td>
+                                        <td class="text-center">{{warehouseReceiptDetail.quantity}}</td>
+                                        <td>{{warehouseReceiptDetail.price}}</td>
                                         <td class="text-right">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>

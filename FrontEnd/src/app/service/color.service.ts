@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Color } from '../model/color';
+import { ColorByProductIdAndSizeId } from '../model/color-by-product-id-and-size-id';
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -17,6 +18,21 @@ export class ColorService {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);
     return this.http.get<Color[]>(API_URL + 'admin/' + 'color', { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  getColorByColorId(token: String, colorId: number): Observable<Color> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.get<Color>(API_URL + 'admin/' + 'color/' + colorId, { headers: headers})
+                  .pipe( 
+                    catchError(this.handleError));
+  }
+
+  getColorByProductIdAndSizeId(productId: string, sizeId: number, colorId: number): Observable<ColorByProductIdAndSizeId[]> {
+    return this.http.get<ColorByProductIdAndSizeId[]>(API_URL + 'customer/color/' + productId + '/' + sizeId + '/' + colorId)
                   .pipe(
                     retry(3), 
                     catchError(this.handleError));

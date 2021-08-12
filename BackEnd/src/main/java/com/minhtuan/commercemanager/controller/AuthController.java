@@ -73,7 +73,7 @@ public class AuthController {
         String email = userDetails.getEmail();
         String role = roles.get(0);
         System.out.println(role);
-        if(role.equals("admin") || role.equals("employee"))
+        if(role.equals("ROLE_ADMIN") || role.equals("ROLE_EMPLOYEE"))
         {
             Employee employee = employeeRepository.findByEmail(email).get();
             JwtResponse jwtResponse = new JwtResponse();

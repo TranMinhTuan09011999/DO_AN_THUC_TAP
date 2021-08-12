@@ -27,8 +27,8 @@ public class JwtUtils {
 
         return Jwts.builder()
                 .setSubject((userPrincipal.getEmail()))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date((new Date(System.currentTimeMillis())).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

@@ -17,9 +17,12 @@ public class Color {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "ID", nullable = false)
+    private Integer id;
+
     @NotBlank(message = "colorId is required")
     @Column(name = "MAMAU", nullable = false)
-    private Integer colorId;
+    private String colorId;
 
     @NotBlank(message = "colorName is required")
     @Column(name = "TENMAU", nullable = false)

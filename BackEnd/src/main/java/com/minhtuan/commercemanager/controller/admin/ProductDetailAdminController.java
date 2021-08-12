@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minhtuan.commercemanager.dto.ProductDetailDTO;
 import com.minhtuan.commercemanager.dto.ProviderDTO;
 import com.minhtuan.commercemanager.exception.ResourceNotFoundException;
+import com.minhtuan.commercemanager.maper.ProductDetailMapper;
 import com.minhtuan.commercemanager.message.request.ProductDetailRequest;
 import com.minhtuan.commercemanager.message.request.ProductRequest;
 import com.minhtuan.commercemanager.message.response.MessageResponse;
@@ -53,6 +54,9 @@ public class ProductDetailAdminController {
     @Autowired
     ProductDetailService productDetailService;
 
+    @Autowired
+    ProductDetailMapper productDetailMapper;
+
     @PostMapping("/add-product-detail")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<?> createProductDetail (@RequestParam("file") MultipartFile file,
@@ -86,7 +90,7 @@ public class ProductDetailAdminController {
         productDetail1.setImage(productDetailRequest.getImage());
         Size size = sizeRepository.findSizeBySizeId(productDetailRequest.getSizeId());
         productDetail1.setSize(size);
-        Color color = colorRepository.findColorByColorId(productDetailRequest.getColorId());
+        Color color = colorRepository.findColorById(productDetailRequest.getColorId());
         productDetail1.setColor(color);
         Product product = productRepository.findProductByProductId(productDetailRequest.getProductId());
         productDetail1.setProduct(product);

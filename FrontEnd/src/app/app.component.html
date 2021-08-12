@@ -23,3 +23,21 @@
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
 </div>
+
+<div id="product-detail" *ngIf="page == 5">
+    <app-header *ngIf="!authService.isAdmin()"></app-header>
+    <router-outlet></router-outlet>
+    <app-footer *ngIf="!authService.isAdmin()"></app-footer>
+</div>
+
+<div class="product-cart checkout-cart blog" *ngIf="page == 6">
+    <app-header *ngIf="!authService.isAdmin()"></app-header>
+    <router-outlet></router-outlet>
+    <app-footer *ngIf="!authService.isAdmin()"></app-footer>
+</div>
+
+<div class="product-checkout checkout-cart" *ngIf="page == 7">
+    <app-header *ngIf="!authService.isAdmin()"></app-header>
+    <router-outlet></router-outlet>
+    <app-footer *ngIf="!authService.isAdmin()"></app-footer>
+</div>

@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 public class ColorMapper {
     public ColorDTO toDTO(Color color){
         ColorDTO dto = new ColorDTO();
-        dto.setColorId(color.getColorId());
+        dto.setColorId(color.getId());
+        dto.setColorCode(color.getColorId());
         dto.setColorName(color.getColorName());
         return dto;
     }

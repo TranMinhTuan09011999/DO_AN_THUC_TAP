@@ -2,10 +2,7 @@ package com.minhtuan.commercemanager.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
@@ -35,4 +32,10 @@ public class Invoice {
     @NotBlank(message = "taxId is required")
     @Column(name = "MASOTHUE", nullable = false)
     private String taxId;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MAPD", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Order orderInvoice;
 }

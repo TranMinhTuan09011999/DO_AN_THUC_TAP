@@ -3,6 +3,7 @@ package com.minhtuan.commercemanager.controller.admin;
 import com.minhtuan.commercemanager.dto.CategoryDTO;
 import com.minhtuan.commercemanager.dto.SizeDTO;
 import com.minhtuan.commercemanager.message.request.CategoryRequest;
+import com.minhtuan.commercemanager.model.Size;
 import com.minhtuan.commercemanager.services.CategoryService;
 import com.minhtuan.commercemanager.services.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,12 @@ public class SizeAdminCotroller {
     public ResponseEntity<?> getSize() {
         List<SizeDTO> sizeDTOList = sizeService.getAllSize();
         return ResponseEntity.ok().body(sizeDTOList);
+    }
+
+    @GetMapping("/size/{sizeId}")
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    public ResponseEntity<?> getSizeBySizeId(@PathVariable(value = "sizeId") Integer sizeId) {
+        SizeDTO sizeDTO = sizeService.getSizeBySizeId(sizeId);
+        return ResponseEntity.ok().body(sizeDTO);
     }
 }

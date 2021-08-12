@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Collection;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -47,4 +48,14 @@ public class ProductDetail {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Size size;
+
+    @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<OrderDetail> orderDetails;
+
+    @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<WarehouseReceiptDetail> warehouseReceiptDetails;
 }

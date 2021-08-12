@@ -1,0 +1,14 @@
+.cart-detailed-totals .table {
+    border: none;
+    color: #fff;
+}
+
+.cart-product-name,
+.cart-product-total {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.errors {
+    color: red;
+    margin-left: 10px;
+}

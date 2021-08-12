@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Category } from '../model/category';
 import { CatogeryRequest } from '../request/catogery-request';
@@ -12,7 +12,16 @@ const API_URL = 'http://localhost:8080/api/';
 })
 export class CategoryService {
 
+  public categoryId: string = "aaaa";
+
+  // private categoryId = new BehaviorSubject("");
+  // currentCategoryId = this.categoryId.asObservable();
+
   constructor(private http: HttpClient) { }
+
+  // changeCategoryId(categoryId: string){
+  //   this.categoryId.next(categoryId);
+  // }
 
   createCategory(token: String, category: CatogeryRequest): Observable<Category> {
     let tokenStr = 'Bearer ' + token;
@@ -27,6 +36,13 @@ export class CategoryService {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);
     return this.http.get<Category[]>(API_URL + 'admin/' + 'category', { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  getCategoryCustomer(): Observable<any> {
+    return this.http.get<Category[]>(API_URL + 'customer/' + 'category')
                   .pipe(
                     retry(3), 
                     catchError(this.handleError));

@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRequest } from 'src/app/model/login-request';
 import { AuthService } from 'src/app/service/auth.service';
-import { CartService } from 'src/app/service/cart.service';
 import { ClassBodyService } from 'src/app/service/class-body.service';
 import { CountService } from 'src/app/service/count.service';
 import { PageService } from 'src/app/service/page.service';
@@ -31,7 +30,7 @@ export class LoginComponent implements OnInit {
   invalidLogin: boolean = false;
   loginResponse!: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService, private router:Router, private tokenStorageService: TokenStorageService, private cartService: CartService, private countService: CountService, private classBodyService: ClassBodyService, private pageService: PageService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService, private router:Router, private tokenStorageService: TokenStorageService, private countService: CountService, private classBodyService: ClassBodyService, private pageService: PageService) { }
 
   ngOnInit(): void {
     this.classBodyService.changeClass(this.classBody);
@@ -65,6 +64,7 @@ export class LoginComponent implements OnInit {
     login.recaptchaResponse = response;
     this.authService.login(login).subscribe(
       data => {
+        console.log("aaa");
         if(data.status === 200) {
           this.tokenStorage.saveUser(data);        
           this.token =  this.tokenStorage.getUser().token;

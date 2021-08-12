@@ -21,12 +21,14 @@ import { LoginGuard } from './guard/login.guard';
 import { LoginInterceptor } from './interceptor/login.interceptor';
 import { UserService } from './service/user.service';
 import { AuthService } from './service/auth.service';
-import { CartService } from './service/cart.service';
 import { CountService } from './service/count.service';
 import { TokenStorageService } from './service/token-storage.service';
 import { AuthInterceptor } from './service/auth.interceptor';
 import { ProductGridComponent } from './user/product-grid/product-grid.component';
 import { ProductDetailComponent } from './user/product-detail/product-detail.component';
+import { CartComponent } from './user/cart/cart.component';
+import { CheckoutComponent } from './user/checkout/checkout.component';
+import { PurchaseOrderComponent } from './user/purchase-order/purchase-order.component';
 
 
 @NgModule({
@@ -41,6 +43,9 @@ import { ProductDetailComponent } from './user/product-detail/product-detail.com
     ChangeInfoComponent,
     ProductGridComponent,
     ProductDetailComponent,
+    CartComponent,
+    CheckoutComponent,
+    PurchaseOrderComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,10 +2,7 @@ package com.minhtuan.commercemanager.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
@@ -15,27 +12,27 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name="ct_phieunhap")
 @ToString
+@IdClass(WarehouseReceiptDetailId.class)
 public class WarehouseReceiptDetail {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @NotBlank(message = "warehouseReceiptDetailId is required")
-    @Column(name = "MACTPN", nullable = false)
-    private Integer warehouseReceiptDetailId;
-
-    @NotBlank(message = "quantity is required")
     @Column(name = "SOLUONG", nullable = false)
     private Integer quantity;
 
-    @NotBlank(message = "price is required")
     @Column(name = "GIA", nullable = false)
     private Double price;
 
-    @NotBlank(message = "size is required")
-    @Column(name = "KICHTHUOC", nullable = false)
-    private Integer size;
+    @Id
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MAPN", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private WarehouseReceipt warehouseReceipt;
 
-    @NotBlank(message = "color is required")
-    @Column(name = "MAU", nullable = false)
-    private Integer color;
+    @Id
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MACTSP", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private ProductDetail productDetail;
 }

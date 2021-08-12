@@ -3,7 +3,9 @@ import { Injectable, Provider } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { ProductDetail } from '../model/product-detail';
+import { ProductWithRoomIdAndCategoryId } from '../model/product-with-room-id-and-category-id';
 import { ProductRequest } from '../request/product-request';
+import { CartResponse } from '../response/cart-response';
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -29,6 +31,32 @@ export class ProductDetailService {
     return this.http.get<ProductDetail[]>(API_URL + 'admin/product-detail/' + productId, { headers: headers})
                   .pipe(
                     retry(3), 
+                    catchError(this.handleError));
+  }
+
+  getProducDetailWithProductIdAndColorIdAndSizeId(productId: string, colorId: number, sizeId: number): Observable<ProductWithRoomIdAndCategoryId[]> {
+    return this.http.get<ProductWithRoomIdAndCategoryId[]>(API_URL + 'customer/' + productId + '/' + colorId + '/' + sizeId)
+                  .pipe(
+                    catchError(this.handleError));
+  }
+
+  getProductDetailTop1BySizeId(sizeId: number): Observable<ProductDetail[]>{
+    return this.http.get<ProductDetail[]>(API_URL + 'customer/product/' + sizeId)
+                  .pipe(
+                    catchError(this.handleError));
+  }
+
+  getProductDetailByProductDetailId(productDetailId: number):Observable<CartResponse>{
+    return this.http.get<CartResponse>(API_URL + 'customer/product-detail/' + productDetailId)
+                  .pipe(
+                    catchError(this.handleError));
+  }
+
+  ckeckProductExist(token: string, productId: string, sizeId: number, colorId: number): Observable<boolean> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.get<boolean>(API_URL + 'admin/' + productId + '/' + sizeId + '/' + colorId, { headers: headers})
+                  .pipe(
                     catchError(this.handleError));
   }
 

@@ -23,5 +23,10 @@
 }
 
 .modal-wrapper .modal-dialog {
-    max-width: 880px;
+    max-width: 1000px;
+}
+
+.errors {
+    color: red;
+    margin-left: 10px;
 }

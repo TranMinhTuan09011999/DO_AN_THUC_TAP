@@ -2,11 +2,9 @@ package com.minhtuan.commercemanager.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Collection;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -20,11 +18,23 @@ public class WarehouseReceipt {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @NotBlank(message = "warehouseReceiptIid is required")
     @Column(name = "MAPN", nullable = false)
-    private Integer warehouseReceiptIid;
+    private String warehouseReceiptId;
 
-    @NotBlank(message = "dateOfIssue is required")
     @Column(name = "NGAYNHAP", nullable = false)
     private Date dateOfIssue;
+
+    @Column(name = "TONGTIEN", nullable = false)
+    private Double amount;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MANV", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Employee employee;
+
+    @OneToMany(mappedBy = "warehouseReceipt", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<WarehouseReceiptDetail> warehouseReceiptDetails;
 }
