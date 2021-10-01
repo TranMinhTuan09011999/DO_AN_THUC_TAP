@@ -77,19 +77,20 @@ export class InventoryReceivingVoucherComponent implements OnInit {
           console.log(this.closeResult);
         });
         return;
+      }else{
+        
+        this.token = this.tokenStorageService.getToken();
+        this.warehouseReceiptService.getAllWarehouseReceiptBySearch(this.token, this.PNId, this.employeeId, this.fromDate, this.toDate)
+                  .subscribe(
+                    (data: WarehouseReceiptResponse[]) => {
+                      this.warehouseReceipts = data;
+                    },
+                    error => {
+                      console.log(error);
+                    });
+          console.log(this.toDate);
       }
     }
-
-    this.token = this.tokenStorageService.getToken();
-    this.warehouseReceiptService.getAllWarehouseReceiptBySearch(this.token, this.PNId, this.employeeId, this.fromDate, this.toDate)
-              .subscribe(
-                (data: WarehouseReceiptResponse[]) => {
-                  this.warehouseReceipts = data;
-                },
-                error => {
-                  console.log(error);
-                });
-      console.log(this.toDate);
   }
 
   private getDismissReason(reason: any): string {

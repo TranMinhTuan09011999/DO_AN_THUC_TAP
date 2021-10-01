@@ -1,60 +1,60 @@
-<div id="{{classBody}}" *ngIf="page == 0">
+<div id="{{classBody}}" *ngIf="page == 0" style="position: relative;">
     <app-header *ngIf="!authService.isAdmin()"></app-header>
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
 </div>
-<div class="{{classBody}}" *ngIf="page == 1">
+<div class="{{classBody}}" *ngIf="page == 1" style="position: relative;">
     <app-header *ngIf="!authService.isAdmin()"></app-header>
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
 </div>
-<div class="{{classBody}}" *ngIf="page == 2">
+<div class="{{classBody}}" *ngIf="page == 2" style="position: relative;">
     <app-header *ngIf="!authService.isAdmin()"></app-header>
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
 </div>
-<div class="{{classBody}}" *ngIf="page == 3">
+<div class="{{classBody}}" *ngIf="page == 3" style="position: relative;">
     <app-header *ngIf="!authService.isAdmin()"></app-header>
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
 </div>
-<div id="product-sidebar-left" class="product-grid-sidebar-left" *ngIf="page == 4">
-    <app-header *ngIf="!authService.isAdmin()"></app-header>
-    <router-outlet></router-outlet>
-    <app-footer *ngIf="!authService.isAdmin()"></app-footer>
-</div>
-
-<div id="product-detail" *ngIf="page == 5">
+<div id="product-sidebar-left" class="product-grid-sidebar-left" *ngIf="page == 4" style="position: relative;">
     <app-header *ngIf="!authService.isAdmin()"></app-header>
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
 </div>
 
-<div class="product-cart checkout-cart blog" *ngIf="page == 6">
+<div id="product-detail" *ngIf="page == 5" style="position: relative;">
     <app-header *ngIf="!authService.isAdmin()"></app-header>
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
 </div>
 
-<div class="product-checkout checkout-cart" *ngIf="page == 7">
+<div class="product-cart checkout-cart blog" *ngIf="page == 6" style="position: relative;">
     <app-header *ngIf="!authService.isAdmin()"></app-header>
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
 </div>
 
-<div class="user-acount" *ngIf="page == 8">
+<div class="product-checkout checkout-cart" *ngIf="page == 7" style="position: relative;">
     <app-header *ngIf="!authService.isAdmin()"></app-header>
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
 </div>
 
-<div class="user-reset-password blog" *ngIf="page == 9">
+<div class="user-acount" *ngIf="page == 8" style="position: relative;">
     <app-header *ngIf="!authService.isAdmin()"></app-header>
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
 </div>
 
-<div class="user-reset-password blog" *ngIf="page == 10">
+<div class="user-reset-password blog" *ngIf="page == 9" style="position: relative;">
+    <app-header *ngIf="!authService.isAdmin()"></app-header>
+    <router-outlet></router-outlet>
+    <app-footer *ngIf="!authService.isAdmin()"></app-footer>
+</div>
+
+<div class="user-reset-password blog" *ngIf="page == 10" style="position: relative;">
     <app-header *ngIf="!authService.isAdmin()"></app-header>
     <router-outlet></router-outlet>
     <app-footer *ngIf="!authService.isAdmin()"></app-footer>
