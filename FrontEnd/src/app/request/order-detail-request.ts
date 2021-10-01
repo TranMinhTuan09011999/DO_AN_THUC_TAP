@@ -3,4 +3,5 @@ export class OrderDetailRequest {
     productDetailId!: number;
     price!: number;
     quantity!: number;
+    discount!: number;
 }

@@ -1,7 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Injectable, Provider } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { Provider } from '../model/provider';
+import { ProviderRequest } from '../request/provider-request';
 
 const API_URL = 'http://localhost:8080/api/';
 
@@ -27,6 +29,32 @@ export class ProviderService {
     return this.http.get<Provider[]>(API_URL + 'admin/' + 'provider', { headers: headers})
                   .pipe(
                     retry(3), 
+                    catchError(this.handleError));
+  }
+
+  getProviderByProviderId(token: String, providerId: string): Observable<Provider> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.get<Provider>(API_URL + 'admin/provider/' + providerId, { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  updateProvider(token: String, providerId: string, providerRequest: ProviderRequest): Observable<Provider> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.put<Provider>(API_URL + 'admin/provider/update/' + providerId, providerRequest, { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  deleteProvider(token: String, providerId: string): Observable<any> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.put(API_URL + 'admin/provider/delete/' + providerId, {} ,{ headers: headers, responseType: 'text'})
+                  .pipe(
                     catchError(this.handleError));
   }
 

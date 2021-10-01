@@ -29,21 +29,21 @@ public class WarehouseReceiptDetailAdminController {
     ProductDetailService productDetailService;
 
     @PostMapping("/add-warehouseReceiptDetail")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> createWarehouseReceiptDetail(@RequestBody WarehouseReceiptDetailRequest warehouseReceiptDetailRequest) {
         warehouseReceiptDetailService.save(warehouseReceiptDetailRequest);
         return ResponseEntity.status(HttpStatus.OK).body("Successfully");
     }
 
     @GetMapping("/{productId}/{sizeId}/{colorId}")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getColorByProductIdAndSizeId(@PathVariable(value = "productId") String productId, @PathVariable(value = "sizeId") Integer sizeId, @PathVariable(value = "colorId") Integer colorId) {
         boolean exist = productDetailService.existsByProductIdAndSizeIdAndColorId(productId, sizeId, colorId);
         return ResponseEntity.status(HttpStatus.OK).body(exist);
     }
 
     @GetMapping("/warehouseReceiptDetail/{warehouseReceiptId}")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getAllWarehouseReceipt(@PathVariable(value = "warehouseReceiptId") String warehouseReceiptId) {
         List<WarehouseReceiptDetailResponse> warehouseReceiptDetailResponseList = warehouseReceiptDetailService.getAll(warehouseReceiptId);
         return ResponseEntity.ok().body(warehouseReceiptDetailResponseList);

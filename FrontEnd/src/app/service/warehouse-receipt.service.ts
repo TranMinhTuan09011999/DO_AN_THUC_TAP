@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -85,6 +85,19 @@ export class WarehouseReceiptService {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);
     return this.http.get<WarehouseReceiptDetailResponse[]>(API_URL + 'admin/warehouseReceiptDetail/' + warehouseReceiptId, { headers: headers})
+                  .pipe(
+                    catchError(this.handleError));
+  }
+
+  getAllWarehouseReceiptBySearch(token: string, warehouseReceiptId: string, employeeId: string, fromDate: string, toDate: string): Observable<WarehouseReceiptResponse[]>{
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    let params = new HttpParams();
+    params = params.append('warehouseReceiptId', warehouseReceiptId);
+    params = params.append('employeeId', employeeId);
+    params = params.append('fromDate', fromDate);
+    params = params.append('toDate', toDate);
+    return this.http.get<WarehouseReceiptResponse[]>(API_URL + 'admin/warehouseReceipt/search', {params: params, headers: headers})
                   .pipe(
                     catchError(this.handleError));
   }

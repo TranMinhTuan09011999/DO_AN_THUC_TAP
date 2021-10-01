@@ -23,7 +23,7 @@ public class RoomAdminController {
     RoomService roomService;
 
     @GetMapping("/room")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getRoom() {
         List<RoomDTO> roomDTOList = roomService.getAllRoom();
         return ResponseEntity.ok().body(roomDTOList);

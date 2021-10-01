@@ -7,7 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WarehouseReceiptDetailResponse {
-    private String productId;
+    private Integer productDetailId;
+    private String productName;
     private String size;
     private String color;
     private Integer quantity;

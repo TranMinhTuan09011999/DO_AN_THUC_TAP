@@ -73,6 +73,21 @@
 
     <!-- Template JS -->
     <script src="assets/js/theme.js"></script>
+    <script>
+        window.onhashchange = function() {
+            console.log("aaaaaaaaa");
+            if (window.innerDocClick) {
+                window.innerDocClick = false;
+            } else {
+                if (window.location.hash != '#undefined') {
+                    goBack();
+                } else {
+                    history.pushState("", document.title, window.location.pathname);
+                    location.reload();
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>

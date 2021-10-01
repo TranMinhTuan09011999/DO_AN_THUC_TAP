@@ -37,6 +37,9 @@ public class Provider {
     @Column(name = "SDT", nullable = false)
     private String providerPhone;
 
+    @Column(name = "TRANGTHAI", nullable = false)
+    private Integer status;
+
     @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

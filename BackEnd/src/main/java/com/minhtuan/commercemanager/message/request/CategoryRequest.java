@@ -11,7 +11,6 @@ import lombok.ToString;
 public class CategoryRequest {
     private static final long serialVersionUID = 1L;
 
-    private String categoryId;
     private String categoryName;
     private Integer room;
 }

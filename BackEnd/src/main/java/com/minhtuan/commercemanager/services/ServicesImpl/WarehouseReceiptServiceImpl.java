@@ -13,6 +13,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,11 +77,56 @@ public class WarehouseReceiptServiceImpl implements WarehouseReceiptService {
     @Override
     public List<WarehouseReceiptResponse> getAll() {
         List<WarehouseReceipt> warehouseReceiptList = warehouseReceiptRepository.findAll();
-        ModelMapper modelMapper = new ModelMapper();
         List<WarehouseReceiptResponse> warehouseReceiptResponseList = warehouseReceiptList
                 .stream()
                 .map(q -> warehouseReceiptMapper.toWarehouseReceiptResponse(q))
                 .collect(Collectors.toList());
+        return warehouseReceiptResponseList;
+    }
+
+    @Override
+    public List<WarehouseReceiptResponse> getAllWarehouseReceiptBySearch(String warehouseReceiptId, String employeeId, String fromDate, String toDate) throws ParseException {
+        List<WarehouseReceiptResponse> warehouseReceiptResponseList = new ArrayList<>();
+        if(warehouseReceiptId != ""){
+            List<WarehouseReceipt> warehouseReceiptList = warehouseReceiptRepository.findAllByWarehouseReceiptIdOrderByWarehouseReceiptIdDesc(warehouseReceiptId);
+            warehouseReceiptResponseList = warehouseReceiptList
+                    .stream()
+                    .map(q -> warehouseReceiptMapper.toWarehouseReceiptResponse(q))
+                    .collect(Collectors.toList());
+            return warehouseReceiptResponseList;
+        }else{
+            if(employeeId != "" && fromDate == "") {
+                Employee employee = employeeRepository.getById(employeeId);
+                List<WarehouseReceipt> warehouseReceiptList = warehouseReceiptRepository.findAllByEmployeeOrderByWarehouseReceiptIdDesc(employee);
+                warehouseReceiptResponseList = warehouseReceiptList
+                        .stream()
+                        .map(q -> warehouseReceiptMapper.toWarehouseReceiptResponse(q))
+                        .collect(Collectors.toList());
+                return warehouseReceiptResponseList;
+            }
+            if(employeeId != "" && fromDate != "") {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date dateFrom = sdf.parse(fromDate);
+                Date dateTo = sdf.parse(toDate);
+                List<WarehouseReceipt> warehouseReceiptList = warehouseReceiptRepository.findWarehouseReceiptsByEmployeeIdOrderByWarehouseReceiptIdDescAndDate(employeeId, dateFrom, dateTo);
+                warehouseReceiptResponseList = warehouseReceiptList
+                        .stream()
+                        .map(q -> warehouseReceiptMapper.toWarehouseReceiptResponse(q))
+                        .collect(Collectors.toList());
+                return warehouseReceiptResponseList;
+            }
+            if(employeeId == "" && fromDate != ""){
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date dateFrom = sdf.parse(fromDate);
+                Date dateTo = sdf.parse(toDate);
+                List<WarehouseReceipt> warehouseReceiptList = warehouseReceiptRepository.findWarehouseReceiptsOrderByWarehouseReceiptIdDescAndDate(dateFrom, dateTo);
+                warehouseReceiptResponseList = warehouseReceiptList
+                        .stream()
+                        .map(q -> warehouseReceiptMapper.toWarehouseReceiptResponse(q))
+                        .collect(Collectors.toList());
+                return warehouseReceiptResponseList;
+            }
+        }
         return warehouseReceiptResponseList;
     }
 }

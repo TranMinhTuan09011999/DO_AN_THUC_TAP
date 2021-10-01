@@ -31,6 +31,9 @@ public class ProductDetail {
     @Column(name = "HINHANH")
     private String image;
 
+    @Column(name = "KHUYENMAI")
+    private Integer discount;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MASP", nullable = false)
     @EqualsAndHashCode.Exclude

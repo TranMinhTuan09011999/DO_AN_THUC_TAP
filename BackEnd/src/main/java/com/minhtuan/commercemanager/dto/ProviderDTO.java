@@ -15,4 +15,5 @@ public class ProviderDTO {
     private String providerAddress;
     private String providerEmail;
     private String providerPhone;
+    private Integer status;
 }

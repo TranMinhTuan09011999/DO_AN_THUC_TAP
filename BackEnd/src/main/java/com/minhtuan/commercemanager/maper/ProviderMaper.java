@@ -17,6 +17,7 @@ public class ProviderMaper {
         dto.setProviderAddress(provider.getProviderAddress());
         dto.setProviderEmail(provider.getProviderEmail());
         dto.setProviderPhone(provider.getProviderPhone());
+        dto.setStatus(provider.getStatus());
         return dto;
     }
 }

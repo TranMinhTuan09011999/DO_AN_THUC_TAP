@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { OrderDetailRequest } from 'src/app/request/order-detail-request';
 import { CartResponse } from 'src/app/response/cart-response';
 import { Items } from 'src/app/response/items';
@@ -27,7 +28,7 @@ export class CheckoutComponent implements OnInit {
   public orderDetailRequest: any;
   public orderId: any;
 
-  constructor(private tokenStorageService: TokenStorageService, private pageService: PageService, private cartService: CartService, private fb: FormBuilder, private checkoutService: CheckoutService) { }
+  constructor(private router:Router, private tokenStorageService: TokenStorageService, private pageService: PageService, private cartService: CartService, private fb: FormBuilder, private checkoutService: CheckoutService) { }
 
   ngOnInit(): void {
     this.pageService.changePage(this.page);
@@ -44,7 +45,7 @@ export class CheckoutComponent implements OnInit {
       lastnameOfReveiver: ['', [Validators.required]],  
       addressOfReceiver: ['', [Validators.required]],
       phoneOfReceiver: ['', [Validators.required, Validators.pattern("^[_0-9]{10}")]], 
-      customerId: user.id
+      customerId: user.id,
     })
   }
 
@@ -62,26 +63,48 @@ export class CheckoutComponent implements OnInit {
         .subscribe(
           (data: string) => {
             this.orderId = data;
+            console.log(this.orderId);
+            let shopping_cart;
+            shopping_cart = JSON.parse(localStorage.getItem('cart') || '{}');
+            for(let i in shopping_cart){
+              console.log("aaaa");
+              this.orderDetailRequest = new OrderDetailRequest();
+              this.orderDetailRequest.orderId = this.orderId;
+              console.log(this.orderDetailRequest.orderId)
+              this.orderDetailRequest.productDetailId = shopping_cart[i].productDetail.productDetailId;
+              this.orderDetailRequest.price = shopping_cart[i].productDetail.price;
+              this.orderDetailRequest.quantity = shopping_cart[i].quantity;
+              this.orderDetailRequest.discount = shopping_cart[i].productDetail.percent;
+              this.checkoutService.addOrderDetails(this.token, this.orderDetailRequest)
+                .subscribe(
+                  (data: string) => {
+                    this.cartService.clearCart();
+                    this.router.navigate(['purchase']).then(this.reloadPage);
+                  },
+                  error => {
+                    console.log(error);
+                  });
+                  if(shopping_cart[i].productDetail.percent == 0)
+                  {
+                    this.totalPrice += (shopping_cart[i].productDetail.price*shopping_cart[i].quantity);
+                  }else if(shopping_cart[i].productDetail.percent > 0){
+                    this.totalPrice += (shopping_cart[i].productDetail.price - shopping_cart[i].productDetail.price*shopping_cart[i].productDetail.percent/100)*shopping_cart[i].quantity;
+                  }
+            }
           },
           error => {
             console.log(error);
           });
-    let shopping_cart;
-    shopping_cart = JSON.parse(localStorage.getItem('cart') || '{}');
-    for(let i in shopping_cart){
-      this.orderDetailRequest = new OrderDetailRequest();
-      this.orderDetailRequest.orderId = this.orderId;
-      this.orderDetailRequest.productDetailId = shopping_cart[i].productDetail.productDetailId;
-      this.orderDetailRequest.price = shopping_cart[i].productDetail.price;
-      this.orderDetailRequest.quantity = shopping_cart[i].productDetail.quantity;
-      this.checkoutService.addOrderDetails(this.token, this.orderDetailRequest);
-      this.totalPrice += (shopping_cart[i].productDetail.price*shopping_cart[i].quantity);
-    }
-    this.cartService.clearCart();
+    
+ 
   }
 
   getTotalsItemsInCart(){
     this.totalItems = this.cartService.numberOfItems();
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 
   total(){
@@ -89,7 +112,12 @@ export class CheckoutComponent implements OnInit {
     let shopping_cart;
     shopping_cart = JSON.parse(localStorage.getItem('cart') || '{}');
     for(let i in shopping_cart){
-      this.totalPrice += (shopping_cart[i].productDetail.price*shopping_cart[i].quantity);
+      if(shopping_cart[i].productDetail.percent == 0)
+      {
+        this.totalPrice += (shopping_cart[i].productDetail.price*shopping_cart[i].quantity);
+      }else if(shopping_cart[i].productDetail.percent > 0){
+        this.totalPrice += (shopping_cart[i].productDetail.price - shopping_cart[i].productDetail.price*shopping_cart[i].productDetail.percent/100)*shopping_cart[i].quantity;
+      }
     }
   }
 

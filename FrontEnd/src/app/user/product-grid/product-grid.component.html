@@ -11,17 +11,17 @@
                                 <ol>
                                     <li>
                                         <a href="#">
-                                            <span>Home</span>
+                                            <span>{{'GRIDPRODUCT.HOME' | translate}}</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <span>{{room}}</span>
+                                            <span>{{('ROOM.' + room) | translate}}</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <span>{{categoryName}}</span>
+                                            <span>{{('CATEGORY.' + categoryName) | translate}}</span>
                                         </a>
                                     </li>
                                 </ol>
@@ -36,140 +36,19 @@
 
                                     <!-- category menu -->
                                     <div class="sidebar-block">
-                                        <div class="title-block">Categories</div>
+                                        <div class="title-block">{{'CATEGORY.CATEGORIES' | translate}}</div>
                                         <div class="block-content">
-                                            <div class="cateTitle hasSubCategory open level1">
-                                                <span class="arrow collapsed collapse-icons" data-toggle="collapse" data-target="#livingroom" aria-expanded="false" role="status">
+                                            <div class="cateTitle hasSubCategory open level1" *ngFor="let room of rooms">
+                                                <span class="arrow collapsed collapse-icons" data-toggle="collapse" [attr.data-target]="'#' + room.roomId" aria-expanded="false" role="status">
                                                         <i class="zmdi zmdi-minus"></i>
                                                         <i class="zmdi zmdi-plus"></i>
                                                     </span>
-                                                <a class="cateItem">Living Room</a>
-                                                <div class="subCategory collapse" id="livingroom" aria-expanded="true" role="status">
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">Side Table</a>
-                                                        <div class="subCategory collapse" id="subCategory-fruits" aria-expanded="true" role="status">
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">Side Table</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">FIREPLACE</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">FIREPLACE</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">floor lamp</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">ottoman</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">armchair</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">cushion</a>
-                                                            </div>
+                                                <a class="cateItem">{{('ROOM.' + room.name) | translate}}</a>
+                                                <div class="subCategory collapse" id="{{room.roomId}}" aria-expanded="true" role="status">
+                                                    <div *ngFor="let category of categories">
+                                                        <div class="cateTitle" *ngIf="category.room.roomId == room.roomId">
+                                                            <a href="#" class="cateItem" (click)="$event.preventDefault();toProductGrid(category.room.name, category.categoryName, category.room.roomId, category.categoryId)">{{('CATEGORY.' + category.categoryName) | translate}}</a>
                                                         </div>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">FIREPLACE</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">FIREPLACE</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">floor lamp</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">ottoman</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">armchair</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">cushion</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="cateTitle hasSubCategory open level1">
-                                                <span class="arrow collapsed collapse-icons" data-toggle="collapse" data-target="#bathroom" aria-expanded="false" role="status">
-                                                        <i class="zmdi zmdi-minus"></i>
-                                                        <i class="zmdi zmdi-plus"></i>
-                                                    </span>
-                                                <a class="cateItem">Bathroom</a>
-                                                <div class="subCategory collapse" id="bathroom" aria-expanded="false" role="status">
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">TOMATO</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">BROCCOLI</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">CABBAGE</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">CUCUMBER</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">EGGPLANT</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="cateTitle hasSubCategory open level1">
-                                                <span class="arrow collapsed collapse-icons" data-toggle="collapse" data-target="#diningroom" aria-expanded="false" role="status">
-                                                        <i class="zmdi zmdi-minus"></i>
-                                                        <i class="zmdi zmdi-plus"></i>
-                                                    </span>
-                                                <a class="cateItem">Dining Rooom</a>
-                                                <div class="subCategory collapse" id="diningroom" aria-expanded="true" role="status">
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">DRY BREAD</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">BREAD SLICES</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">FRENCH BREAD</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">BLACK BREAD</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="cateTitle hasSubCategory open level1">
-                                                <span class="arrow collapsed collapse-icons" data-toggle="collapse" data-target="#bedroom" aria-expanded="false" role="status">
-                                                        <i class="zmdi zmdi-minus"></i>
-                                                        <i class="zmdi zmdi-plus"></i>
-                                                    </span>
-                                                <a class="cateItem">BedRoom</a>
-                                                <div class="subCategory collapse" id="bedroom" aria-expanded="true" role="status">
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">ORANGE JUICES</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">TOMATO JUICES</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">APPLE JUICES</a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="cateTitle hasSubCategory open level1">
-                                                <span class="arrow collapsed collapse-icons" data-toggle="collapse" data-target="#kitchen" aria-expanded="false" role="status">
-                                                        <i class="zmdi zmdi-minus"></i>
-                                                        <i class="zmdi zmdi-plus"></i>
-                                                    </span>
-                                                <a class="cateItem">Kitchen</a>
-                                                <div class="subCategory collapse" id="kitchen" aria-expanded="true" role="status">
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">ORANGE JUICES</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">TOMATO JUICES</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">APPLE JUICES</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -178,7 +57,7 @@
 
                                     <!-- best seller -->
                                     <div class="sidebar-block">
-                                        <div class="title-block">Catalog</div>
+                                        <!-- <div class="title-block">Catalog</div>
                                         <div class="new-item-content">
                                             <h3 class="title-product">categories</h3>
                                             <ul class="scroll-product">
@@ -255,8 +134,8 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                        </div>
-                                        <div class="new-item-content">
+                                        </div> -->
+                                        <!-- <div class="new-item-content">
                                             <h3 class="title-product">Manufacture</h3>
                                             <ul class="scroll-product">
                                                 <li>
@@ -340,138 +219,64 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </div> -->
                                         <div class="tiva-filter-price new-item-content sidebar-block">
-                                            <h3 class="title-product">By Price</h3>
-                                            <div id="block_price_filter" class="block">
+                                            <h3 class="title-product">{{'GRIDPRODUCT.PRICE' | translate}}</h3>
+                                            <div class="range-slide">
+                                                <div class="slide">
+                                                    <div class="line" id="line" style="left: 0%; right: 0%;"></div>
+                                                    <span class="thumb" id="thumbMin" style="left: 0%;"></span>
+                                                    <span class="thumb" id="thumbMax" style="left: 100%;"></span>
+                                                </div>
+                                                <input #min id="rangeMin" type="range" max="20000000" min="0" step="1" value="0">
+                                                <input #max id="rangeMax" type="range" max="20000000" min="0" step="100000" value="20000000">
+                                            </div>
+                                            <div class="display">
+                                                <span id="min">0đ</span>
+                                                <span id="max">20,000,000đ</span>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <a href="#" class="btn" style="margin-top: 2rem;font-size: 0.8rem;
+                                                padding: 0.4rem 1.5rem;" (click)="$event.preventDefault();getProductSearchPrice();"> {{'GRIDPRODUCT.SEARCH' | translate}} </a>
+                                            </div>
+
+
+
+
+                                            <!-- <div id="block_price_filter" class="block">
                                                 <div class="block-content">
                                                     <div id="slider-range" class="tiva-filter">
                                                         <div class="filter-itemprice-filter">
                                                             <div class="layout-slider">
-                                                                <input id="price-filter" name="price" value="0;100" />
+                                                                <input #myname id="price-filter" name="price" value="0;20000000" />
                                                             </div>
                                                             <div class="layout-slider-settings"></div>
                                                         </div>
+                                                        <div style="text-align: center;">
+                                                            <a href="#" class="btn" style="margin-top: 2rem;font-size: 0.8rem;
+                                                            padding: 0.4rem 1.5rem;" (click)="$event.preventDefault();getProductSearchPrice();"> Search </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="sidebar-block by-color">
-                                            <h3 class="title-product">By Color</h3>
-                                            <div>
-                                                <span class="left">
-                                                        <label class="color-item1"></label>
-                                                        <a href="#">
-                                                            <span>Blue
-                                                                <span>(30)</span>
-                                                </span>
-                                                </a>
-                                                </span>
-                                                <span class="right">
-                                                        <label class="color-item2"></label>
-                                                        <a href="#">
-                                                            <span>Green
-                                                                <span>(30)</span>
+                                            <h3 class="title-product">{{'GRIDPRODUCT.BYCOLOR' | translate}}</h3>
+                                            <div *ngFor="let color of colors" style="width: 50%;
+                                            float: left;">
+                                                <span>
+                                                        <label [ngStyle]="{'background-color': color?.colorCode}"></label>
+                                                        <a href="#" [ngStyle]="{'color': color?.colorCode}" (click)="$event.preventDefault();getProductWithRoomIdAndCategoryIdAndColorId(color.colorId);">
+                                                            <span>{{('COLOR.' + color.colorName) | translate}}
                                                 </span>
                                                 </a>
                                                 </span>
                                             </div>
-                                            <div>
-                                                <span class="left">
-                                                        <label class="color-item3"></label>
-                                                        <a href="#">
-                                                            <span>Yellow
-                                                                <span>(30)</span>
-                                                </span>
-                                                </a>
-                                                </span>
-                                                <span class="right">
-                                                        <label class="color-item4"></label>
-                                                        <a href="#">
-                                                            <span>Brown
-                                                                <span>(30)</span>
-                                                </span>
-                                                </a>
-                                                </span>
-
-                                            </div>
-                                            <div>
-                                                <span class="left">
-                                                        <label class="color-item5"></label>
-                                                        <a href="#">
-                                                            <span>Pink
-                                                                <span>(30)</span>
-                                                </span>
-                                                </a>
-                                                </span>
-                                                <span class="right">
-                                                        <label class="color-item6"></label>
-                                                        <a href="#">
-                                                            <span>Red
-                                                                <span>(30)</span>
-                                                </span>
-                                                </a>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- product tag -->
-                                    <div class="sidebar-block product-tags">
-                                        <div class="title-block">
-                                            Product Tags
-                                        </div>
-                                        <div class="block-content">
-                                            <ul class="listSidebarBlog list-unstyled">
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Hot Trend">Hot Trend</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Jewelry">Jewelry</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="man.html" title="Show products matching tag Man">Man</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Party">Party</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag SamSung">SamSung</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Shirt Dresses">Shirt Dresses</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Shoes">Shoes</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Summer">Summer</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Sweaters">Sweaters</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Winter">Winter</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Woman">Woman</a>
-                                                </li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-8 col-lg-9 col-md-8 product-container">
-                                    <h1>{{room}}</h1>
+                                    <h1>{{('ROOM.' + room) | translate}}</h1>
                                     <div class="js-product-list-top firt nav-top">
                                         <div class="d-flex justify-content-around row">
                                             <div class="col col-xs-12">
@@ -483,20 +288,20 @@
                                                         <a href="#list" data-toggle="tab" class="fa fa-list-ul"></a>
                                                     </li>
                                                 </ul>
-                                                <div class="hidden-sm-down total-products">
+                                                <!-- <div class="hidden-sm-down total-products">
                                                     <p>There are 12 products.</p>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="col col-xs-12">
                                                 <div class="d-flex sort-by-row justify-content-lg-end justify-content-md-end">
 
                                                     <div class="products-sort-order dropdown">
-                                                        <select class="select-title">
-                                                                <option value="">Sort by</option>
-                                                                <option value="">Name, A to Z</option>
-                                                                <option value="">Name, Z to A</option>
-                                                                <option value="">Price, low to high</option>
-                                                                <option value="">Price, high to low</option>
+                                                        <select class="select-title" #mySelect (change)="onChange(mySelect.value)">
+                                                                <option [value]="1">{{'GRIDPRODUCT.SORT BY' | translate}}</option>
+                                                                <option [value]="2">{{'GRIDPRODUCT.NAMEAZ' | translate}}</option>
+                                                                <option [value]="3">{{'GRIDPRODUCT.NAMEZA' | translate}}</option>
+                                                                <option [value]="4">{{'GRIDPRODUCT.PRICEAZ' | translate}}</option>
+                                                                <option [value]="5">{{'GRIDPRODUCT.PRICEZA' | translate}}</option>
                                                             </select>
                                                     </div>
                                                 </div>
@@ -506,12 +311,14 @@
                                     <div class="tab-content product-items">
                                         <div id="grid" class="related tab-pane fade in active show">
                                             <div class="row">
-                                                <div class="item text-center col-md-4" *ngFor="let product of products">
+                                                <div class="item text-center col-md-4" *ngFor="let product of products  | paginate: config">
                                                     <div class="product-miniature js-product-miniature item-one first-item">
                                                         <div class="thumbnail-container border">
-                                                            <a href="product-detail.html">
+                                                            <a href="#" (click)="$event.preventDefault();toProductDetail(product.productId, product.colorId, product.sizeId, room, categoryName, product.productName)">
                                                                 <img class="img-fluid" src="http://localhost:8080/api/image/imageProduct/{{product.productDetailId}}" alt="img" style="height: 235px;">
                                                             </a>
+                                                            <span class="sticker" *ngIf="product.status == 1">{{'HOMEPRODUCT.NEW' | translate}}</span>
+                                                            <div *ngIf="product.percent > 0" class="product-flags discount">-{{product.percent}}%</div>
                                                             <div class="highlighted-informations">
                                                                 <div class="variant-links">
                                                                     <a href="#" class="color beige" title="Beige"></a>
@@ -523,7 +330,7 @@
                                                         <div class="product-description">
                                                             <div class="product-groups">
                                                                 <div class="product-title">
-                                                                    <a href="product-detail.html">{{product.productName}}</a>
+                                                                    <a href="product-detail.html">{{('PRODUCT.' + product.productName) | translate}}</a>
                                                                 </div>
                                                                 <div class="rating">
                                                                     <div class="star-content">
@@ -535,21 +342,16 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="product-group-price">
-                                                                    <div class="product-price-and-shipping">
-                                                                        <span class="price">£{{product.price}}</span>
+                                                                    <div class="product-price-and-shipping" *ngIf="product.percent > 0">
+                                                                        <span class="price">{{product.price - product.price*product.percent/100 | currency: "VND"}}</span>
+                                                                        <del class="regular-price">{{product.price | currency: "VND"}}</del>
+                                                                    </div>
+                                                                    <div class="product-price-and-shipping" *ngIf="product.percent == 0">
+                                                                        <span class="price">{{product.price | currency: "VND"}}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="product-buttons d-flex justify-content-center">
-                                                                <form action="#" method="post" class="formAddToCart">
-                                                                    <input type="hidden" name="id_product" value="1">
-                                                                    <a class="add-to-cart" href="#" data-button-action="add-to-cart">
-                                                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                                    </a>
-                                                                </form>
-                                                                <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                </a>
                                                                 <a href="#" (click)="$event.preventDefault();toProductDetail(product.productId, product.colorId, product.sizeId, room, categoryName, product.productName)" class="quick-view hidden-sm-down" data-link-action="quickview">
                                                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                                                 </a>
@@ -558,27 +360,29 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <pagination-controls (pageChange)="pageChanged($event)" style="text-align: right;"></pagination-controls>
                                         </div>
                                         <div id="list" class="related tab-pane fade">
-                                            <div class="row" *ngFor="let product of products">
+                                            <div class="row" *ngFor="let product of products | paginate: config1">
                                                 <div class="item col-md-12">
                                                     <div class="product-miniature item-one first-item">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <div class="thumbnail-container border">
+                                                                <div class="thumbnail-container border" style="height: 210px; text-align: center; padding-top: 30px;">
                                                                     <a href="product-detail.html">
-                                                                        <img class="img-fluid" src="http://localhost:8080/api/image/imageProduct/{{product.productDetailId}}" alt="img">
+                                                                        <img class="img-fluid" src="http://localhost:8080/api/image/imageProduct/{{product.productDetailId}}" alt="img" style="height: 140px;">
                                                                     </a>
+                                                                    <div *ngIf="product.percent > 0" class="product-flags discount">-{{product.percent}}%</div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <div class="product-description">
                                                                     <div class="product-groups">
                                                                         <div class="product-title">
-                                                                            <a href="product-detail.html">{{product.productName}}</a>
+                                                                            <a href="product-detail.html">{{('PRODUCT.' + product.productName) | translate}}</a>
                                                                             <span class="info-stock">
                                                                                     <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                                                                                    In Stock
+                                                                                    {{'GRIDPRODUCT.INSTOCK' | translate}}
                                                                                 </span>
                                                                         </div>
                                                                         <div class="rating">
@@ -591,18 +395,22 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="product-group-price">
-                                                                            <div class="product-price-and-shipping">
-                                                                                <span class="price">£{{product.price}}</span>
+                                                                            <div class="product-price-and-shipping d-flex flex-row" *ngIf="product.percent > 0">
+                                                                                <span class="price">{{product.price - product.price*product.percent/100 | currency: "VND"}}</span>
+                                                                                <del class="regular-price">{{product.price | currency: "VND"}}</del>
+                                                                            </div>
+                                                                            <div class="product-price-and-shipping" *ngIf="product.percent == 0">
+                                                                                <span class="price">{{product.price | currency: "VND"}}</span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="discription">
-                                                                            {{product.description}}
+                                                                            {{('PRODUCTDESCRIPTION.' + product.description) | translate}}
                                                                         </div>
                                                                     </div>
                                                                     <div class="product-buttons d-flex">
                                                                         <form action="#" method="post" class="formAddToCart">
                                                                             <a class="add-to-cart" href="#" data-button-action="add-to-cart">
-                                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>Add to cart
+                                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>{{'GRIDPRODUCT.ADDTOCART' | translate}}
                                                                             </a>
                                                                         </form>
                                                                         <a class="addToWishlist" href="#" data-rel="1" onclick="">
@@ -618,51 +426,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- pagination -->
-                                    <div class="pagination">
-                                        <div class="js-product-list-top ">
-                                            <div class="d-flex justify-content-around row">
-                                                <div class="showing col col-xs-12">
-                                                    <span>SHOWING 1-3 OF 3 ITEM(S)</span>
-                                                </div>
-                                                <div class="page-list col col-xs-12">
-                                                    <ul>
-                                                        <li>
-                                                            <a rel="prev" href="#" class="previous disabled js-search-link">
-                                                                    Previous
-                                                                </a>
-                                                        </li>
-                                                        <li class="current active">
-                                                            <a rel="nofollow" href="#" class="disabled js-search-link">
-                                                                    1
-                                                                </a>
-                                                        </li>
-                                                        <li>
-                                                            <a rel="nofollow" href="#" class="disabled js-search-link">
-                                                                    2
-                                                                </a>
-                                                        </li>
-                                                        <li>
-                                                            <a rel="nofollow" href="#" class="disabled js-search-link">
-                                                                    3
-                                                                </a>
-                                                        </li>
-
-                                                        <li>
-                                                            <a rel="next" href="#" class="next disabled js-search-link">
-                                                                    Next
-                                                                </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                            <pagination-controls (pageChange)="pageChanged1($event)" style="text-align: right;"></pagination-controls>
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-- end col-md-9-1 -->
                             </div>
                         </div>

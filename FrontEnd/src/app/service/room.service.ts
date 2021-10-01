@@ -20,10 +20,8 @@ export class RoomService {
     this.roomId.next(roomId);
   }
 
-  getRoom(token: String): Observable<any> {
-    let tokenStr = 'Bearer ' + token;
-    const headers = new HttpHeaders().set('Authorization', tokenStr);
-    return this.http.get<Room[]>(API_URL + 'admin/' + 'room', { headers: headers})
+  getRoom(): Observable<any> {
+    return this.http.get<Room[]>(API_URL + 'customer/' + 'room')
                   .pipe(
                     retry(3), 
                     catchError(this.handleError));

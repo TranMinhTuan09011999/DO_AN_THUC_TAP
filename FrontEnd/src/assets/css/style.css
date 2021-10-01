@@ -3227,9 +3227,7 @@ footer [class~=title-block] {
     margin-bottom: 1rem;
 }
 
-#wrapper-site #content-wrapper #main [class~=living-room] {
-    background: url("../assets/img/home/home1-background1.jpg");
-}
+#wrapper-site #content-wrapper #main [class~=living-room] {}
 
 #block_price_filter [class~=tiva-filter] [class~=price-filter] {
     margin-bottom: 40px;
@@ -5047,9 +5045,7 @@ footer [class~=title-block],
     margin-top: -1rem;
 }
 
-#wrapper-site #content-wrapper #main [class~=testimonial-block] [class~=type-one] [class~=textimonial-image] [class~=icon-testimonial] {
-    background: url("../assets/img/home/note.png") no-repeat center center;
-}
+#wrapper-site #content-wrapper #main [class~=testimonial-block] [class~=type-one] [class~=textimonial-image] [class~=icon-testimonial] {}
 
 #block_price_filter span.jslider.jslider_plastic .jslider-bg i.f {
     height: .072916667in;
@@ -18927,9 +18923,7 @@ footer [class~=title-block],
     border-top-color: transparent;
 }
 
-#wrapper-site #content-wrapper #main [class~=kitchen] {
-    background: url("../assets/img/home/home1-background2.jpg");
-}
+#wrapper-site #content-wrapper #main [class~=kitchen] {}
 
 [class~=product-checkout] #checkout [class~=check-info] [class~=content] {
     margin-bottom: 0 !important;
@@ -19469,10 +19463,6 @@ footer [class~=title-block],
 
 #product-sidebar-left [class~=main-content] [class~=content] [class~=product-container] [class~=nav-top] [class~=products-sort-order] [class~=dropdown-menu] {
     border-radius: 0;
-}
-
-#wrapper-site #content-wrapper #main .testimonial-block {
-    padding-bottom: 5rem;
 }
 
 #wrapper-site #content-wrapper #main [class~=groupbanner-special] [class~=title-block] span:nth-child(3) {

@@ -1,12 +1,11 @@
 package com.minhtuan.commercemanager.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductDetailDTO {
     private static final long serialVersionUID = 1L;
 
@@ -14,6 +13,7 @@ public class ProductDetailDTO {
     private Integer quantity;
     private Double price;
     private String image;
+    private Integer discount;
     private ProductDTO product;
     private ColorDTO color;
     private SizeDTO size;

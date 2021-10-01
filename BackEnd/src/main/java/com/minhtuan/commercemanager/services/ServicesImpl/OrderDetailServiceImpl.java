@@ -1,5 +1,7 @@
 package com.minhtuan.commercemanager.services.ServicesImpl;
 
+import com.minhtuan.commercemanager.dto.OrderDetailDTO;
+import com.minhtuan.commercemanager.maper.OrderDetailMapper;
 import com.minhtuan.commercemanager.message.request.OrderDetailRequest;
 import com.minhtuan.commercemanager.model.Order;
 import com.minhtuan.commercemanager.model.OrderDetail;
@@ -11,6 +13,9 @@ import com.minhtuan.commercemanager.repository.ProductDetailRepository;
 import com.minhtuan.commercemanager.services.OrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService {
@@ -24,6 +29,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Autowired
     private OrderDetailRepository orderDetailRepository;
 
+    @Autowired
+    private OrderDetailMapper orderDetailMapper;
+
     @Override
     public void save(OrderDetailRequest orderDetailRequest) {
         OrderDetail orderDetail = new OrderDetail();
@@ -33,6 +41,16 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         orderDetail.setProductDetail(productDetail);
         orderDetail.setPrice(orderDetailRequest.getPrice());
         orderDetail.setQuantity(orderDetailRequest.getQuantity());
+        orderDetail.setDiscount(orderDetailRequest.getDiscount());
+        System.out.println(orderDetail.getDiscount());
         orderDetailRepository.save(orderDetail);
+    }
+
+    @Override
+    public List<OrderDetailDTO> getOrderDetailsByOrderId(String orderId) {
+        Order order = orderRepository.findOrderByOrderId(orderId);
+        List<OrderDetail> orderDetailList = orderDetailRepository.findAllByOrderOrderByOrderDetailIdDesc(order);
+        List<OrderDetailDTO> orderDetailDTOList = orderDetailList.stream().map(orderDetail -> orderDetailMapper.toDTO(orderDetail)).collect(Collectors.toList());
+        return orderDetailDTOList;
     }
 }

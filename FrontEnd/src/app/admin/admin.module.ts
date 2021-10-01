@@ -17,7 +17,25 @@ import { AddInventoryReceivingVoucherDetailComponent } from './add-inventory-rec
 import { ListProviderComponent } from './provider/list-provider/list-provider.component';
 import { ProductComponent } from './product/list_product/product.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
-
+import { OrdersComponent } from './orders/orders.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { CustomerComponent } from './customer/customer.component';
+import { AccumulationAnnotationService, AccumulationChartModule, AccumulationDataLabelService, AccumulationLegendService, AccumulationTooltipService, CategoryService, ChartAnnotationService, ChartModule, ColumnSeriesService, DataLabelService, DateTimeService, LegendService, LineSeriesService, MultiColoredLineSeriesService, ParetoSeriesService, PieSeriesService, RangeColumnSeriesService, ScrollBarService, SplineAreaSeriesService, SplineSeriesService, StackingColumnSeriesService, StackingLineSeriesService, StepLineSeriesService, TooltipService } from '@syncfusion/ej2-angular-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import { SearchfilterPipe } from './searchfilter.pipe';
+import { SearchEmployeeFilterPipe } from './search-employee-filter.pipe';
+import { SearchEmployeeNameFilterPipe } from './search-employee-name-filter.pipe';
+import { SearchCustomerNamePipe } from './search-customer-name.pipe';
+import { RevenueComponent } from './revenue/revenue.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { SearchProviderFilterPipe } from './search-provider-filter.pipe';
+import { SearchProviderNameFilterPipe } from './search-provider-name-filter.pipe';
+import { SearchCategoryIdFilterPipe } from './search-category-id-filter.pipe';
+import { SearchCategoryNameFilterPipe } from './search-category-name-filter.pipe';
+import { SearchRoomFilterPipe } from './search-room-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -33,16 +51,37 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
     ProductComponent,
     ListProviderComponent,
     ProductDetailComponent,
+    OrdersComponent,
+    EmployeeComponent,
+    CustomerComponent,
+    SearchfilterPipe,
+    SearchEmployeeFilterPipe,
+    SearchEmployeeNameFilterPipe,
+    SearchCustomerNamePipe,
+    RevenueComponent,
+    SearchProviderFilterPipe,
+    SearchProviderNameFilterPipe,
+    SearchCategoryIdFilterPipe,
+    SearchCategoryNameFilterPipe,
+    SearchRoomFilterPipe,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     NgxPaginationModule, 
     Ng2SearchPipeModule,
+    AccumulationChartModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    ChartModule,
+    BrowserModule
   ],
-  providers: [],
+  providers: [PieSeriesService, AccumulationDataLabelService, AccumulationLegendService, AccumulationTooltipService, AccumulationAnnotationService, ColumnSeriesService, CategoryService, LineSeriesService, StepLineSeriesService, SplineSeriesService, StackingLineSeriesService, DateTimeService,
+    SplineAreaSeriesService, MultiColoredLineSeriesService, ParetoSeriesService, LegendService, TooltipService, DataLabelService, RangeColumnSeriesService, StackingColumnSeriesService, ScrollBarService, ChartAnnotationService],
   bootstrap: [AdminComponent]
 })
 export class AdminModule { }

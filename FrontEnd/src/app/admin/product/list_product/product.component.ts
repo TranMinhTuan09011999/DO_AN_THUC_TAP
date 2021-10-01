@@ -22,8 +22,17 @@ export class ProductComponent implements OnInit {
   providers: Array<Provider> = [];
   categories: Array<Category> = [];
   products: Array<Product> = [];
+  searchValue!: string;
   dataForm!: FormGroup;
   submitted = false;
+  product!: Product;
+  config: any;
+  public productId!: any;
+  productIdSearch: string = '';
+  productNameSearch: string = '';
+  categoryIdSearch: string = '';
+  providerIdSearch: string = '';
+  statusSearch: number = -1;
 
   constructor(private router: Router, private fb: FormBuilder, private activeService: ActiveService, private tokenStorageService: TokenStorageService, private providerService: ProviderService, private categoryService: CategoryService,private productService: ProductService) { }
 
@@ -45,7 +54,35 @@ export class ProductComponent implements OnInit {
     })
   }
 
+  resetForm(){
+    this.infoForm();
+  }
+
   get f() { return this.dataForm.controls; }
+
+  showEditProduct(productId: string){
+    this.token = this.tokenStorageService.getToken();
+    this.productId = productId;
+    this.productService.getProductByProductId(this.token, productId)
+        .subscribe(
+          (data: Product) => {
+            this.product = data;
+            this.patchValue();
+          },
+          error => {
+            console.log(error);
+          });
+  }
+
+  patchValue(){
+    this.dataForm.patchValue({
+      productName: this.product.productName,
+      status: this.product.status,
+      description: this.product.description,
+      providerId: this.product.providerDTO.providerId,
+      categoryId: this.product.categoryDTO.categoryId
+    })
+  }
 
   getProvider(){
     this.token = this.tokenStorageService.getToken();
@@ -82,6 +119,28 @@ export class ProductComponent implements OnInit {
     this.addProduct();
   }
 
+  onSubmit1(){
+    this.submitted = true;
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    if(this.dataForm.invalid){
+      console.log("aaa");
+      return;
+    }
+    this.updateProduct();
+  }
+
+  updateProduct(){
+    this.token = this.tokenStorageService.getToken();
+    this.productService.updateProduct(this.token, this.productId, this.dataForm.value)
+          .subscribe(
+            (data: Product) => {
+              this.reloadPage();
+            },
+            error => {
+              console.log(error);
+            });
+  }
+
   getProduct(){
     this.token = this.tokenStorageService.getToken();
     this.productService.getProduct(this.token)
@@ -92,6 +151,12 @@ export class ProductComponent implements OnInit {
           error => {
             console.log(error);
           });
+
+          this.config = {
+            itemsPerPage: 5,
+            currentPage: 1,
+            totalItems: this.products.values.length
+        };
   }
 
   addProduct(){
@@ -109,6 +174,24 @@ export class ProductComponent implements OnInit {
 
   toProductDetail(productId: string){
     this.router.navigate(['admin/product/' + productId]).then(this.reloadPage);
+  }
+
+  pageChanged(event: any){
+    this.config.currentPage = event;
+  }
+
+  search(){
+    this.token = this.tokenStorageService.getToken();
+    console.log(this.productIdSearch);
+    console.log(this.productNameSearch);
+    this.productService.getProductSearch(this.token, this.productIdSearch, this.productNameSearch, this.categoryIdSearch, this.providerIdSearch, this.statusSearch)
+      .subscribe(
+        (data: Product[]) => {
+          this.products = data;
+        },
+        error => {
+          console.log(error);
+        });
   }
 
   reloadPage(): void {

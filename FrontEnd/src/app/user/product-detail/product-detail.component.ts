@@ -12,6 +12,12 @@ import { ColorService } from 'src/app/service/color.service';
 import { PageService } from 'src/app/service/page.service';
 import { ProductDetailService } from 'src/app/service/product-detail.service';
 import { SizeService } from 'src/app/service/size.service';
+import { formatDate, PlatformLocation } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { CategoryService } from 'src/app/service/category.service';
+import { Category } from 'src/app/model/category';
+import { Room } from 'src/app/model/room';
+import { RoomService } from 'src/app/service/room.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -34,8 +40,16 @@ export class ProductDetailComponent implements OnInit {
   productDetailId!: number;
   qtyAddedToCart = 0;
   quantity: number = 1;
+  jstoday = '';
+  categories: Array<Category> = [];
+  rooms: Array<Room> = [];
 
-  constructor(private cart: CartService, private router:Router, private colorService: ColorService, private sizeService: SizeService, private pageService: PageService, private route: ActivatedRoute, private productDetailService: ProductDetailService) { }
+  constructor(location: PlatformLocation, private roomService: RoomService, private categoryService: CategoryService, private translate: TranslateService, private cart: CartService, private router:Router, private colorService: ColorService, private sizeService: SizeService, private pageService: PageService, private route: ActivatedRoute, private productDetailService: ProductDetailService) {
+    translate.setDefaultLang('vn');
+    location.onPopState(() => {
+      this.reloadPage();
+    });  
+   }
 
   ngOnInit(): void {
     this.pageService.changePage(this.page);
@@ -47,13 +61,21 @@ export class ProductDetailComponent implements OnInit {
       this.sizeId = params['sizeId'];
      });
      this.getProductDetailWithProductIdAndColorIdAndSizeId();
+     this.getCategory();
+     this.getRoom();
+     //this.getColorByProductIdAndSizeId();
+     //this.getColorIdBySizeId(this.sizeId);
   }
 
   getProductDetailWithProductIdAndColorIdAndSizeId(){
     this.productDetailService.getProducDetailWithProductIdAndColorIdAndSizeId(this.productId, this.colorId, this.sizeId)
     .subscribe(
       (data: ProductWithRoomIdAndCategoryId[]) => {
+        console.log(data);
         this.product = data[0];
+        let today= new Date();
+        this.jstoday = formatDate(today, 'yyyy-MM-dd HH:mm:ss', 'en-VN');
+        console.log(this.jstoday);
         this.getColorByProductIdAndSizeId();
         this.getSizeByProductId();
       },
@@ -139,6 +161,65 @@ export class ProductDetailComponent implements OnInit {
     if(this.quantity > 1){
       this.quantity--;
     }
+  }
+
+  compareDate(dateOfBegin: string, dateOfEnd: string, today:string):number{
+    let date = new Date(dateOfBegin);
+    let date1 = new Date(dateOfEnd);
+    let date2 = new Date(today);
+    console.log(date);
+    console.log(date1);
+    console.log(date2);
+    if(date < date2 && date1 > date2){
+      return 1;
+    }
+    return 0;
+  }
+
+  compareDateOfBeginAndToday(dateOfBegin: string, today:string):number{
+    let date = Date.parse(dateOfBegin);
+    let date1 = Date.parse(today);
+    if(date < date1){
+      return 1;
+    }
+    return 0;
+  }
+
+  compareDateOfEndAndToday(dateOfEnd: string, today:string):number{
+    let date = Date.parse(dateOfEnd);
+    let date1 = Date.parse(today);
+    if(date > date1){
+      return 1;
+    }
+    return 0;
+  }
+
+  toProductGrid(room: string, categoryName: string, roomId: number, categoryId: string){
+    this.router.navigate(['/product-grid/' + room + "/" + categoryName], { queryParams: { roomId: roomId, categoryId: categoryId } }).then(this.reloadPage);
+  }
+
+  getCategory(){
+    this.categoryService.getCategoryCustomer()
+        .subscribe(
+          (data: Category[]) => {
+            this.categories = data;
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+            console.log(this.categories);
+          },
+          error => {
+            console.log(error);
+          });
+  }
+
+  getRoom(){
+    this.roomService.getRoom()
+      .subscribe(
+        (data) => {
+          this.rooms = data;
+        },
+        error => {
+          console.log(error);
+        });
   }
 
 }

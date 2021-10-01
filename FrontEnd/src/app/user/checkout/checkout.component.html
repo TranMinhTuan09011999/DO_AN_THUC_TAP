@@ -7,12 +7,12 @@
                     <ol>
                         <li>
                             <a href="#">
-                                <span>Home</span>
+                                <span>{{'ORDER.HOME' | translate}}</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <span>Checkout</span>
+                                <span>{{'ORDER.ORDER' | translate}}</span>
                             </a>
                         </li>
                     </ol>
@@ -30,7 +30,7 @@
                                 <div class="col-md-6 check-info">
                                     <div class="checkout-personal-step">
                                         <h3 class="step-title h3 info">
-                                            RECEIVER INFORMATION
+                                            {{'ORDER.INFORMATION' | translate}}
                                         </h3>
                                     </div>
                                     <div class="content" style="width: 520px;padding-left: 0rem;">
@@ -39,28 +39,28 @@
                                                 <form action="#" id="customer-form" class="js-customer-form" [formGroup]="this.dataForm" (ngSubmit)="onSubmit()">
                                                     <div>
                                                         <div class="form-group row">
-                                                            <input class="form-control" name="firstname" type="text" placeholder="First name" formControlName="firstnameOfReveiver">
+                                                            <input class="form-control" name="firstname" type="text" placeholder="{{'ORDER.FIRSTNAME' | translate}}" formControlName="firstnameOfReveiver">
                                                             <div *ngIf="submitted && f.firstnameOfReveiver.errors">
-                                                                <div *ngIf="f.firstnameOfReveiver.errors.required" class="errors"> * Firstname of receiver is required</div>
+                                                                <div *ngIf="f.firstnameOfReveiver.errors.required" class="errors"> * {{'ORDER.REQUIREDFIRSTNAME' | translate}}</div>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <input class="form-control" name="lastname" type="text" placeholder="Last name" formControlName="lastnameOfReveiver">
+                                                            <input class="form-control" name="lastname" type="text" placeholder="{{'ORDER.LASTNAME' | translate}}" formControlName="lastnameOfReveiver">
                                                             <div *ngIf="submitted && f.lastnameOfReveiver.errors">
-                                                                <div *ngIf="f.lastnameOfReveiver.errors.required" class="errors"> * Lastname of receiver is required</div>
+                                                                <div *ngIf="f.lastnameOfReveiver.errors.required" class="errors"> * {{'ORDER.REQUIREDLASTNAME' | translate}}</div>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <input class="form-control" name="address" type="text" placeholder="Address" formControlName="addressOfReceiver">
+                                                            <input class="form-control" name="address" type="text" placeholder="{{'ORDER.ADDRESS' | translate}}" formControlName="addressOfReceiver">
                                                             <div *ngIf="submitted && f.addressOfReceiver.errors">
-                                                                <div *ngIf="f.addressOfReceiver.errors.required" class="errors"> * Address of receiver is required</div>
+                                                                <div *ngIf="f.addressOfReceiver.errors.required" class="errors"> * {{'ORDER.REQUIREDADDRESS' | translate}}</div>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <input class="form-control" name="phone" type="text" placeholder="Phone" formControlName="phoneOfReceiver">
+                                                            <input class="form-control" name="phone" type="text" placeholder="(+84)" formControlName="phoneOfReceiver">
                                                             <div *ngIf="submitted && f.phoneOfReceiver.errors">
-                                                                <div *ngIf="f.phoneOfReceiver.errors.required" class="errors"> * Email is required</div>
-                                                                <div *ngIf="f.phoneOfReceiver.errors.pattern" class="errors"> * Format email is wrong (Ex: 0377730290)</div>
+                                                                <div *ngIf="f.phoneOfReceiver.errors.required" class="errors"> * {{'ORDER.REQUIREDPHONE' | translate}}</div>
+                                                                <div *ngIf="f.phoneOfReceiver.errors.pattern" class="errors"> * {{'ORDER.PHONE10' | translate}}</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -68,7 +68,7 @@
                                                         <div class="row">
                                                             <input type="hidden" name="submitCreate" value="1">
                                                             <button class="continue btn btn-primary pull-xs-right" name="continue" data-link-action="register-new-customer" type="submit" value="1">
-                                                                Continue
+                                                                {{'ORDER.ORDER1' | translate}}
                                                             </button>
                                                         </div>
                                                     </div>
@@ -81,75 +81,60 @@
                                     <div class="cart-summary">
                                         <div class="cart-detailed-totals">
                                             <div class="cart-summary-products">
-                                                <div class="summary-label">There are {{totalItems}} item in your cart</div>
+                                                <div class="summary-label">{{'CART.There are' | translate}} {{totalItems}} {{'CART.Item' | translate}}</div>
                                             </div>
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th class="cart-product-name">Product</th>
-                                                        <th class="cart-product-name">Quantity</th>
-                                                        <th class="cart-product-total text-right">Total</th>
+                                                        <th class="cart-product-name">{{'ORDER.PRODUCT' | translate}}</th>
+                                                        <th class="cart-product-name" style="width: 100px">{{'ORDER.QTY' | translate}}</th>
+                                                        <th class="cart-product-total text-right" style="width: 100px">{{'ORDER.TOTAL' | translate}}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody *ngFor="let item of items">
                                                     <tr class="cart_item">
                                                         <td class="cart-product-name">
-                                                            <span class="label">Name: </span>
-                                                            <span class="label">{{item.productDetail.productName}} </span>
+                                                            <span class="label">{{'ORDER.NAME' | translate}}: </span>
+                                                            <span class="label">{{('PRODUCT.' + item.productDetail?.productName) | translate}} </span>
                                                             <br>
-                                                            <span class="label">Size: </span>
+                                                            <div class="product-line-info product-price" *ngIf="item.productDetail.percent > 0">
+                                                                <span class="label">{{'ORDER.PRICE' | translate}}: </span>
+                                                                <span class="value">{{item.productDetail.price - item.productDetail.price*item.productDetail.percent/100 | currency: "VND"}}</span>
+                                                                <del class="regular-price" style="margin-left: 0.5rem;
+                                                                color: #a99292;">{{item.productDetail?.price | currency: "VND"}}</del>
+                                                            </div>
+                                                            <div class="product-line-info product-price" *ngIf="item.productDetail.percent == 0">
+                                                                <span class="label">{{'ORDER.PRICE' | translate}}: </span>
+                                                                <span class="value">{{item.productDetail?.price | currency: "VND"}}</span>
+                                                            </div>
+                                                            <span class="label">{{'ORDER.SIZE' | translate}}: </span>
                                                             <span class="label">{{item.productDetail.size}} </span>
                                                             <br>
-                                                            <span class="label">Color: </span>
-                                                            <span class="label">{{item.productDetail.colorName}} </span>
+                                                            <span class="label">{{'ORDER.COLOR' | translate}}: </span>
+                                                            <span class="label">{{('COLOR.' + item.productDetail.colorName) | translate}} </span>
                                                         </td>
                                                         <td class="cart-product-total text-center"><span class="amount">x{{item.quantity}}</span></td>
-                                                        <td class="cart-product-total text-right"><span class="amount">£{{item.productDetail.price*item.quantity}}</span></td>
+                                                        <td class="cart-product-total text-right" *ngIf="item.productDetail.percent == 0"><span class="amount">{{item.productDetail.price*item.quantity | currency: "VND"}}</span></td>
+                                                        <td class="cart-product-total text-right" *ngIf="item.productDetail.percent > 0"><span class="amount">{{(item.productDetail.price - item.productDetail.price*item.productDetail.percent/100)*item.quantity | currency: "VND"}}</span></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                             <div class="cart-summary-line" id="cart-subtotal-products">
                                                 <span class="label js-subtotal">
-                                                    Cart Subtotal:
+                                                    {{'ORDER.Cart Subtotal' | translate}}:
                                                 </span>
-                                                <span class="value float-right">£{{totalPrice}}</span>
+                                                <span class="value float-right">{{totalPrice | currency: "VND"}}</span>
                                             </div>
                                             <div class="cart-summary-line" id="cart-subtotal-shipping">
                                                 <span class="label">
-                                                    Total Shipping:
+                                                    {{'ORDER.TOTALSHIP' | translate}}:
                                                 </span>
-                                                <span class="value float-right">Free</span>
+                                                <span class="value float-right">{{'ORDER.FREE' | translate}}</span>
                                                 <div>
                                                     <small class="value"></small>
                                                 </div>
                                             </div>
-                                            <div class="cart-summary-line cart-total">
-                                                <span class="label">Order Total: </span>
-                                                <span class="value float-right">£200.00 (tax incl.)</span>
-                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="block-reassurance">
-                                        <ul>
-                                            <li>
-                                                <div class="block-reassurance-item">
-                                                    <img src="assets/img/product/check1.png" alt="Security policy (edit with Customer reassurance module)">
-                                                    <span>Security policy (edit with Customer reassurance module)</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="block-reassurance-item">
-                                                    <img src="assets/img/product/check2.png" alt="Delivery policy (edit with Customer reassurance module)">
-                                                    <span>Delivery policy (edit with Customer reassurance module)</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="block-reassurance-item">
-                                                    <img src="assets/img/product/check3.png" alt="Return policy (edit with Customer reassurance module)">
-                                                    <span>Return policy (edit with Customer reassurance module)</span>
-                                                </div>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>

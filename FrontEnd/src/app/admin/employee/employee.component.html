@@ -1,0 +1,248 @@
+<!-- main content -->
+<div class="page-wrapper">
+    <div class="main-content" id="cart" style="padding-top: 3rem;">
+        <!-- main -->
+        <div id="wrapper-site">
+            <div class="page">
+                <div class="section-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h2>NHÂN VIÊN</h2>
+                                    </div>
+                                    <div class="header-action d-md-flex">
+                                        <div class="input-group mr-2">
+                                            <input type="text" class="form-control" placeholder="Search employee id..." [(ngModel)]="searchValue">
+                                        </div>
+                                        <div class="input-group mr-2">
+                                            <input type="text" class="form-control" placeholder="Search Name..." [(ngModel)]="searchValueName">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();addEmployee(mymodal);"><i class="fa fa-plus"></i> Thêm nhân viên</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-body mt-3">
+                    <div class="container-fluid">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Mã nhân viên</th>
+                                                                <th>Họ tên nhân viên</th>
+                                                                <th class="w50">Giới tính</th>
+                                                                <th class="w100">Ngày sinh</th>
+                                                                <th class="w100">Địa chỉ</th>
+                                                                <th class="w100">Số điện thoại</th>
+                                                                <th class="w100">Email</th>
+                                                                <th>Chức năng</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let employee of employees | paginate: config | searchEmployeeFilter: searchValue | searchEmployeeNameFilter: searchValueName">
+                                                                <td>{{employee.id}}</td>
+                                                                <td>{{employee.lastname}} {{employee.firstname}}</td>
+                                                                <td *ngIf="employee.gender == 0">Male</td>
+                                                                <td *ngIf="employee.gender == 1">Female</td>
+                                                                <td>{{employee.birthday}}</td>
+                                                                <td>{{employee.address}}</td>
+                                                                <td>{{employee.phone}}</td>
+                                                                <td>{{employee.email}}</td>
+                                                                <td class="text-right">
+                                                                    <div class="dropdown dropdown-action">
+                                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                                            <a class="dropdown-item" href="edit-expense.html"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_expense" (click)="$event.preventDefault();getEmployeeId(mymodal1, employee.id);"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <pagination-controls (pageChange)="pageChanged($event)" style="text-align: right;"></pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-wrapper" id="exampleModalCenter" *ngIf="show == true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h1 class="text-center title-page">Tạo Nhân Viên</h1>
+                <form action="#" id="customer-form" class="js-customer-form" [formGroup]="this.dataForm" (ngSubmit)="onSubmit()">
+                    <div>
+                        <div class="form-group">
+                            <div>
+                                <input class="form-control" name="email" type="email" placeholder="Email" formControlName="email">
+                            </div>
+                            <div *ngIf="submitted && f.email.errors">
+                                <div *ngIf="f.email.errors.required" class="errors"> * Vui lòng nhập email</div>
+                                <div *ngIf="f.email.errors.pattern" class="errors"> * Email không đúng định dạng (Ex: tmtuan@gmail.com)</div>
+                                <div *ngIf="f.email.errors.emailExists" class="errors"> * Email đã tồn tại rồi</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input class="form-control" name="firstname" type="text" placeholder="First name" formControlName="firstname">
+                            </div>
+                            <div *ngIf="submitted && f.firstname.errors">
+                                <div *ngIf="f.firstname.errors.required" class="errors"> * Vui lòng nhập tên</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input class="form-control" name="lastname" type="text" placeholder="Last name" formControlName="lastname">
+                            </div>
+                            <div *ngIf="submitted && f.lastname.errors">
+                                <div *ngIf="f.lastname.errors.required" class="errors"> * Vui lòng nhập họ</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio1">
+                                              <input type="radio" class="form-check-input" id="radio1" name="gender" value="0" formControlName="gender" checked>Nam
+                                            </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio2">
+                                              <input type="radio" class="form-check-input" id="radio2" name="gender" value="1" formControlName="gender">Nữ
+                                            </label>
+                            </div>
+                            <div *ngIf="submitted && f.gender.errors">
+                                <div *ngIf="f.gender.errors.required" class="errors"> * Vui lòng chọn giới tính</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="phone" style="display: flex">
+                                <button type="button" class="btn btn-default" aria-expanded="false"><span class="type-text">Phone</span> </button>
+                                <input type="text" name="phone" class="form-control" placeholder="(+84)" formControlName="phone" />
+                            </div>
+                            <div *ngIf="submitted && f.phone.errors">
+                                <div *ngIf="f.phone.errors.required" class="errors"> * Vui lòng nhập số điện thoại</div>
+                                <div *ngIf="f.phone.errors.pattern" class="errors"> * Số điện thoại phải là 10 số (Ex: 0377730290)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group phone">
+                                <button type="button" class="btn btn-default" aria-expanded="false"><span class="type-text">Ngày sinh</span> </button>
+                                <input type="date" class="form-control" id="birthday" name="birthday" [ngModel]="birthday | date:'yyyy-MM-dd'" formControlName="birthday">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input class="form-control" name="Address" type="text" placeholder="Address" formControlName="address">
+                            </div>
+                            <div *ngIf="submitted && f.address.errors">
+                                <div *ngIf="f.address.errors.required" class="errors"> * Vui lòng nhập địa chỉ</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <div class="input-group js-parent-focus">
+                                    <input class="form-control js-child-focus js-visible-password" name="password" type="password" placeholder="Password" formControlName="password">
+                                </div>
+                                <div *ngIf="submitted && f.password.errors">
+                                    <div *ngIf="f.password.errors.required" class="errors"> * Vui lòng nhập mật khẩu</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <div class="input-group js-parent-focus">
+                                    <input class="form-control js-child-focus js-visible-password" name="repeat password" type="password" placeholder="Repeat Password" formControlName="pwdd">
+                                </div>
+                                <div *ngIf="submitted && f.pwdd.errors">
+                                    <div *ngIf="f.pwdd.errors.required" class="errors"> * Vui lòng nhập lại mật khẩu</div>
+                                    <div *ngIf="f.pwdd.errors?.MustMatch" class="errors"> * Mật khẩu không trùng!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div>
+                            <button class="btn btn-primary" data-link-action="sign-in" type="submit">
+                                            Tạo tài khoản
+                                        </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header" style="background-color: #2661e4;
+    height: 3.4rem;">
+        <h4 class="modal-title" id="modal-basic-title" style="color: #fff;
+        font-size: 1.1rem;">Message</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true" style="color: #fff;">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        {{message}}
+    </div>
+    <div class="modal-footer" style="height: 3rem;">
+        <button style="background-color: #0678ec;
+        color: #fff;
+        border: none;" type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+    </div>
+</ng-template>
+
+<ng-template #mymodal1 let-modal>
+    <div class="modal-header" style="background-color: #2661e4;
+    height: 3.4rem;">
+        <h4 class="modal-title" id="modal-basic-title" style="color: #fff;
+        font-size: 1.1rem;">Message</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true" style="color: #fff;">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        {{message1}}
+    </div>
+    <div class="modal-footer" style="height: 3rem;">
+        <button style="background-color: #0678ec;
+        color: #fff;
+        border: none;" type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+    </div>
+</ng-template>
+
+<div id="delete_expense" class="modal fade delete-modal" role="dialog" *ngIf="mess == true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="assets/admin/img/sent.png" alt="" width="50" height="46">
+                <h3>Bạn có chắc chắn xóa nhân viên này không?</h3>
+                <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Đóng</a>
+                    <button type="submit" class="btn btn-danger" (click)="deleteEmployee();">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

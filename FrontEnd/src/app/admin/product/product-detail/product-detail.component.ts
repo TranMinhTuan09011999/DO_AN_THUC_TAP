@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Color } from 'src/app/model/color';
 import { ProductDetail } from 'src/app/model/product-detail';
 import { Size } from 'src/app/model/size';
+import { CartResponse } from 'src/app/response/cart-response';
 import { ColorService } from 'src/app/service/color.service';
 import { ProductDetailService } from 'src/app/service/product-detail.service';
 import { SizeService } from 'src/app/service/size.service';
@@ -16,7 +17,7 @@ import { TokenStorageService } from 'src/app/service/token-storage.service';
 })
 export class ProductDetailComponent implements OnInit {
 
-  productId: String = '';
+  productId: string = '';
   token: any;
   sizes: Array<Size> = [];
   colors: Array<Color> = [];
@@ -25,8 +26,15 @@ export class ProductDetailComponent implements OnInit {
   public message!: string;
   public imagePath: any;
   dataForm!: FormGroup;
+  dataForm1!: FormGroup;
   submitted = false;
+  submitted1 = false;
   productDetails: Array<ProductDetail> = [];
+  public productDetailId!: any;
+  public productDetail!: ProductDetail;
+  hasImage = false;
+  sizeId = 0; 
+  colorId = 0;
 
   constructor(private productDetailService: ProductDetailService, private fb: FormBuilder, private router : Router, private route: ActivatedRoute, private sizeService: SizeService, private tokenStorageService: TokenStorageService, private colorService: ColorService) { }
 
@@ -36,6 +44,7 @@ export class ProductDetailComponent implements OnInit {
     this.getSize();
     this.getColor();
     this.infoForm();
+    this.infoForm1();
   }
 
   infoForm(){
@@ -44,12 +53,40 @@ export class ProductDetailComponent implements OnInit {
       price:  ['', [Validators.required]],
       sizeId:  ['', [Validators.required]],
       colorId:  ['', [Validators.required]],
+      discount:  0,
       productId: this.productId,
       image: [],
     })
   }
 
+  infoForm1(){
+    this.dataForm1 = this.fb.group({
+      quantity: ['', [Validators.required]],  
+      price:  ['', [Validators.required]],
+      sizeId:  ['', [Validators.required]],
+      colorId:  ['', [Validators.required]],
+      discount:  ['', [Validators.required]],
+      productId: this.productId,
+      image: [],
+    })
+  }
+
+  search(){
+    console.log(this.sizeId);
+    console.log(this.colorId);
+    this.token = this.tokenStorageService.getToken();
+    this.productDetailService.getProductDetailBySearch(this.token, this.productId, this.sizeId, this.colorId)
+          .subscribe(
+            (data: ProductDetail[]) => {
+              this.productDetails = data;
+            },
+            error => {
+              console.log(error);
+            });
+  }
+
   get f() { return this.dataForm.controls; }
+  get f1() { return this.dataForm1.controls; }
 
   onSubmit(): void {
     this.submitted = true;
@@ -57,6 +94,74 @@ export class ProductDetailComponent implements OnInit {
       return;
     }
     this.addProductDetail();
+  }
+
+  onSubmit1(){
+    this.submitted1 = true;
+    if(this.dataForm1.invalid){
+      return;
+    }
+    if(this.hasImage == false)
+    {
+      this.updateProductDetailWithoutImage();
+    }else{
+      this.updateProductDetail();
+    }
+  }
+
+  showEditProductDetail(productDetailId: number){
+    this.token = this.tokenStorageService.getToken();
+    this.productDetailId = productDetailId;
+    this.productDetailService.getProductDetailWithProductDetailId(this.productDetailId)
+        .subscribe(
+          (data: ProductDetail) => {
+            this.productDetail = data;
+            console.log(this.productDetail)
+            this.patchValue();
+          },
+          error => {
+            console.log(error);
+          });
+  }
+
+  updateProductDetailWithoutImage(){
+    this.token = this.tokenStorageService.getToken();
+    this.productDetailService.updateProductDetailWithoutImage(this.token, this.productDetailId, this.dataForm1.value)
+          .subscribe(
+            (data) => {
+              this.reloadPage();
+            },
+            error => {
+              console.log(error);
+            });
+  }
+
+  updateProductDetail(){
+    this.token = this.tokenStorageService.getToken();
+    const productDetail = this.dataForm1.value;
+    console.log(productDetail);
+    const formData = new FormData();
+    formData.append('productDetail',JSON.stringify(productDetail));
+    formData.append('file',this.imageFile);
+    this.productDetailService.updateProductDetail(this.token, this.productDetailId, formData)
+          .subscribe(
+            (data) => {
+              this.reloadPage();
+            },
+            error => {
+              console.log(error);
+            });
+  }
+
+  patchValue(){
+    this.dataForm1.patchValue({
+      quantity: this.productDetail.quantity,
+      price: this.productDetail.price,
+      sizeId: this.productDetail.size.sizeId,
+      colorId: this.productDetail.color.colorId,
+      discount: this.productDetail.discount,
+      image: this.productDetail.image
+    })
   }
 
   addProductDetail() {
@@ -119,6 +224,7 @@ export class ProductDetailComponent implements OnInit {
         this.imgURL = reader.result;
         console.log(this.imgURL);
       }
+      this.hasImage = true;
     }
   }
 
@@ -127,6 +233,7 @@ export class ProductDetailComponent implements OnInit {
     this.productDetailService.getProductDetail(this.token, productId)
         .subscribe(
           (data: ProductDetail[]) => {
+            console.log(data);
             this.productDetails = data;
           },
           error => {

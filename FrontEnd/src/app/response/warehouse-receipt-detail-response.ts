@@ -1,5 +1,6 @@
 export class WarehouseReceiptDetailResponse {
-    productId!: string;
+    productDetailId!: number;
+    productName!: string;
     size!: string;
     color!: string;
     quantity!: number;

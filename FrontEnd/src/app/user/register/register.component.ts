@@ -9,6 +9,8 @@ import { delay, map, switchMap } from 'rxjs/operators';
 import { ClassBodyService } from 'src/app/service/class-body.service';
 import { CountService } from 'src/app/service/count.service';
 import { PageService } from 'src/app/service/page.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-register',
@@ -24,9 +26,12 @@ export class RegisterComponent implements OnInit {
   page: number = 1;
   submitted = false;
   birthday!:Date;
+  message!: string;
+  closeResult!: string;
 
-
-  constructor(private fb: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService, private router:Router, private userService: UserService, private classBodyService: ClassBodyService, private pageService: PageService) { }
+  constructor(private modalService: NgbModal, private translate: TranslateService, private fb: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService, private router:Router, private userService: UserService, private classBodyService: ClassBodyService, private pageService: PageService) {
+    translate.setDefaultLang('vn');
+   }
   
   ngOnInit(): void {
     this.classBodyService.changeClass(this.classBody);
@@ -56,19 +61,39 @@ export class RegisterComponent implements OnInit {
 
   get f() { return this.dataForm.controls; }
 
-  onSubmit() {
+  onSubmit(content:any) {
     this.submitted = true;
     const val = this.dataForm.value;
-    console.log(val);
-    this.addData();
+    if(this.dataForm.invalid){
+      return;
+    }
+    this.addData(content);
   }
 
-  addData() {
+  addData(content:any) {
     this.authService.register(this.dataForm.value, this.role).
     subscribe( (data: any) => {
-      console.log("Registion success");
-      this.router.navigate(['/login']).then(this.reloadPage);
+      this.message = 'Register Account Successlly!!!';
+          this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+            this.router.navigate(['/login']).then(this.reloadPage);
+            console.log(this.closeResult);
+          }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            console.log(this.closeResult);
+          });
+          return;
     });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 
   private emailExistsValidator(): AsyncValidatorFn {

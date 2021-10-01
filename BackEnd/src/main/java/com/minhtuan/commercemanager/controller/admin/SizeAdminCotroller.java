@@ -21,14 +21,14 @@ public class SizeAdminCotroller {
     SizeService sizeService;
 
     @GetMapping("/size")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getSize() {
         List<SizeDTO> sizeDTOList = sizeService.getAllSize();
         return ResponseEntity.ok().body(sizeDTOList);
     }
 
     @GetMapping("/size/{sizeId}")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getSizeBySizeId(@PathVariable(value = "sizeId") Integer sizeId) {
         SizeDTO sizeDTO = sizeService.getSizeBySizeId(sizeId);
         return ResponseEntity.ok().body(sizeDTO);

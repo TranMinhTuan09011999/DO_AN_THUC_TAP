@@ -4,4 +4,5 @@ export class Provider {
     providerAddress!: string;
     providerEmail!: string;
     providerPhone!: string;
+    status!: number;
 }

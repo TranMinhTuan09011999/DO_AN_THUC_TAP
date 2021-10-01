@@ -1,0 +1,98 @@
+<!-- main content -->
+<div class="page-wrapper">
+    <div class="main-content" id="cart" style="padding-top: 3rem;">
+        <!-- main -->
+        <div id="wrapper-site">
+            <div class="page">
+                <div class="section-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h2>KHÁCH HÀNG</h2>
+                                    </div>
+                                    <div class="header-action d-md-flex">
+                                        <div class="input-group mr-2">
+                                            <input type="text" class="form-control" placeholder="Search customer id..." [(ngModel)]="searchValue">
+                                        </div>
+                                        <div class="input-group mr-2">
+                                            <input type="text" class="form-control" placeholder="Search name..." [(ngModel)]="searchValueName">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-body mt-3">
+                    <div class="container-fluid">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Mã nhân viên</th>
+                                                                <th>Họ tên nhân viên</th>
+                                                                <th class="w50">Giới tính</th>
+                                                                <th class="w100">Ngày sinh</th>
+                                                                <th class="w100">Địa chỉ</th>
+                                                                <th class="w100">Số điện thoại</th>
+                                                                <th class="w100">Email</th>
+                                                                <th>Chức năng</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let customer of customers | paginate: config | searchfilter: searchValue | searchCustomerName: searchValueName">
+                                                                <td>{{customer.id}}</td>
+                                                                <td>{{customer.lastname}} {{customer.firstname}}</td>
+                                                                <td *ngIf="customer.gender == 0">Male</td>
+                                                                <td *ngIf="customer.gender == 1">Female</td>
+                                                                <td>{{customer.birthday}}</td>
+                                                                <td>{{customer.address}}</td>
+                                                                <td>{{customer.phone}}</td>
+                                                                <td>{{customer.email}}</td>
+                                                                <td class="text-right">
+                                                                    <div class="dropdown dropdown-action">
+                                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_expense" (click)="$event.preventDefault();getCustomerId(customer.id);"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <pagination-controls (pageChange)="pageChanged($event)" style="text-align: right;"></pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="delete_expense" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="assets/admin/img/sent.png" alt="" width="50" height="46">
+                <h3>Bạn có chắc chắn xóa khách hàng này</h3>
+                <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <button type="submit" class="btn btn-danger" (click)="deleteCustomer();">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,151 @@
+<!-- main content -->
+<div class="main-content">
+    <div class="wrap-banner">
+
+        <!-- breadcrumb -->
+        <nav class="breadcrumb-bg">
+            <div class="container no-index">
+                <div class="breadcrumb">
+                    <ol>
+                        <li>
+                            <a href="#">
+                                <span>{{'ACCOUNT.HOME' | translate}}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span>{{'ACCOUNT.MYACCOUNT' | translate}}</span>
+                            </a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </nav>
+
+        <div class="acount head-acount">
+            <div class="container">
+                <div id="main">
+                    <h1 class="title-page">{{'ACCOUNT.MYACCOUNT' | translate}}</h1>
+                    <div class="content" id="block-history">
+                        <table class="std table">
+                            <tbody>
+                                <tr>
+                                    <th class="first_item">{{'ACCOUNT.MYNAME' | translate}} :</th>
+                                    <td>{{customer.lastname}} {{customer.firstname}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="first_item">{{'ACCOUNT.GENDER' | translate}} :</th>
+                                    <td *ngIf="customer.gender == 0">{{'ACCOUNT.Male' | translate}}</td>
+                                    <td *ngIf="customer.gender == 1">{{'ACCOUNT.Female' | translate}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="first_item">{{'ACCOUNT.BIRTHDAY' | translate}} :</th>
+                                    <td>{{customer.birthday}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="first_item">{{'ACCOUNT.ADDRESS' | translate}} :</th>
+                                    <td>{{customer.address}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="first_item">{{'ACCOUNT.PHONE' | translate}}:</th>
+                                    <td>{{customer.phone}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="first_item">Email :</th>
+                                    <td>{{customer.email}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <button class="btn btn-primary" data-link-action="sign-in" type="submit" data-toggle="modal" data-target="#exampleModalCenter">
+                        {{'ACCOUNT.Edit' | translate}}
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="this.dataForm" (ngSubmit)="onSubmit()">
+    <div class="modal fade modal-wrapper" id="exampleModalCenter">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-center">{{'ACCOUNT.Edit' | translate}}</h2>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <div>
+                                <input class="form-control" name="firstname" type="text" placeholder="{{'REGISTER.FIRSTNAME' | translate}}" formControlName="firstname">
+                            </div>
+                            <div *ngIf="submitted && f.firstname.errors">
+                                <div *ngIf="f.firstname.errors.required" class="errors"> * {{'REGISTER.REQUIREDFIRSTNAME' | translate}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input class="form-control" name="lastname" type="text" placeholder="{{'REGISTER.LASTNAME' | translate}}" formControlName="lastname">
+                            </div>
+                            <div *ngIf="submitted && f.lastname.errors">
+                                <div *ngIf="f.lastname.errors.required" class="errors"> * {{'REGISTER.REQUIREDLASTNAME' | translate}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio1">
+                                  <input type="radio" class="form-check-input" id="radio1" name="gender" [value]="0" checked formControlName="gender">{{'REGISTER.MALE' | translate}}
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio2">
+                                  <input type="radio" class="form-check-input" id="radio2" name="gender" [value]="1" formControlName="gender">{{'REGISTER.FEMALE' | translate}}
+                                </label>
+                            </div>
+                            <div *ngIf="submitted && f.gender.errors">
+                                <div *ngIf="f.gender.errors.required" class="errors"> * Gender is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="phone" style="display: flex">
+                                <button type="button" class="btn btn-default" aria-expanded="false"><span class="type-text">{{'REGISTER.PHONE' | translate}}</span> </button>
+                                <input type="text" name="phone" class="form-control" placeholder="(+84)" formControlName="phone" />
+                            </div>
+                            <div *ngIf="submitted && f.phone.errors">
+                                <div *ngIf="f.phone.errors.required" class="errors"> * {{'REGISTER.REQUIREDPHONE' | translate}}</div>
+                                <div *ngIf="f.phone.errors.pattern" class="errors"> * {{'REGISTER.PHONE10' | translate}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group phone">
+                                <button type="button" class="btn btn-default" aria-expanded="false"><span class="type-text">{{'REGISTER.BIRTHDAY' | translate}}</span> </button>
+                                <input type="date" class="form-control" id="birthday" name="birthday" formControlName="birthday">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input class="form-control" name="Address" type="Address" placeholder="{{'REGISTER.ADDRESS' | translate}}" formControlName="address">
+                            </div>
+                            <div *ngIf="submitted && f.address.errors">
+                                <div *ngIf="f.address.errors.required" class="errors"> * {{'REGISTER.REQUIREDADDRESS' | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div>
+                            <button class="btn btn-primary" data-link-action="sign-in" type="submit">
+                                {{'ACCOUNT.Edit' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

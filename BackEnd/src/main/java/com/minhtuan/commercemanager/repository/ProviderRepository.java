@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface ProviderRepository extends JpaRepository<Provider, String> {
-    List<Provider> findAllByOrderByProviderIdDesc();
+    List<Provider> findAllByStatusOrderByProviderIdDesc(Integer status);
     Provider findProviderByProviderId(String providerId);
 }

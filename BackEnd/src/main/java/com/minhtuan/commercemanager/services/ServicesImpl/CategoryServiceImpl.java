@@ -65,6 +65,7 @@ public class CategoryServiceImpl implements CategoryService {
         category.setCategoryName(categoryRequest.getCategoryName());
         Room room = roomRepository.findRoomByRoomId(categoryRequest.getRoom());
         category.setRoom(room);
+        category.setStatus(1);
         categoryRepository.save(category);
         CategoryDTO categoryDTO = categoryMapper.toDTO(category);
         return categoryDTO;
@@ -72,8 +73,41 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDTO> getAllCategory() {
-        List<Category> categoryList = categoryRepository.findAllByOrderByCategoryIdDesc();
+        List<Category> categoryList = categoryRepository.findAllByStatusOrderByCategoryId(1);
         List<CategoryDTO> categoryDTOList = categoryList.stream().map(category -> categoryMapper.toDTO(category)).collect(Collectors.toList());
         return categoryDTOList;
+    }
+
+    @Override
+    public List<CategoryDTO> getAllCategoryByRoom(Integer roomId) {
+        Room room = roomRepository.getById(roomId);
+        List<Category> categoryList = categoryRepository.findAllByRoomAndStatusOrderByCategoryId(room, 1);
+        List<CategoryDTO> categoryDTOList = categoryList.stream().map(category -> categoryMapper.toDTO(category)).collect(Collectors.toList());
+        return categoryDTOList;
+    }
+
+    @Override
+    public CategoryDTO getCategoryByCategoryId(String categoryId) {
+        Category category = categoryRepository.getById(categoryId);
+        CategoryDTO categoryDTO = categoryMapper.toDTO(category);
+        return categoryDTO;
+    }
+
+    @Override
+    public CategoryDTO updateCategoryByCategoryId(String categoryId, CategoryRequest categoryRequest) {
+        Category category = categoryRepository.getById(categoryId);
+        category.setCategoryName(categoryRequest.getCategoryName());
+        Room room = roomRepository.getById(categoryRequest.getRoom());
+        category.setRoom(room);
+        categoryRepository.save(category);
+        CategoryDTO categoryDTO = categoryMapper.toDTO(category);
+        return categoryDTO;
+    }
+
+    @Override
+    public void deleteCategory(String categoryId) {
+        Category category = categoryRepository.getById(categoryId);
+        category.setStatus(0);
+        categoryRepository.save(category);
     }
 }

@@ -21,11 +21,9 @@ public class Invoice {
     @Column(name = "MAHD", nullable = false)
     private String invoiceId;
 
-    @NotBlank(message = "date is required")
     @Column(name = "NGAY", nullable = false)
     private Date date;
 
-    @NotBlank(message = "amount is required")
     @Column(name = "THANHTIEN", nullable = false)
     private Double amount;
 

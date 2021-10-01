@@ -1,0 +1,273 @@
+{
+    "HEADER": {
+        "HOME": "HOME",
+        "ORDER": "MY PURCHASE",
+        "CONTACT": "CONTACT US",
+        "SEARCH": "Search",
+        "ACCOUNT": "My Account",
+        "LOGOUT": "Log Out",
+        "TOTAL": "TOTAL",
+        "VIEWCART": "VIEW CART",
+        "CHECKOUT": "CHECKOUT",
+        "SIGNIN": "Sign In",
+        "REGISTER": "Register Account"
+    },
+
+    "TITLE": {
+        "FREEDELIVERY": "FREE DELIVERY FROM $ 250",
+        "FREEINSTALLATION": "FREE INSTALLATION",
+        "MONEYBACK": "MONEY BACK GUARANTEED",
+        "HOME": "Home",
+        "LOGIN": "Login"
+    },
+
+    "ROOM": {
+        "LIVINGROOM": "LIVING ROOM",
+        "KITCHEN": "KITCHEN",
+        "DINNINGROOM": "DINNING ROOM",
+        "BEDROOM": "BEDROOM",
+        "BATHROOM": "BATHROOM",
+        "Living Room": "Living Room",
+        "Kitchen": "Kitchen",
+        "Dinning Room": "Dinning Room",
+        "Bedroom": "Bedroom",
+        "Bathroom": "Bathroom"
+    },
+
+    "LOGIN": {
+        "LOGIN": "LOGIN",
+        "Email": "Email",
+        "Password": "Password",
+        "Forgot": "Forgot your password?",
+        "SIGN IN": "SIGN IN",
+        "Email is required": "Email is required",
+        "Format Email": "Format email is wrong (Ex: tmtuan@gmail.com)",
+        "Password is required": "password is required",
+        "FormatEmail": "Format email is wrong (Ex: tmtuan@gmail.com)",
+        "Recaptcha": "Recaptcha not verified"
+    },
+
+    "REGISTER": {
+        "REGISTER": "REGISTER",
+        "FIRSTNAME": "Firstname",
+        "LASTNAME": "Lastname",
+        "MALE": "Male",
+        "FEMALE": "Female",
+        "PHONE": "Phone",
+        "BIRTHDAY": "Birthday",
+        "ADDRESS": "Address",
+        "PASSWORD": "Password",
+        "REPEATPASSWORD": "Repeat password",
+        "REQUIREDEMAIL": "Email is required",
+        "FormatEmail": "Format email is wrong (Ex: tmtuan@gmail.com)",
+        "EXISTEMAIL": "That email already exists",
+        "REQUIREDFIRSTNAME": "Firstname is required",
+        "REQUIREDLASTNAME": "Lastname is required",
+        "REQUIREDGENDER": "Gender is required",
+        "REQUIREDPHONE": "Phone is required",
+        "PHONE10": "Phone have to 10 digits (Ex: 0377730290)",
+        "REQUIREDADDRESS": "Address is required",
+        "REQUIREDPASSWORD": "Password is required",
+        "REQUIREDREPEATPASSWORD": "Repeat password is required",
+        "MATCHPASSWORD": "Password does not match!",
+        "CREATEACCOUNT": "CREATE ACCOUNT"
+    },
+
+    "FORGOTPASSWORD": {
+        "HOME": "Home",
+        "RESETPASSWORD": "User Reset Password",
+        "REQUIREDEMAIL": "Email is required",
+        "FormatEmail": "Format email is wrong (Ex: tmtuan@gmail.com)",
+        "EmailNotExist": "Email does not exist",
+        "SEND": "SEND RESET LINK",
+        "Please check your email to change password...": "Please check your email to change password!!!"
+    },
+
+    "RESETPASSWORD": {
+        "HOME": "Home",
+        "RESETPASSWORD": "User Reset Password",
+        "NEWPASSWORD": "NEW PASSWORD",
+        "NEWPASSWORD1": "New password",
+        "NEWPASSWORDAGAIN": "New password again",
+        "RIQUIREDNEWPASSWORD": "New password is required",
+        "RIQUIREDNEWPASSWORDAGAIN": "New password again is required",
+        "MATCHPASSWORD": "Password does not match",
+        "CHANGE": "CHANGE PASSWORD"
+    },
+
+    "CATEGORY": {
+        "CATEGORIES": "CATEGORIES",
+        "SOFA": "SOFA",
+        "SIDE TABLE": "SIDE TABLE",
+        "FLOOR LAMP": "FLOOR LAMP",
+        "ARMCHAIR": "ARMCHAIR",
+        "WALL CLOCK": "WALL CLOCK",
+        "PICTURE": "PICTURE",
+        "FIREPLACE": "FIREPLACE",
+        "Tủ Lạnh": "REFRIGERATOR"
+    },
+
+    "HOMEPRODUCT": {
+        "NEWPRODUCT": "NEW PRODUCTS",
+        "DISCOUNT": "DISCOUNT PRODUCTS",
+        "SPECIAL": "SPECIAL PRODUCTS",
+        "NEW": "NEW"
+    },
+
+    "PRODUCT": {
+        "SO-938 Sofa set 3-1-Don": "SO-938 Sofa set 3-1-Don",
+        "SO-920 Sofa Set 3-1": "SO-920 Sofa Set 3-1",
+        "SO-912 Sofa Set 3-2-1": "SO-912 Sofa Set 3-2-1",
+        "Sofa 3 chỗ Klosso phong cách Châu Âu KGB001": "3 seater sofa Klosso European style KGB001",
+        "SO-524 Corner Sofa": "SO-524 Corner Sofa",
+        "SO-529 Sofa Set 3-1": "SO-529 Sofa Set 3-1",
+        "European Style Klosso Single Sofa": "European Style Klosso Single Sofa",
+        "Sofa Đơn Klosso Phong Cách Châu Âu KSD003-C": "European Style Klosso Single Sofa KSD003-C",
+        "Tủ lạnh Energy Star": "Energy Star Refrigerator",
+        "Tủ lạnh Smart Energy Star": "Smart Energy Star refrigerator",
+        "Tủ lạnh đông đáy 22 Energy Star 9 Cu": "22 Energy Star 9 Cu . Bottom Freezer Refrigerator",
+        "Tủ lạnh Ngôi sao Năng lượng Thông minh với Trung tâm gia đình": "Smart Energy Star Refrigerator with Home Hub",
+        "Tủ lạnh 24 Top Freezer 10 cu. Ft.": "Refrigerator 24 Top Freezer 10 cu. Ft.",
+        "Tủ lạnh hai cửa 23 Tủ đông trên cùng 7,4 cu. Ft.": "Two-door refrigerator 23 Top freezer 7.4 cu. Ft.",
+        "Cosmo 22.5 Chân khối bằng thép không gỉ Tủ lạnh 4 cửa kiểu Pháp có tay cầm kéo": "Cosmo 22.5 Stainless steel block legs 4-door French refrigerator with pull handle"
+    },
+
+    "MESSAGE": {
+        "MESSAGE": "MESSAGE",
+        "Email or Password is wrong!!!": "Email or Password is wrong!!!",
+        "Register Account Successlly!!!": "Register Account Successlly!!!",
+        "Change password successly...": "Change password successlly..."
+    },
+
+    "GRIDPRODUCT": {
+        "HOME": "Home",
+        "PRICE": "BY PRICE",
+        "SEARCH": "SEARCH",
+        "BYCOLOR": "BY COLOR",
+        "SORT BY": "SORT BY",
+        "NAMEAZ": "NAME, A TO Z",
+        "NAMEZA": "NAME, Z TO A",
+        "PRICEAZ": "PRICE, LOW TO HIGH",
+        "PRICEZA": "PRICE, HIGH TO LOW",
+        "ADDTOCART": "ADD TO CART",
+        "INSTOCK": "IN STOCK"
+    },
+
+    "COLOR": {
+        "ĐEN": "BLACK",
+        "XANH LÁ": "GREEN",
+        "TÍM": "PURPLE",
+        "XÁM": "GRAY",
+        "CAM": "ORANGE",
+        "TRẮNG": "WHITE",
+        "ĐỎ": "RED",
+        "VÀNG": "YELLOW"
+    },
+
+    "PRODUCTDESCRIPTION": {
+        "Bộ Sofa da Nhật Bản SO-938 có kích thước vừa phải, thích hợp cho phòng khách vừa và nhỏ, mang đậm nét sang trọng vốn có của nghệ thuật thiết kế nội thất Nhật Bản.": "The Japanese leather sofa set SO-938 has a moderate size, suitable for small and medium living rooms, bearing the inherent elegance of Japanese interior design art.",
+        "Bộ Sofa da Nhật Bản SO-912 gồm 1 sofa 2 chỗ, 1 sofa 1 chỗ và 1 cục giữa  được sản xuất tại Nhật với thiết kế mang đậm nét sang trọng vốn có của nghệ thuật thiết kế nội thất Nhật Bản.": "The SO-912 Japanese leather sofa set includes 1 2-seater sofa, 1 1-seat sofa and 1 center piece made in Japan with a luxurious design inherent in Japanese interior design art.",
+        "Bộ Sofa da đa năng Nhật Bản SO-920 được điều khiển bằng cơ điện, có thể bật ra thành ghế thư giãn. Ghế ở giữa có thể gập xuống thành bàn, rất thích hợp cho nhu cầu nghỉ ngơi của gia đình.": "The SO-920 Japanese multi-function leather sofa set is electrically controlled and can be turned into a relaxing chair. The seat in the middle can be folded down into a table, very suitable for family resting needs.",
+        "Bộ Sofa SO-524 được thiết kế với kích thước phù hợp với không gian vừa và nhỏ. Phần ghế bật điện thư giãn được điều khiển bằng điện, với nhiều chế độ rất tiện lợi tạo sự thoải mái cho người dùng": "Sofa set SO-524 is designed with a size suitable for small and medium spaces. The relaxing power-on chair is electrically controlled, with many convenient modes to create comfort for the user",
+        "Bộ Sofa da nhập khẩu Malaysia SO-529, được thiết kế độc đáo với tính năng điều khiển bằng cơ điện, có thể bật ra thành ghế thư giãn.": "Leather sofa set imported from Malaysia SO-529, uniquely designed with electromechanical control, can be turned into a relaxing chair.",
+        "Khung gỗ kháng ẩm, kháng khuẩn. Mút D40 kháng khuẩn, độ bền cao, đàn hồi tốt. Được bọc lớp vải bố nhung mịn kháng khuẩn cao cấp": "Wood frame moisture resistant, antibacterial. D40 foam is antibacterial, durable, and has good elasticity. Upholstered in high quality antibacterial velvet fabric",
+        "Khung gỗ kháng ẩm, kháng khuẩn. Mút D40 kháng khuẩn, độ bền cao, đàn hồi tốt. Chân gỗ cao cấp, bền, chắc chắn. ": "Wood frame moisture resistant, antibacterial. D40 foam is antibacterial, durable, and has good elasticity. High quality wooden legs, durable, sturdy.",
+        "Chiếc tủ lạnh này được thiết kế đẹp mắt với ngăn trưng bày tối thiểu, thiết kế hiện đại kết hợp tuyệt đẹp với căn bếp của bạn và lớp sơn hoàn thiện chống lại những vết ố hàng ngày.": "This refrigerator is beautifully designed with minimal display, a modern design that blends beautifully with your kitchen, and a finish that resists everyday stains.",
+        "Tủ lạnh trung tâm gia đình được thiết kế đẹp mắt với ngăn phân phối tối thiểu và cửa cạnh kiểu dáng đẹp với tay cầm hiện đại.": "Beautifully designed home central fridge with minimal dispensing and sleek side doors with modern handles.",
+        "Tủ lạnh này được Chứng nhận ENERGY STAR về hiệu quả sử dụng năng lượng quanh năm, được thiết kế để tiết kiệm năng lượng tối ưu và sử dụng dễ dàng, đáng tin cậy.": "This refrigerator is ENERGY STAR Certified for year-round energy efficiency, designed for optimal energy savings and easy, reliable use.",
+        "Tủ lạnh trung tâm gia đình của Samsung giúp bạn kết nối dễ dàng hơn với những gì quan trọng nhất đối với bạn: gia đình và ngôi nhà của bạn, mọi lúc mọi nơi. ": "Samsung home-centric refrigerators make it easier for you to stay connected to what matters most to you: your family and your home, wherever you are.",
+        "Thêm một chút tinh tế cổ điển cho ngôi nhà của bạn với tủ lạnh gắn trên cùng phong cách retro của Galanz.": "Add a touch of vintage flair to your home with Galanz's retro top-mount refrigerator.",
+        "Một cấu hình hẹp và thiết kế kiểu dáng đẹp làm cho 7,4 cu này. ft. Tủ lạnh / Tủ đông màu trắng, thiết bị nhà bếp lý tưởng cho các căn hộ, nhà phố, chung cư hoặc bất kỳ ngôi nhà nào có không gian hạn chế.": "A narrow profile and sleek design make this 7.4 cu. ft. White Refrigerator/Freezer, ideal kitchen appliance for apartments, townhouses, condominiums or any house with limited space.",
+        "Tủ lạnh cửa trên Pháp có kích thước 22,5 foot khối của Cosmo có kiểu dáng đẹp tối giản cao cấp và các tính năng sáng tạo, ấn tượng.": "Cosmo's 22.5-cubic-foot French top-door refrigerator has a sleek, premium minimalist look and impressive, innovative features."
+    },
+
+    "PRODUCTDETAIL": {
+        "ADDTOCART": "ADD TO CART",
+        "SIZE": "SIZE",
+        "COLOR": "COLOR",
+        "OTHERCOLOR": "OTHER COLOR",
+        "QTY": "QTY",
+        "OUTOFSTOCK": "OUT OF STOCK",
+        "IMAGE": "Image",
+        "PRODUCTNAME": "Product Name",
+        "PRICE": "Price",
+        "PRODUCT DETAIL INFORMATION": "PRODUCT DETAIL INFORMATION"
+    },
+
+    "CART": {
+        "HOME": "Home",
+        "SHOPPINGCART": "Shopping Cart",
+        "SIZE": "SIZE",
+        "COLOR": "COLOR",
+        "QTY": "QTY",
+        "TOTAL": "TOTAL",
+        "There are": "There are ",
+        "Item": "item in your cart",
+        "TOTALPRODUCTS": "Total products:",
+        "TOTALSHIP": "Total Shipping: Free",
+        "SECURITY": "Security policy",
+        "DELIVERY": "Delivery policy",
+        "RETURN": "Return policy",
+        "CONTINUE": "COUNTINUE",
+        "CLEARCART": "CLEAR CART",
+        "CHECKOUT": "ORDER"
+    },
+
+    "ORDER": {
+        "HOME": "Home",
+        "ORDER": "Order",
+        "INFORMATION": "RECEIVER INFORMATION",
+        "FIRSTNAME": "Firstname",
+        "LASTNAME": "Lastname",
+        "ADDRESS": "Address",
+        "REQUIREDFIRSTNAME": "Firstname is required",
+        "REQUIREDLASTNAME": "Lastname is required",
+        "REQUIREDADDRESS": "Address is required",
+        "REQUIREDPHONE": "Phone is required",
+        "PHONE10": "Phone have to 10 digits (Ex: 0377730290)",
+        "ORDER1": "ORDER",
+        "PRODUCT": "Product",
+        "QTY": "Quantity",
+        "TOTAL": "Total",
+        "NAME": "NAME",
+        "PRICE": "PRICE",
+        "SIZE": "SIZE",
+        "COLOR": "COLOR",
+        "Cart Subtotal": "Cart Subtotal",
+        "TOTALSHIP": "Total Shipping",
+        "FREE": "Free"
+    },
+
+    "MYORDER": {
+        "HOME": "Home",
+        "Purchase": "Purchase",
+        "Unconfirmed": "Unconfirmed",
+        "Confirmed": "Confirmed",
+        "Delivering": "Delivering",
+        "Delivered": "Delivered",
+        "Canceled": "Canceled",
+        "OrderDate": "Order Date",
+        "Fullname": "Fullname Of Receiver",
+        "Address": "Address Of Receiver",
+        "Phone": "Phone Of Receiver",
+        "DeliveryDate": "Delivery Date",
+        "DeliveryEmployee": "Delivery Employee",
+        "Action": "Action",
+        "Cancel": "Cancel",
+        "Payment": "Payment",
+        "Paymenteds": "Paymented"
+    },
+
+    "ACCOUNT": {
+        "HOME": "Home",
+        "MYACCOUNT": "My Account",
+        "MYNAME": "My Name",
+        "GENDER": "Gender",
+        "BIRTHDAY": "Birthday",
+        "ADDRESS": "Address",
+        "PHONE": "Phone",
+        "Male": "Male",
+        "Female": "Female",
+        "Edit": "EDIT ACCOUNT"
+    }
+}

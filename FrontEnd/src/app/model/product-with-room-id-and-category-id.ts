@@ -2,7 +2,6 @@ export class ProductWithRoomIdAndCategoryId {
     productId!: string;
     productName!: string;
     productDetailId!: number;
-    image!: string;
     price!: number;
     description!: string;
     colorId!: number;
@@ -10,4 +9,9 @@ export class ProductWithRoomIdAndCategoryId {
     colorName!: string;
     size!: string;
     colorCode!: string;
+    percent!: number;
+    status!: number;
+    quantity!: number;
+    room!: string;
+    categoryName!: string;
 }

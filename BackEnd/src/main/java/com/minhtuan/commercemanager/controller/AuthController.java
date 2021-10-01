@@ -1,8 +1,12 @@
 package com.minhtuan.commercemanager.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.minhtuan.commercemanager.exception.EmailAlreadyExistedException;
@@ -18,9 +22,11 @@ import com.minhtuan.commercemanager.repository.RoleRepository;
 import com.minhtuan.commercemanager.security.jwt.JwtUtils;
 import com.minhtuan.commercemanager.security.services.UserDetailsImpl;
 import com.minhtuan.commercemanager.services.CaptchaService;
+import com.minhtuan.commercemanager.services.EmailService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -58,6 +64,9 @@ public class AuthController {
     @Autowired
     private CaptchaService captchaService;
 
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -77,6 +86,11 @@ public class AuthController {
         {
             Employee employee = employeeRepository.findByEmail(email).get();
             JwtResponse jwtResponse = new JwtResponse();
+            if(employee.getStatus() == 0){
+                jwtResponse.setMessage("Account don't exist");
+                jwtResponse.setStatus(400);
+                return ResponseEntity.ok(jwtResponse);
+            }
             boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
             if(!captchaVerified) {
                 jwtResponse.setMessage("Invalid captcha");
@@ -99,6 +113,11 @@ public class AuthController {
         }else {
             Customer customer = customerRepository.findByEmail(email).get();
             JwtResponse jwtResponse = new JwtResponse();
+            if(customer.getStatus() == 0){
+                jwtResponse.setMessage("Account don't exist");
+                jwtResponse.setStatus(400);
+                return ResponseEntity.ok(jwtResponse);
+            }
             boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
             if(!captchaVerified) {
                 jwtResponse.setMessage("Invalid captcha");
@@ -121,7 +140,6 @@ public class AuthController {
         }
     }
 
-    @ApiOperation(value = "Add an student")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (accountRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -133,7 +151,7 @@ public class AuthController {
             case "admin":
                 Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                Account account = new Account(signUpRequest.getEmail(),encoder.encode(signUpRequest.getPassword()), adminRole);
+                Account account = new Account(signUpRequest.getEmail(),encoder.encode(signUpRequest.getPassword()),null, adminRole);
                 accountRepository.save(account);
 
                 List<Employee> employeeList = employeeRepository.findAll();
@@ -160,12 +178,12 @@ public class AuthController {
                         newIdString = "0" + newIdString;
                     }
                     String idNew = IdBegin + newIdString;
-                    Employee employee = new Employee(idNew, signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail());
+                    Employee employee = new Employee(idNew, signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail(), 1);
                     System.out.println(employee.getId());
                     employeeRepository.save(employee);
                     return ResponseEntity.ok(new MessageResponse("Account admin registered successfully!"));
                 }else {
-                    Employee employee = new Employee("NV00001", signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail());
+                    Employee employee = new Employee("NV00001", signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail(), 1);
                     System.out.println(employee.getId());
                     employeeRepository.save(employee);
                     return ResponseEntity.ok(new MessageResponse("Account admin registered successfully!"));
@@ -173,7 +191,7 @@ public class AuthController {
             case "employee":
                 Role employeeRole = roleRepository.findByName(ERole.ROLE_EMPLOYEE)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                Account employeeAccount = new Account(signUpRequest.getEmail(),encoder.encode(signUpRequest.getPassword()), employeeRole);
+                Account employeeAccount = new Account(signUpRequest.getEmail(),encoder.encode(signUpRequest.getPassword()),null, employeeRole);
                 accountRepository.save(employeeAccount);
                 List<Employee> employeeLists = employeeRepository.findAll();
                 if(employeeLists.size() > 0) {
@@ -199,18 +217,18 @@ public class AuthController {
                         newIdString = "0" + newIdString;
                     }
                     String idNew = IdBegin + newIdString;
-                    Employee employee = new Employee(idNew, signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail());
+                    Employee employee = new Employee(idNew, signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail(), 1);
                     employeeRepository.save(employee);
                     return ResponseEntity.ok(new MessageResponse("Account employee registered successfully!"));
                 }else {
-                    Employee employee = new Employee("NV00001", signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail());
+                    Employee employee = new Employee("NV00001", signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail(), 1);
                     employeeRepository.save(employee);
                     return ResponseEntity.ok(new MessageResponse("Account employee registered successfully!"));
                 }
             default:
                 Role customerRole = roleRepository.findByName(ERole.ROLE_CUSTOMER)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                Account customerAccount = new Account(signUpRequest.getEmail(),encoder.encode(signUpRequest.getPassword()), customerRole);
+                Account customerAccount = new Account(signUpRequest.getEmail(),encoder.encode(signUpRequest.getPassword()),null, customerRole);
                 accountRepository.save(customerAccount);
                 List<Customer> customerList = customerRepository.findAll();
                 if(customerList.size() > 0) {
@@ -236,14 +254,54 @@ public class AuthController {
                         newIdString = "0" + newIdString;
                     }
                     String idNew = IdBegin + newIdString;
-                    Customer customer = new Customer(idNew, signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail());
+                    Customer customer = new Customer(idNew, signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail(), 1);
                     customerRepository.save(customer);
                     return ResponseEntity.ok(new MessageResponse("Account customer registered successfully!"));
                 }else {
-                    Customer customer = new Customer("KH00001", signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail());
+                    Customer customer = new Customer("KH00001", signUpRequest.getFirstname(),signUpRequest.getLastname(), signUpRequest.getGender(), signUpRequest.getBirthday(), signUpRequest.getAddress(),signUpRequest.getPhone(), signUpRequest.getEmail(), 1);
                     customerRepository.save(customer);
                     return ResponseEntity.ok(new MessageResponse("Account customer registered successfully!"));
                 }
+        }
+    }
+
+    @PostMapping("/forgot/{email}")
+    public ResponseEntity<?> processForgotPassword(@PathVariable String email, HttpServletRequest request){
+        Optional<Account> optional = accountRepository.findByEmail(email);
+        if (!optional.isPresent()) {
+            return ResponseEntity.ok(new MessageResponse("Email not exist"));
+        } else {
+            Account account = optional.get();
+            account.setResetToken(UUID.randomUUID().toString());
+
+            // Save token to database
+            accountRepository.save(account);
+
+            String appUrl = request.getScheme() + "://" + request.getServerName();
+
+            // Email message
+            SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
+            passwordResetEmail.setFrom("tranminhtuannhj@gmail.com");
+            passwordResetEmail.setTo(account.getEmail());
+            passwordResetEmail.setSubject("Password Reset Request");
+            passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
+                    + ":4200/reset?token=" + account.getResetToken());
+            emailService.sendEmail(passwordResetEmail);
+            return ResponseEntity.ok(new MessageResponse("Send mail successfully!"));
+        }
+    }
+
+    @PostMapping("/reset")
+    public ResponseEntity<?> setNewPassword(@RequestParam Map<String, String> requestParams){
+        Optional<Account> account = accountRepository.findByResetToken(requestParams.get("token"));
+        if (account.isPresent()) {
+            Account resetAccount = account.get();
+            resetAccount.setPassword(encoder.encode(requestParams.get("password")));
+            resetAccount.setResetToken(null);
+            accountRepository.save(resetAccount);
+            return ResponseEntity.ok(new MessageResponse("Change password successfully!"));
+        } else {
+            return ResponseEntity.ok(new MessageResponse("User not exist"));
         }
     }
 }

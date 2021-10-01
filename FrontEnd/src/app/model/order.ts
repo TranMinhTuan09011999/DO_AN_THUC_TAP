@@ -6,4 +6,5 @@ export class Order {
     addressOfReceiver!: string;
     phoneOfReceiver!: string;
     status!: number;
+    payment!: number;
 }

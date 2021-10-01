@@ -18,7 +18,7 @@ public class ProductDetailRequest {
 
     private Integer quantity;
     private Double price;
-
+    private Integer discount;
     @JsonProperty("image")
     private String image;
     private String productId;

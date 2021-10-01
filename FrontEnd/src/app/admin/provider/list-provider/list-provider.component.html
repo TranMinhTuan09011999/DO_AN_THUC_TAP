@@ -1,65 +1,42 @@
 <div class="page-wrapper">
     <div class="content">
         <div class="row">
-            <div class="col-sm-8 col-5">
+            <div class="col-sm-3 col-3">
                 <h4 class="page-title"></h4>
             </div>
-            <div class="col-sm-4 col-7 text-right m-b-30">
-                <a class="btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add provider</a>
-            </div>
-        </div>
-        <div class="row filter-row">
-            <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-12">
-                <label class="focus-label">* Code:</label>
-                <div class="form-group">
-                    <input type="text" class="form-control floating">
+            <div class="col-sm-6 col-6">
+                <div class="row filter-row">
+                    <div class="col-sm-6 col-md-3 col-lg-6 col-xl-6 col-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Tìm mã..." [(ngModel)]="searchIdValue">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-6 col-xl-6 col-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Tìm tên..." [(ngModel)]="searchNameValue">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-12">
-                <label class="focus-label">* Name: </label>
-                <div class="form-group">
-                    <input type="text" class="form-control floating">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-12">
-                <label class="focus-label">* Email: </label>
-                <div class="form-group">
-                    <input type="text" class="form-control floating">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-12">
-                <label class="focus-label">* Address: </label>
-                <div class="form-group">
-                    <input type="text" class="form-control floating">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-12">
-                <label class="focus-label">* Phone: </label>
-                <div class="form-group">
-                    <input type="text" class="form-control floating">
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-12">
-                <label class="focus-label"></label>
-                <a href="#" class="btn btn-success btn-block" style="margin-top: 8px;
-                padding: 6px;min-height: 0px;"> Search </a>
+            <div class="col-sm-3 col-3 text-right m-b-30">
+                <a class="btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();getProviderId();"><i class="fa fa-plus"></i> Thêm nhà cung cấp</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table mb-0 datatable">
+                    <table class="table table-striped custom-table mb-0">
                         <thead>
                             <tr>
-                                <th>Code</th>
-                                <th>Name</th>
+                                <th>Mã</th>
+                                <th>Tên</th>
                                 <th>Email</th>
-                                <th>Address</th>
-                                <th>Phone</th>
-                                <th class="text-right">Actions</th>
+                                <th>Địa chỉ</th>
+                                <th>Số điện thoại</th>
+                                <th class="text-right">Chức năng</th>
                             </tr>
                         </thead>
-                        <tbody *ngFor="let provider of providers">
+                        <tbody *ngFor="let provider of providers | paginate: config | searchProviderFilter: searchIdValue | searchProviderNameFilter: searchNameValue">
                             <tr>
                                 <td>
                                     <strong>{{provider.providerId}}</strong>
@@ -72,14 +49,15 @@
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="edit-expense.html"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_expense"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter1" (click)="$event.preventDefault();showEditProvider(provider.providerId);"><i class="fa fa-pencil m-r-5"></i> Sửa</a>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_expense" (click)="$event.preventDefault();getProviderId1(provider.providerId);"><i class="fa fa-trash-o m-r-5"></i> Xóa</a>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <pagination-controls (pageChange)="pageChanged($event)" style="text-align: right;"></pagination-controls>
                 </div>
             </div>
         </div>
@@ -90,9 +68,9 @@
         <div class="modal-content">
             <div class="modal-body text-center">
                 <img src="assets/admin/img/sent.png" alt="" width="50" height="46">
-                <h3>Are you sure want to delete this expense?</h3>
-                <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                <h3>Bạn có chắc chắn xóa nhà cung cấp này không?</h3>
+                <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Đóng</a>
+                    <button type="submit" class="btn btn-danger" (click)="deleteProvider()">Xóa</button>
                 </div>
             </div>
         </div>
@@ -105,7 +83,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="text-center">ADD PROVIDER</h2>
+                        <h2 class="text-center">Thêm nhà cung cấp</h2>
                     </div>
                 </div>
                 <div class="row">
@@ -114,10 +92,10 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label>Name: </label>
+                                        <label>Tên: </label>
                                         <input class="form-control" type="text" formControlName="providerName">
                                         <div *ngIf="submitted && f.providerName.errors">
-                                            <div *ngIf="f.providerName.errors.required" class="errors"> * Name is required</div>
+                                            <div *ngIf="f.providerName.errors.required" class="errors"> * Vui lòng nhập tên</div>
                                         </div>
                                     </div>
                                 </div>
@@ -128,8 +106,8 @@
                                         <label>Email: </label>
                                         <input class="form-control" type="text" formControlName="providerEmail">
                                         <div *ngIf="submitted && f.providerEmail.errors">
-                                            <div *ngIf="f.providerEmail.errors.required" class="errors"> * Email is required</div>
-                                            <div *ngIf="f.providerEmail.errors.pattern" class="errors"> * Format email is wrong (Ex: tmtuan@gmail.com)</div>
+                                            <div *ngIf="f.providerEmail.errors.required" class="errors"> * Vui lòng nhập email</div>
+                                            <div *ngIf="f.providerEmail.errors.pattern" class="errors"> * Định dạng email sai (Ex: tmtuan@gmail.com)</div>
                                         </div>
                                     </div>
                                 </div>
@@ -137,10 +115,10 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label>Address: </label>
+                                        <label>Địa chỉ: </label>
                                         <input class="form-control" type="text" formControlName="providerAddress">
                                         <div *ngIf="submitted && f.providerAddress.errors">
-                                            <div *ngIf="f.providerAddress.errors.required" class="errors"> * Address is required</div>
+                                            <div *ngIf="f.providerAddress.errors.required" class="errors"> * Vui lòng nhập địa chỉ</div>
                                         </div>
                                     </div>
                                 </div>
@@ -148,16 +126,16 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label>Phone: </label>
+                                        <label>Số điện thoại: </label>
                                         <input class="form-control" type="text" formControlName="providerPhone">
                                         <div *ngIf="submitted && f.providerPhone.errors">
-                                            <div *ngIf="f.providerPhone.errors.required" class="errors"> * Phone is required</div>
+                                            <div *ngIf="f.providerPhone.errors.required" class="errors"> * Vui lòng nhập SDT</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="m-t-20 text-center">
-                                <button class="btn btn-primary submit-btn" type="submit">Create Provider</button>
+                                <button class="btn btn-primary submit-btn" type="submit">Tạo nhà cung cấp</button>
                             </div>
                         </form>
                     </div>
@@ -165,3 +143,71 @@
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade modal-wrapper" id="exampleModalCenter1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="text-center">Sửa nhà cung cấp</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <form [formGroup]="this.dataForm" (ngSubmit)="onSubmit1()">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Tên: </label>
+                                        <input class="form-control" type="text" formControlName="providerName">
+                                        <div *ngIf="submitted && f.providerName.errors">
+                                            <div *ngIf="f.providerName.errors.required" class="errors"> * Vui lòng nhập tên nhà cung cấp</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Email: </label>
+                                        <input class="form-control" type="text" formControlName="providerEmail">
+                                        <div *ngIf="submitted && f.providerEmail.errors">
+                                            <div *ngIf="f.providerEmail.errors.required" class="errors"> * Vui lòng nhập email</div>
+                                            <div *ngIf="f.providerEmail.errors.pattern" class="errors"> * Định dạng email không đúng (Ex: tmtuan@gmail.com)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Địa chỉ: </label>
+                                        <input class="form-control" type="text" formControlName="providerAddress">
+                                        <div *ngIf="submitted && f.providerAddress.errors">
+                                            <div *ngIf="f.providerAddress.errors.required" class="errors"> * Vui lòng nhập địa chỉ</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>SDT: </label>
+                                        <input class="form-control" type="text" formControlName="providerPhone">
+                                        <div *ngIf="submitted && f.providerPhone.errors">
+                                            <div *ngIf="f.providerPhone.errors.required" class="errors"> * Vui lòng nhập SDT</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-t-20 text-center">
+                                <button class="btn btn-primary submit-btn" type="submit">Sửa nhà cung cấp</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

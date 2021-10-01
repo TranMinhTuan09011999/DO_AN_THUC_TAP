@@ -10,4 +10,5 @@ public class OrderDetailRequest {
     private Integer productDetailId;
     private Double price;
     private Integer quantity;
+    private Integer discount;
 }

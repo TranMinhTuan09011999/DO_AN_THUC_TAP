@@ -9,12 +9,12 @@
                     <ol>
                         <li>
                             <a href="#">
-                                <span>Home</span>
+                                <span>{{'MYORDER.HOME' | translate}}</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <span>Purchase</span>
+                                <span>{{'MYORDER.Purchase' | translate}}</span>
                             </a>
                         </li>
                     </ol>
@@ -28,15 +28,12 @@
                         <div class="col-md-12">
                             <div class="d-flex justify-content-between align-items-center">
                                 <ul class="nav nav-tabs page-header-tab">
-                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Project-OnGoing">All</a></li>
-                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Project-UpComing">UpComing</a></li>
-                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Project-add">Add</a></li>
+                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Unconfirmed">{{'MYORDER.Unconfirmed' | translate}}</a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Comfirmed">{{'MYORDER.Confirmed' | translate}}</a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Delivering">{{'MYORDER.Delivering' | translate}}</a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Delivered">{{'MYORDER.Delivered' | translate}}</a></li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Canceled">{{'MYORDER.Canceled' | translate}}</a></li>
                                 </ul>
-                                <div class="header-action d-md-flex">
-                                    <div class="input-group mr-2">
-                                        <input type="text" class="form-control" placeholder="Search...">
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -45,7 +42,7 @@
             <div class="section-body mt-3">
                 <div class="container-fluid">
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="Project-OnGoing" role="tabpanel">
+                        <div class="tab-pane fade show active" id="Unconfirmed" role="tabpanel">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card">
@@ -54,32 +51,34 @@
                                                 <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
                                                     <thead>
                                                         <tr>
-                                                            <th>Order Date</th>
-                                                            <th>Full Name Of Receiver</th>
-                                                            <th class="w100">Address Of Receiver</th>
-                                                            <th class="w100">Phone Of Receiver</th>
-                                                            <th>Status</th>
+                                                            <th>{{'MYORDER.OrderDate' | translate}}</th>
+                                                            <th>{{'MYORDER.Fullname' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.Address' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.Phone' | translate}}</th>
+                                                            <th>{{'MYORDER.Action' | translate}}</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody *ngFor="let order of orders">
+                                                    <tbody *ngFor="let unconfirmOrder of unconfirmOrders | paginate: config">
                                                         <tr>
-                                                            <td>{{order.dateOfOrder}}</td>
-                                                            <td>{{order.lastnameOfReveiver}} {{order.firstnameOfReveiver}}</td>
-                                                            <td>{{order.addressOfReceiver}}</td>
-                                                            <td>{{order.phoneOfReceiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(unconfirmOrder.orderId)">{{unconfirmOrder.dateOfOrder}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(unconfirmOrder.orderId)">{{unconfirmOrder.lastnameOfReveiver}} {{unconfirmOrder.firstnameOfReveiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(unconfirmOrder.orderId)">{{unconfirmOrder.addressOfReceiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(unconfirmOrder.orderId)">{{unconfirmOrder.phoneOfReceiver}}</td>
                                                             <td>
-                                                                <label *ngIf="order.status == 1" style="margin-right: 17px;"> Unconfirmed </label>
+                                                                <a href="" class="btn btn-light" style="font-size: 0.9rem;
+                                                            padding: 0px 9px; background-color: rgb(230, 82, 82); " (click)="$event.preventDefault();cancel(unconfirmOrder.orderId)"> {{'MYORDER.Cancel' | translate}}</a>
                                                             </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <pagination-controls (pageChange)="pageChanged($event)" style="text-align: right;"></pagination-controls>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="Project-UpComing" role="tabpanel">
+                        <div class="tab-pane fade" id="Comfirmed" role="tabpanel">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card">
@@ -88,75 +87,196 @@
                                                 <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
                                                     <thead>
                                                         <tr>
-                                                            <th>Owner</th>
-                                                            <th>Milestone</th>
-                                                            <th class="w100">Work</th>
-                                                            <th class="w100">Duration</th>
-                                                            <th>Priority</th>
+                                                            <th>{{'MYORDER.OrderDate' | translate}}</th>
+                                                            <th>{{'MYORDER.Fullname' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.Address' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.Phone' | translate}}</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody *ngFor="let confirmOrder of confirmOrders | paginate: config1">
                                                         <tr>
-                                                            <td><img src="assets/images/xs/avatar1.jpg" alt="Avatar" class="w30 rounded-circle mr-2"> <span>Isidore Dilao</span></td>
-                                                            <td>Account receivable</td>
-                                                            <td><span>30:00</span></td>
-                                                            <td>30:0 hrs</td>
-                                                            <td><span class="text-warning">Medium</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><img src="assets/images/xs/avatar2.jpg" alt="Avatar" class="w30 rounded-circle mr-2"> <span>Maricel Villalon</span></td>
-                                                            <td>Account receivable</td>
-                                                            <td><span>68:00</span></td>
-                                                            <td>105:0 hrs</td>
-                                                            <td><span class="text-danger">High</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><img src="assets/images/xs/avatar3.jpg" alt="Avatar" class="w30 rounded-circle mr-2"> <span>Theresa Wright</span></td>
-                                                            <td>Approval site</td>
-                                                            <td><span>74:00</span></td>
-                                                            <td>89:0 hrs</td>
-                                                            <td><span>None</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><img src="assets/images/xs/avatar4.jpg" alt="Avatar" class="w30 rounded-circle mr-2"> <span>Jason Porter</span></td>
-                                                            <td>Final touch up</td>
-                                                            <td><span>30:00</span></td>
-                                                            <td>30:0 hrs</td>
-                                                            <td><span>None</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><img src="assets/images/xs/avatar5.jpg" alt="Avatar" class="w30 rounded-circle mr-2"> <span>Annelyn Mercado</span></td>
-                                                            <td>Account receivable</td>
-                                                            <td><span>30:00</span></td>
-                                                            <td>30:0 hrs</td>
-                                                            <td><span>None</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><img src="assets/images/xs/avatar6.jpg" alt="Avatar" class="w30 rounded-circle mr-2"> <span>Sean Black</span></td>
-                                                            <td>Basement slab preparation</td>
-                                                            <td><span>88:00</span></td>
-                                                            <td>88:0 hrs</td>
-                                                            <td><span>None</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><img src="assets/images/xs/avatar7.jpg" alt="Avatar" class="w30 rounded-circle mr-2"> <span>Scott Ortega</span></td>
-                                                            <td>Account receivable</td>
-                                                            <td><span>56:00</span></td>
-                                                            <td>125:0 hrs</td>
-                                                            <td><span class="text-warning">Medium</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><img src="assets/images/xs/avatar8.jpg" alt="Avatar" class="w30 rounded-circle mr-2"> <span>David Wallace</span></td>
-                                                            <td>Account receivable</td>
-                                                            <td><span>30:00</span></td>
-                                                            <td>30:0 hrs</td>
-                                                            <td><span>None</span></td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(confirmOrder.orderId)">{{confirmOrder.dateOfOrder}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(confirmOrder.orderId)">{{confirmOrder.lastnameOfReveiver}} {{confirmOrder.firstnameOfReveiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(confirmOrder.orderId)">{{confirmOrder.addressOfReceiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(confirmOrder.orderId)">{{confirmOrder.phoneOfReceiver}}</td>
+                                                            <td>
+                                                                <a href="" class="btn btn-light" style="font-size: 0.9rem;
+                                                            padding: 0px 9px; background-color: rgb(230, 82, 82); " (click)="$event.preventDefault();payment(confirmOrder.orderId)" *ngIf="confirmOrder.payment == 0"> {{'MYORDER.Payment' | translate}}</a>
+                                                                <a href="" class="btn btn-light" style="font-size: 0.9rem;
+                                                            padding: 0px 9px; background-color: rgb(230, 82, 82); " (click)="$event.preventDefault();payment(confirmOrder.orderId)" *ngIf="confirmOrder.payment == 1"> {{'MYORDER.Paymented' | translate}}</a>
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <pagination-controls (pageChange)="pageChanged1($event)" style="text-align: right;"></pagination-controls>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Delivering" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{'MYORDER.OrderDate' | translate}}</th>
+                                                            <th>{{'MYORDER.Fullname' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.Address' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.Phone' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.DeliveryDate' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.DeliveryEmployee' | translate}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let deliveringOrder of deliveringOrders | paginate: config2">
+                                                        <tr>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveringOrder.orderId)">{{deliveringOrder.dateOfOrder}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveringOrder.orderId)">{{deliveringOrder.lastnameOfReveiver}} {{deliveringOrder.firstnameOfReveiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveringOrder.orderId)">{{deliveringOrder.addressOfReceiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveringOrder.orderId)">{{deliveringOrder.phoneOfReceiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveringOrder.orderId)">{{deliveringOrder.deliveryDate}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveringOrder.orderId)">{{deliveringOrder.employeeDelivery.lastname}} {{deliveringOrder.employeeDelivery.firstname}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <pagination-controls (pageChange)="pageChanged2($event)" style="text-align: right;"></pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Delivered" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{'MYORDER.OrderDate' | translate}}</th>
+                                                            <th>{{'MYORDER.Fullname' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.Address' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.Phone' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.DeliveryDate' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.DeliveryEmployee' | translate}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let deliveredOrder of deliveredOrders | paginate: config3">
+                                                        <tr>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveredOrder.orderId)">{{deliveredOrder.dateOfOrder}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveredOrder.orderId)">{{deliveredOrder.lastnameOfReveiver}} {{deliveredOrder.firstnameOfReveiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveredOrder.orderId)">{{deliveredOrder.addressOfReceiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveredOrder.orderId)">{{deliveredOrder.phoneOfReceiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveredOrder.orderId)">{{deliveredOrder.deliveryDate}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(deliveredOrder.orderId)">{{deliveredOrder.employeeDelivery.lastname}} {{deliveredOrder.employeeDelivery.firstname}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <pagination-controls (pageChange)="pageChanged3($event)" style="text-align: right;"></pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Canceled" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{'MYORDER.OrderDate' | translate}}</th>
+                                                            <th>{{'MYORDER.Fullname' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.Address' | translate}}</th>
+                                                            <th class="w100">{{'MYORDER.Phone' | translate}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let canceledOrder of canceledOrders | paginate: config4">
+                                                        <tr>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(canceledOrder.orderId)">{{canceledOrder.dateOfOrder}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(canceledOrder.orderId)">{{canceledOrder.lastnameOfReveiver}} {{canceledOrder.firstnameOfReveiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(canceledOrder.orderId)">{{canceledOrder.addressOfReceiver}}</td>
+                                                            <td data-toggle="modal" data-target="#exampleModalCenter" (click)="$event.preventDefault();showOrderDetail(canceledOrder.orderId)">{{canceledOrder.phoneOfReceiver}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <pagination-controls (pageChange)="pageChanged4($event)" style="text-align: right;"></pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-wrapper" id="exampleModalCenter">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="min-width: 92%;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="text-center">{{'MYORDER.PRODUCT DETAIL INFORMATION' | translate}}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'PRODUCTDETAIL.IMAGE' | translate}}</th>
+                                                <th>{{'PRODUCTDETAIL.PRODUCTNAME' | translate}}</th>
+                                                <th>{{'PRODUCTDETAIL.SIZE' | translate}}</th>
+                                                <th>{{'PRODUCTDETAIL.COLOR' | translate}}</th>
+                                                <th>{{'PRODUCTDETAIL.QTY' | translate}}</th>
+                                                <th>{{'PRODUCTDETAIL.PRICE' | translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let orderDetail of orderDetails">
+                                            <tr>
+                                                <td>
+                                                    <img class="card-img-top img-responsive" src="http://localhost:8080/api/image/imageProduct/{{orderDetail.productDetails.productDetailId}}" style="height :100px;width:100px">
+                                                </td>
+                                                <td style="padding-top: 3rem;">{{('PRODUCT.' + orderDetail.productDetails.product.productName) | translate}}</td>
+                                                <td style="padding-top: 3rem;">{{orderDetail.productDetails.size.size}}</td>
+                                                <td style="padding-top: 3rem;">{{('COLOR.' + orderDetail.productDetails.color.colorName) | translate}}</td>
+                                                <td style="padding-top: 3rem;">{{orderDetail.quantity}}</td>
+                                                <td style="padding-top: 3rem; position: relative;" *ngIf="orderDetail.discount > 0">
+                                                    <span class="price">{{orderDetail.price - orderDetail.price*orderDetail.discount/100 | currency: "VND"}}</span>
+                                                    <del style="margin-left: 1rem;" class="regular-price">{{orderDetail.price | currency: "VND"}}</del>
+                                                    <div *ngIf="orderDetail.discount > 0" class="product-flags discount">-{{orderDetail.discount}}%</div>
+                                                </td>
+                                                <td style="padding-top: 3rem;" *ngIf="orderDetail.discount == 0">{{orderDetail.price | currency: "VND"}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-right">Total: </td>
+                                                <td>{{total | currency: "VND"}}</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>

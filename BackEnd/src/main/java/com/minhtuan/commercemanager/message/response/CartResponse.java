@@ -22,6 +22,7 @@ public class CartResponse implements java.io.Serializable{
     private String size;
     private Integer colorId;
     private String colorName;
+    private Integer percent;
 
     public CartResponse(Object[] objects){
         this.productDetailId = objects[0] != null ? Integer.valueOf(objects[0].toString()) : null;
@@ -32,6 +33,7 @@ public class CartResponse implements java.io.Serializable{
         this.size = objects[5] != null ? String.valueOf(objects[5]) : null;
         this.colorId = objects[6] != null ? Integer.valueOf(objects[6].toString()) : null;
         this.colorName = objects[7] != null ? String.valueOf(objects[7]) : null;
+        this.percent = objects[8] != null ? Integer.valueOf(objects[8].toString()) : null;
     }
 
 

@@ -27,6 +27,9 @@ public class OrderDetail {
     @Column(name = "SOLUONG", nullable = false)
     private Integer quantity;
 
+    @Column(name = "KHUYENMAI", nullable = false)
+    private Integer discount;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MAPD", nullable = false)
     @EqualsAndHashCode.Exclude

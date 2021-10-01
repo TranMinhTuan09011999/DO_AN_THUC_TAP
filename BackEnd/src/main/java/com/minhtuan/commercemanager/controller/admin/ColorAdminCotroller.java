@@ -19,14 +19,14 @@ public class ColorAdminCotroller {
     ColorService colorService;
 
     @GetMapping("/color")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getColor() {
         List<ColorDTO> colorDTOList = colorService.getAllColor();
         return ResponseEntity.ok().body(colorDTOList);
     }
 
     @GetMapping("/color/{colorId}")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getSizeBySizeId(@PathVariable(value = "colorId") Integer colorId) {
         ColorDTO colorDTO = colorService.getColorByColorId(colorId);
         return ResponseEntity.ok().body(colorDTO);

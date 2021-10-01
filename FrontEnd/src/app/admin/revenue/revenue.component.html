@@ -1,0 +1,52 @@
+<div class="page-wrapper">
+    <div class="content">
+        <div class="row filter-row">
+            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
+                <label class="focus-label">* Từ: </label>
+                <div class="form-group">
+                    <input class="form-control" type="month" id="fromDate" name="fromDate" [(ngModel)]="fromDate" max={{jstoday}}>
+                    <!-- <input class="form-control" type="date" name="input" max="{{jstoday}}" [(ngModel)]="fromDate" required (change)="onChange()" /> -->
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
+                <label class="focus-label">* Đến: </label>
+                <div class="form-group">
+                    <input class="form-control" type="month" id="toDate" name="toDate" [(ngModel)]="toDate" max={{jstoday}}>
+                    <!-- <input class="form-control" *ngIf="disabled == true" type="date" name="input" [(ngModel)]="toDate" required disabled/>
+                    <input class="form-control" *ngIf="disabled == false" min={{fromDate}} max={{jstoday}} type="date" name="input" [(ngModel)]="toDate" required/> -->
+                    <!-- max="2014-12-31" -->
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                <label class="focus-label"></label>
+                <button class="btn btn-success btn-block" style="margin-top: 8px;
+                    padding: 6px;min-height: 0px;" type="submit" (click)="search(mymodal)">Tìm kiếm</button>
+            </div>
+        </div>
+        <!-- max="2014-12-31" -->
+        <ejs-accumulationchart [title]='chartTitle' [legendSettings]='legend' [tooltip]='tooltipSettings' innerRadius='40%' [enableAnimation]='enableAnimation' [center]='center' style="margin-top: 1rem;" width='92%'>
+            <e-accumulation-series-collection>
+                <e-accumulation-series type='Pie' [dataSource]='data' xName='name' yName='value' [dataLabel]='chartLabel' [startAngle]="startAngle" [endAngle]="endAngle" radius="70%" [explode]='explode' explodeOffset='10%' [explodeIndex]='0'>
+                </e-accumulation-series>
+            </e-accumulation-series-collection>
+        </ejs-accumulationchart>
+    </div>
+</div>
+<ng-template #mymodal let-modal>
+    <div class="modal-header" style="background-color: #2661e4;
+    height: 3.4rem;">
+        <h4 class="modal-title" id="modal-basic-title" style="color: #fff;
+        font-size: 1.1rem;">Thông báo</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true" style="color: #fff;">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        {{message}}
+    </div>
+    <div class="modal-footer" style="height: 3rem;">
+        <button style="background-color: #0678ec;
+        color: #fff;
+        border: none;" type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+    </div>
+</ng-template>

@@ -7,98 +7,22 @@
     <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
     <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
     <ul class="nav user-menu float-right">
-        <li class="nav-item dropdown d-none d-sm-block">
-            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span class="badge badge-pill bg-danger float-right">3</span></a>
-            <div class="dropdown-menu notifications">
-                <div class="topnav-dropdown-header">
-                    <span>Notifications</span>
-                </div>
-                <div class="drop-scroll">
-                    <ul class="notification-list">
-                        <li class="notification-message">
-                            <a href="activities.html">
-                                <div class="media">
-                                    <span class="avatar">
-                                        <img alt="John Doe" src="assets/admin/img/user.jpg" class="img-fluid">
-                                    </span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
-                                        <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a href="activities.html">
-                                <div class="media">
-                                    <span class="avatar">V</span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
-                                        <p class="noti-time"><span class="notification-time">6 mins ago</span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a href="activities.html">
-                                <div class="media">
-                                    <span class="avatar">L</span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
-                                        <p class="noti-time"><span class="notification-time">8 mins ago</span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a href="activities.html">
-                                <div class="media">
-                                    <span class="avatar">G</span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Rolland Webber</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
-                                        <p class="noti-time"><span class="notification-time">12 mins ago</span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a href="activities.html">
-                                <div class="media">
-                                    <span class="avatar">V</span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added new task <span class="noti-title">Private chat module</span></p>
-                                        <p class="noti-time"><span class="notification-time">2 days ago</span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="topnav-dropdown-footer">
-                    <a href="activities.html">View all Notifications</a>
-                </div>
-            </div>
-        </li>
-        <li class="nav-item dropdown d-none d-sm-block">
-            <a href="javascript:void(0);" id="open_msg_box" class="hasnotifications nav-link"><i class="fa fa-comment-o"></i> <span class="badge badge-pill bg-danger float-right">8</span></a>
-        </li>
         <li class="nav-item dropdown has-arrow">
             <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
                 <span class="user-img">
                     <img class="rounded-circle" src="assets/admin/img/user.jpg" width="24" alt="Admin">
                     <span class="status online"></span>
                 </span>
-                <span>Admin</span>
+                <span>{{role}}</span>
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="profile.html">My Profile</a>
-                <a class="dropdown-item" href="edit-profile.html">Edit Profile</a>
-                <a class="dropdown-item" href="settings.html">Settings</a>
-                <a class="dropdown-item" href="#" (click)="$event.preventDefault();logout()">Logout</a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenterAccount">Hồ Sơ</a>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenterEditAccount">Chỉnh Sửa Hồ Sơ</a>
+                <a class="dropdown-item" href="#" (click)="$event.preventDefault();logout()">Đăng Xuất</a>
             </div>
         </li>
     </ul>
-    <div class="dropdown mobile-user-menu float-right">
+    <!-- <div class="dropdown mobile-user-menu float-right">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="profile.html">My Profile</a>
@@ -106,5 +30,135 @@
             <a class="dropdown-item" href="settings.html">Settings</a>
             <a class="dropdown-item" href="#" (click)="$event.preventDefault();logout()">Logout</a>
         </div>
+    </div> -->
+</div>
+
+<div class="modal fade modal-wrapper" id="exampleModalCenterAccount">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="acount head-acount">
+                    <div class="container">
+                        <div id="main">
+                            <h1 class="title-page" style="text-align: center;">My Account</h1>
+                            <div class="content" id="block-history">
+                                <table class="std table">
+                                    <tbody>
+                                        <tr>
+                                            <th class="first_item">My Name :</th>
+                                            <td>{{employee.lastname}} {{employee.firstname}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="first_item">Gender :</th>
+                                            <td *ngIf="employee.gender == 0">male</td>
+                                            <td *ngIf="employee.gender == 1">Female</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="first_item">Birthday :</th>
+                                            <td>{{employee.birthday}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="first_item">Address :</th>
+                                            <td>{{employee.address}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="first_item">Phone:</th>
+                                            <td>{{employee.phone}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="first_item">Email :</th>
+                                            <td>{{employee.email}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
+<form [formGroup]="this.dataForm" (ngSubmit)="onSubmit()">
+    <div class="modal fade modal-wrapper" id="exampleModalCenterEditAccount">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-center">EDIT ACCOUNT</h2>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <div>
+                                <input class="form-control" name="firstname" type="text" placeholder="First name" formControlName="firstname">
+                            </div>
+                            <div *ngIf="submitted && f.firstname.errors">
+                                <div *ngIf="f.firstname.errors.required" class="errors"> * Firstname is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input class="form-control" name="lastname" type="text" placeholder="Last name" formControlName="lastname">
+                            </div>
+                            <div *ngIf="submitted && f.lastname.errors">
+                                <div *ngIf="f.lastname.errors.required" class="errors"> * Lastname is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio1">
+                                  <input type="radio" class="form-check-input" id="radio1" name="gender" [value]="0" checked formControlName="gender">Male
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio2">
+                                  <input type="radio" class="form-check-input" id="radio2" name="gender" [value]="1" formControlName="gender">Female
+                                </label>
+                            </div>
+                            <div *ngIf="submitted && f.gender.errors">
+                                <div *ngIf="f.gender.errors.required" class="errors"> * Gender is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="phone" style="display: flex">
+                                <button type="button" class="btn btn-default" aria-expanded="false"><span class="type-text">Phone</span> </button>
+                                <input type="text" name="phone" class="form-control" placeholder="(+84) 1111 111 111" formControlName="phone" />
+                            </div>
+                            <div *ngIf="submitted && f.phone.errors">
+                                <div *ngIf="f.phone.errors.required" class="errors"> * Phone is required</div>
+                                <div *ngIf="f.phone.errors.pattern" class="errors"> * Phone have to 10 digits (Ex: 0377730290)</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group phone">
+                                <button type="button" class="btn btn-default" aria-expanded="false"><span class="type-text">Birthday</span> </button>
+                                <input type="date" class="form-control" id="birthday" name="birthday" formControlName="birthday">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input class="form-control" name="Address" type="Address" placeholder="Address" formControlName="address">
+                            </div>
+                            <div *ngIf="submitted && f.address.errors">
+                                <div *ngIf="f.address.errors.required" class="errors"> * Address is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div style="text-align: center;">
+                            <button class="btn btn-primary" data-link-action="sign-in" type="submit">
+                                Edit Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

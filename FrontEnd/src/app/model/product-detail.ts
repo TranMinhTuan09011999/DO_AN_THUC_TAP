@@ -8,6 +8,7 @@ export class ProductDetail {
     quantity!: number;
     price!: number;
     image!:string;
+    discount!: number;
     product!: Product;
     color!: Color;
     size!: Size;

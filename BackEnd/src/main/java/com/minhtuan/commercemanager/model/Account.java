@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="taikhoan")
 @ToString
-@ApiModel(value = "All details about the student.")
 public class Account extends Auditable<String>{
     private static final long serialVersionUID = 1L;
 
@@ -29,6 +28,9 @@ public class Account extends Auditable<String>{
     @NotBlank(message = "Password is required")
     @Column(name = "PASSWORD", nullable = false)
     private String password;
+
+    @Column(name = "reset_token")
+    private String resetToken;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MANQ", nullable = false)

@@ -1,5 +1,5 @@
-import { Provider } from "@angular/core";
 import { Category } from "./category";
+import { Provider } from "./provider";
 
 export class Product {
     productId!: string;

@@ -2,48 +2,53 @@
     <div class="content">
         <div class="row">
             <div class="col-sm-8 col-5">
-                <h4 class="font-weight-bold">Product ID: {{productId}}</h4>
+                <h4 class="font-weight-bold">Mã sản phẩm: {{productId}}</h4>
             </div>
             <div class="col-sm-4 col-7 text-right m-b-30 ">
-                <a class="btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add product</a>
+                <a class="btn btn-primary btn-rounded float-right" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Thêm sản phẩm</a>
             </div>
         </div>
         <div class="row filter-row " style="max-width: 91%; margin: 0 17% ">
             <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 col-12 ">
                 <div class="form-group ">
-                    <label class="focus-label ">* Size </label>
-                    <select class="select ">
-                            <option>Cash</option>
-                            <option>Cheque</option>
-                        </select>
+                    <label class="focus-label ">* Kích thước </label>
+                    <select class="form-control" [(ngModel)]="sizeId">
+                        <option [ngValue] = 0></option>    
+                        <option *ngFor="let size of sizes" [ngValue]="size.sizeId" >
+                                {{size.size}}
+                              </option>
+                    </select>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 col-12 ">
                 <div class="form-group ">
-                    <label class="focus-label ">* Color </label>
-                    <select class="select ">
-                            <option>Cash</option>
-                            <option>Cheque</option>
-                        </select>
+                    <label class="focus-label ">* Màu </label>
+                    <select class="form-control" [(ngModel)]="colorId">
+                        <option [ngValue] = 0></option>
+                            <option *ngFor="let color of colors" [ngValue]="color.colorId" >
+                                {{color.colorName}}
+                              </option>
+                    </select>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 col-12 ">
                 <label class="focus-label "></label>
-                <a href="# " class="btn btn-success btn-block " style="margin-top: 8px; padding: 6px;min-height: 0px; "> Search </a>
+                <a href="# " class="btn btn-success btn-block " style="margin-top: 8px; padding: 6px;min-height: 0px; " (click)="$event.preventDefault();search();"> Tìm kiếm </a>
             </div>
         </div>
         <div class="row ">
             <div class="col-md-12 ">
                 <div class="table-responsive ">
-                    <table class="table table-striped custom-table mb-0 datatable ">
+                    <table class="table table-striped custom-table mb-0">
                         <thead>
                             <tr>
-                                <th>Image</th>
-                                <th>Size</th>
-                                <th>Color</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th class="text-right ">Actions</th>
+                                <th>Hình</th>
+                                <th>Kích thước</th>
+                                <th>Màu</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                                <th class="text-center ">Khuyến mại</th>
+                                <th class="text-right ">Chứu năng</th>
                             </tr>
                         </thead>
                         <tbody *ngFor="let productDetail of productDetails">
@@ -54,12 +59,13 @@
                                 <td>{{productDetail.size.size}}</td>
                                 <td>{{productDetail.color.colorName}}</td>
                                 <td>{{productDetail.quantity}}</td>
-                                <td>{{productDetail.price}}</td>
+                                <td>{{productDetail.price | currency: "VND"}}</td>
+                                <td class="text-center ">{{productDetail.discount}}%</td>
                                 <td class="text-right">
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="edit-expense.html"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a class="dropdown-item" href="edit-expense.html" data-toggle="modal" data-target="#exampleModalCenter1" (click)="$event.preventDefault();showEditProductDetail(productDetail.productDetailId);"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_expense"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
@@ -93,34 +99,34 @@
             <div class="modal-body ">
                 <div class="row ">
                     <div class="col-md-12 ">
-                        <h2 class="text-center ">ADD PRODUCT DETAIL</h2>
+                        <h2 class="text-center ">Thêm chi tiết sản phẩm</h2>
                     </div>
                 </div>
                 <form [formGroup]="this.dataForm" (ngSubmit)="onSubmit()">
                     <div class="row ">
                         <div class="col-sm-6 ">
                             <div class="form-group ">
-                                <label>Size: </label>
+                                <label>Kích thước: </label>
                                 <select class="form-control " formControlName="sizeId">
                                 <option *ngFor="let size of sizes " [ngValue]="size.sizeId ">
                                     {{size.size}}
                                   </option>
                             </select>
                                 <div *ngIf="submitted && f.sizeId.errors ">
-                                    <div *ngIf="f.sizeId.errors.required " class="errors "> * Size is required</div>
+                                    <div *ngIf="f.sizeId.errors.required " class="errors "> * Vui lòng nhập kích thước</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group ">
-                                <label>Color:</label>
+                                <label>Màu:</label>
                                 <select class="form-control " formControlName="colorId">
                                 <option *ngFor="let color of colors " [ngValue]="color.colorId ">
                                     {{color.colorName}}
                                   </option>
                             </select>
                                 <div *ngIf="submitted && f.colorId.errors ">
-                                    <div *ngIf="f.colorId.errors.required " class="errors "> * Color is required</div>
+                                    <div *ngIf="f.colorId.errors.required " class="errors "> * Vui lòng nhập màu</div>
                                 </div>
                             </div>
                         </div>
@@ -128,19 +134,19 @@
                     <div class="row ">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Price: </label>
+                                <label>Giá: </label>
                                 <input placeholder="" class="form-control" type="text" formControlName="price">
                                 <div *ngIf="submitted && f.price.errors">
-                                    <div *ngIf="f.price.errors.required" class="errors"> * Proce is required</div>
+                                    <div *ngIf="f.price.errors.required" class="errors"> * Vui lòng nhập giá</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Quantity: </label>
+                                <label>Số lượng: </label>
                                 <input placeholder="" class="form-control" type="number" formControlName="quantity">
                                 <div *ngIf="submitted && f.quantity.errors">
-                                    <div *ngIf="f.quantity.errors.required" class="errors"> * Quantity is required</div>
+                                    <div *ngIf="f.quantity.errors.required" class="errors"> * Vui lòng nhập số lượng</div>
                                 </div>
                             </div>
                         </div>
@@ -148,18 +154,105 @@
                     <div class="row ">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Image:</label>
+                                <label>Hình ảnh:</label>
                                 <input class="form-control" type="file" accept="image/*" (change)="onSelectFile($event)">
                                 <img [src]="imgURL" height="200" *ngIf="imgURL">
                             </div>
                         </div>
                     </div>
                     <div class="m-t-20 text-center ">
-                        <button class="btn btn-primary submit-btn btn-rounded " type="submit ">ADD</button>
+                        <button class="btn btn-primary submit-btn btn-rounded " type="submit ">Thêm</button>
                     </div>
                 </form>
             </div>
         </div>
 
+    </div>
+</div>
+
+<div class="modal fade modal-wrapper" id="exampleModalCenter1">
+    <div class="modal-dialog modal-dialog-centered " role="document ">
+        <div class="modal-content ">
+            <div class="modal-body ">
+                <div class="row ">
+                    <div class="col-md-12 ">
+                        <h2 class="text-center ">Sửa chi tiết sản phẩm</h2>
+                    </div>
+                </div>
+                <form [formGroup]="this.dataForm1" (ngSubmit)="onSubmit1()">
+                    <div class="row ">
+                        <div class="col-sm-6 ">
+                            <div class="form-group ">
+                                <label>Kích thước: </label>
+                                <select class="form-control " formControlName="sizeId">
+                                <option *ngFor="let size of sizes " [ngValue]="size.sizeId ">
+                                    {{size.size}}
+                                  </option>
+                            </select>
+                                <div *ngIf="submitted1 && f1.sizeId.errors ">
+                                    <div *ngIf="f1.sizeId.errors.required " class="errors "> * Vui lòng nhập kích thước</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group ">
+                                <label>Màu:</label>
+                                <select class="form-control " formControlName="colorId">
+                                <option *ngFor="let color of colors " [ngValue]="color.colorId ">
+                                    {{color.colorName}}
+                                  </option>
+                            </select>
+                                <div *ngIf="submitted1 && f1.colorId.errors ">
+                                    <div *ngIf="f1.colorId.errors.required " class="errors "> * Vui lòng nhập màu</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Giá: </label>
+                                <input placeholder="" class="form-control" type="text" formControlName="price">
+                                <div *ngIf="submitted1 && f1.price.errors">
+                                    <div *ngIf="f1.price.errors.required" class="errors"> * Vui lòng nhập giá</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Số lượng: </label>
+                                <input placeholder="" class="form-control" type="number" formControlName="quantity">
+                                <div *ngIf="submitted1 && f1.quantity.errors">
+                                    <div *ngIf="f1.quantity.errors.required" class="errors"> * Vui lòng nhập số lượng/div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Hình ảnh:</label>
+                                    <input class="form-control" type="file" accept="image/*" (change)="onSelectFile($event)">
+                                    <img [src]="imgURL" height="200" width="200" *ngIf="imgURL">
+                                    <img src="http://localhost:8080/api/image/imageProduct/{{productDetailId}}" height="200" width="200" *ngIf="!imgURL">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Khuyến mãi: </label>
+                                    <input placeholder="" class="form-control" type="number" formControlName="discount">
+                                    <div *ngIf="submitted1 && f1.discount.errors">
+                                        <div *ngIf="f1.discount.errors.required" class="errors"> * Vui lòng nhập phần trăm</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-t-20 text-center ">
+                            <button class="btn btn-primary submit-btn btn-rounded " type="submit ">Sửa</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

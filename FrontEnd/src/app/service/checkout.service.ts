@@ -1,8 +1,9 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Order } from '../model/order';
+import { InvoiceRequest } from '../request/invoice-request';
 import { OrderDetailRequest } from '../request/order-detail-request';
 import { OrderRequest } from '../request/order-request';
 
@@ -26,8 +27,26 @@ export class CheckoutService {
   addOrderDetails(token: String, orderDetailRequest : OrderDetailRequest): Observable<any> {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);
-    return this.http.post(API_URL + 'orderDetail', orderDetailRequest, { headers: headers})
+    console.log("kkkkkkk");
+    return this.http.post(API_URL + 'orderDetail', orderDetailRequest, { headers: headers, responseType: 'text'})
                   .pipe( 
+                    catchError(this.handleError));
+  }
+
+  addReceipt(token: String, invoiceRequest : InvoiceRequest): Observable<any> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.post(API_URL + 'admin/invoice', invoiceRequest, { headers: headers, responseType: 'text'})
+                  .pipe( 
+                    catchError(this.handleError));
+  }
+
+  paymentPaypal(orderId: string, price: number): Observable<any>{
+    let params = new HttpParams();
+    params = params.append('price', price.toString());
+    params = params.append('orderId', orderId);
+    return this.http.post(API_URL + 'pay',{}, {params: params, responseType: 'text'})
+                  .pipe(
                     catchError(this.handleError));
   }
 

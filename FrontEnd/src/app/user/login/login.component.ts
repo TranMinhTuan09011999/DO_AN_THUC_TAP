@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 import { LoginRequest } from 'src/app/model/login-request';
 import { AuthService } from 'src/app/service/auth.service';
 import { ClassBodyService } from 'src/app/service/class-body.service';
@@ -29,8 +31,12 @@ export class LoginComponent implements OnInit {
   captchaError: boolean = false;
   invalidLogin: boolean = false;
   loginResponse!: string;
+  message!: string;
+  closeResult!: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService, private router:Router, private tokenStorageService: TokenStorageService, private countService: CountService, private classBodyService: ClassBodyService, private pageService: PageService) { }
+  constructor(private modalService: NgbModal, private translate: TranslateService, private fb: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService, private router:Router, private tokenStorageService: TokenStorageService, private countService: CountService, private classBodyService: ClassBodyService, private pageService: PageService) {
+    translate.setDefaultLang('vn');
+  }
 
   ngOnInit(): void {
     this.classBodyService.changeClass(this.classBody);
@@ -48,12 +54,13 @@ export class LoginComponent implements OnInit {
   }
   get f() { return this.dataForm.controls; }
 
-  onSubmit(): void {
+  onSubmit(content: any): void {
     this.submitted = true;
     if(this.dataForm.invalid){
       return;
     }
     const response = grecaptcha.getResponse();
+    console.log(response);
     if (response.length === 0) {
       this.captchaError = true;
       return;
@@ -64,7 +71,6 @@ export class LoginComponent implements OnInit {
     login.recaptchaResponse = response;
     this.authService.login(login).subscribe(
       data => {
-        console.log("aaa");
         if(data.status === 200) {
           this.tokenStorage.saveUser(data);        
           this.token =  this.tokenStorage.getUser().token;
@@ -86,7 +92,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['../']).then(this.reloadPage);
           }    
           else {
-            this.router.navigate(['admin']);
+            this.router.navigate(['admin']).then(this.reloadPage);;
           }
         } else {
           this.invalidLogin = true;
@@ -95,13 +101,36 @@ export class LoginComponent implements OnInit {
         grecaptcha.reset();
       },
       err => {  
-        this.IsLogin = true;
-      }
+        this.message = 'Email or Password is wrong!!!';
+          this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+            console.log(this.closeResult);
+          }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            console.log(this.closeResult);
+          });
+          return;
+        }
     );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 
   reloadPage(): void {
     window.location.reload();
+  }
+
+  toForgotPassword(){
+    this.router.navigate(['../forgot-password']).then(this.reloadPage);
+    this.reloadPage();
   }
   
 }

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
 import { AdminModule } from './admin/admin.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -30,6 +30,19 @@ import { CartComponent } from './user/cart/cart.component';
 import { CheckoutComponent } from './user/checkout/checkout.component';
 import { PurchaseOrderComponent } from './user/purchase-order/purchase-order.component';
 
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MyAccountComponent } from './user/my-account/my-account.component';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import { SuccessPaypalComponent } from './user/success-paypal/success-paypal.component';
+import { CancedPaypalComponent } from './user/canced-paypal/canced-paypal.component';
+
+export function HttpLoaderFactory(http: HttpClient){
+  return new TranslateHttpLoader(http);
+}
+
 
 @NgModule({
   declarations: [
@@ -46,6 +59,11 @@ import { PurchaseOrderComponent } from './user/purchase-order/purchase-order.com
     CartComponent,
     CheckoutComponent,
     PurchaseOrderComponent,
+    MyAccountComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    SuccessPaypalComponent,
+    CancedPaypalComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +72,15 @@ import { PurchaseOrderComponent } from './user/purchase-order/purchase-order.com
     ReactiveFormsModule,
     AdminModule,
     BrowserAnimationsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgbModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   // providers: [UserService, AuthService, CartService, CountService, TokenStorageService ,LoginGuard, 
   //   {provide: HTTP_INTERCEPTORS, useClass:  AuthInterceptor, multi: true}

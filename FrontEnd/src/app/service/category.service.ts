@@ -32,10 +32,19 @@ export class CategoryService {
                     catchError(this.handleError));
   }
 
-  getCategory(token: String): Observable<any> {
+  getCategory(token: String): Observable<Category[]> {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);
     return this.http.get<Category[]>(API_URL + 'admin/' + 'category', { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  getCategoryByCategoryId(token: string, categoryId: string): Observable<Category> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.get<Category>(API_URL + 'admin/category/' + categoryId, { headers: headers})
                   .pipe(
                     retry(3), 
                     catchError(this.handleError));
@@ -45,6 +54,30 @@ export class CategoryService {
     return this.http.get<Category[]>(API_URL + 'customer/' + 'category')
                   .pipe(
                     retry(3), 
+                    catchError(this.handleError));
+  }
+
+  getCategoryByRoom(roomId: number): Observable<Category[]>{
+    return this.http.get<Category[]>(API_URL + 'customer/category/' + roomId)
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  updateCategory(token: String, categoryId: string, catogeryRequest: CatogeryRequest): Observable<Category> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.put<Category>(API_URL + 'admin/category/update/' + categoryId, catogeryRequest, { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  deleteCategory(token: String, categoryId: string): Observable<any> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.put(API_URL + 'admin/category/delete/' + categoryId, {} ,{ headers: headers, responseType: 'text'})
+                  .pipe(
                     catchError(this.handleError));
   }
 

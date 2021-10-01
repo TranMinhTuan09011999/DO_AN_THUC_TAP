@@ -48,6 +48,9 @@ public class Order {
     @Column(name = "TRANGTHAI", nullable = false)
     private Integer status;
 
+    @Column(name = "THANHTOAN", nullable = false)
+    private Integer payment;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MANV")
     @EqualsAndHashCode.Exclude

@@ -47,4 +47,10 @@ public class ProductDetailCustomerController {
         List<CartResponse> cartResponseList = productDetailService.getProductDetailByProductDetailId(productDetailId);
         return ResponseEntity.ok().body(cartResponseList.get(0));
     }
+
+    @GetMapping("/productDetail/{productDetailId}")
+    public ResponseEntity<?> getProductDetailWithProductDetailId (@PathVariable(value = "productDetailId") Integer productDetailId) throws ResourceNotFoundException {
+        ProductDetailDTO productDetailDTO = productDetailService.getProductDetailWithProductDetailId(productDetailId);
+        return ResponseEntity.ok().body(productDetailDTO);
+    }
 }

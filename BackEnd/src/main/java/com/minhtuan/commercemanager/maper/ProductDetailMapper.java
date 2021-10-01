@@ -24,6 +24,7 @@ public class ProductDetailMapper {
         dto.setQuantity(productDetail.getQuantity());
         dto.setPrice(productDetail.getPrice());
         dto.setImage(productDetail.getImage());
+        dto.setDiscount(productDetail.getDiscount());
         dto.setSize(sizeMapper.toDTO(productDetail.getSize()));
         dto.setColor(colorMapper.toDTO(productDetail.getColor()));
         dto.setProduct(productMapper.toDTO(productDetail.getProduct()));

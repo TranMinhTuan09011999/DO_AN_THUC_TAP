@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { ProductDetail } from '../model/product-detail';
 import { ProductWithRoomIdAndCategoryId } from '../model/product-with-room-id-and-category-id';
+import { ProductDetailRequest } from '../request/product-detail-request';
 import { ProductRequest } from '../request/product-request';
 import { CartResponse } from '../response/cart-response';
 
@@ -25,10 +26,41 @@ export class ProductDetailService {
                     catchError(this.handleError));
   }
 
+  updateProductDetail(token: String, productDetailId: number, formData: FormData): Observable<any> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.put(API_URL + 'admin/product-detail/update/' + productDetailId, formData, { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  updateProductDetailWithoutImage(token: String, productDetailId: number, productDetailRequest: ProductDetailRequest): Observable<any> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.put(API_URL + 'admin/product-detail/update/noChangeImage/' + productDetailId, productDetailRequest, { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
   getProductDetail(token: String, productId: String): Observable<ProductDetail[]> {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);
     return this.http.get<ProductDetail[]>(API_URL + 'admin/product-detail/' + productId, { headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  getProductDetailBySearch(token: String, productId: string, sizeId: number, colorId: number): Observable<ProductDetail[]> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    let params = new HttpParams();
+    params = params.append('sizeId', sizeId.toString());
+    params = params.append('colorId', colorId.toString());
+    params = params.append('productId', productId);
+    return this.http.get<ProductDetail[]>(API_URL + 'admin/productDetail/search', {params: params, headers: headers})
                   .pipe(
                     retry(3), 
                     catchError(this.handleError));
@@ -52,12 +84,36 @@ export class ProductDetailService {
                     catchError(this.handleError));
   }
 
+  getProductDetailWithProductDetailId(productDetailId: number):Observable<ProductDetail>{
+    return this.http.get<ProductDetail>(API_URL + 'customer/productDetail/' + productDetailId)
+                  .pipe(
+                    catchError(this.handleError));
+  }
+
   ckeckProductExist(token: string, productId: string, sizeId: number, colorId: number): Observable<boolean> {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);
     return this.http.get<boolean>(API_URL + 'admin/' + productId + '/' + sizeId + '/' + colorId, { headers: headers})
                   .pipe(
                     catchError(this.handleError));
+  }
+
+  updateProductDetailWithQuantityAndPrice(token: String, productDetailId: number, quantity: number, price: number): Observable<ProductDetail> {
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.put<ProductDetail>(API_URL + 'admin/productDetail/update/' + productDetailId + '/' + quantity + '/' + price, {} ,{ headers: headers})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  updateProductDetailQuantity(token: String, productDetailId: number, quantity: number):Observable<ProductDetail>{
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.put<ProductDetail>(API_URL + 'admin/productDetail/update/' + productDetailId,{quantity},{headers: headers})
+                    .pipe(
+                      catchError(this.handleError)
+                    );
   }
 
   private handleError(error: HttpErrorResponse) {

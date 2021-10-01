@@ -23,6 +23,13 @@ export class ColorService {
                     catchError(this.handleError));
   }
 
+  getColorCustomer(): Observable<Color[]> {
+    return this.http.get<Color[]>(API_URL + 'customer/' + 'color')
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
   getColorByColorId(token: String, colorId: number): Observable<Color> {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);

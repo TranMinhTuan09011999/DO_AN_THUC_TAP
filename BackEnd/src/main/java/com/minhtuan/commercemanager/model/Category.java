@@ -25,6 +25,9 @@ public class Category {
     @Column(name = "TENDMH", nullable = false)
     private String categoryName;
 
+    @Column(name = "TRANGTHAI", nullable = false)
+    private Integer status;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MAPHONG")
     @EqualsAndHashCode.Exclude

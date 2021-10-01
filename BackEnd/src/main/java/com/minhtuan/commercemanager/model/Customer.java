@@ -52,12 +52,15 @@ public class Customer extends Auditable<String>{
     @Column(name = "EMAIL", nullable = false)
     private String email;
 
+    @Column(name = "TRANGTHAI", nullable = false)
+    private Integer status;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<Order> orders;
 
-    public Customer(String id, String firstname, String lastname, Integer gender, Date birthday, String address, String phone, String email) {
+    public Customer(String id, String firstname, String lastname, Integer gender, Date birthday, String address, String phone, String email, Integer status) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -66,5 +69,6 @@ public class Customer extends Auditable<String>{
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.status = status;
     }
 }

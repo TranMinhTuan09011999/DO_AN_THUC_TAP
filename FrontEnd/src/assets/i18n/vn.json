@@ -1,0 +1,273 @@
+{
+    "HEADER": {
+        "HOME": "TRANG CHỦ",
+        "ORDER": "ĐƠN HÀNG",
+        "CONTACT": "LIÊN HỆ",
+        "SEARCH": "Tìm kiếm",
+        "ACCOUNT": "Tài Khoản",
+        "LOGOUT": "Đăng xuất",
+        "TOTAL": "TỔNG TIỀN",
+        "VIEWCART": "GIỎ HÀNG",
+        "CHECKOUT": "THANH TOÁN",
+        "SIGNIN": "Đăng Nhập",
+        "REGISTER": "Đăng Ký Tài Khoản"
+    },
+
+    "TITLE": {
+        "FREEDELIVERY": "GIAO HÀNG MIỄN PHÍ TỪ 250$",
+        "FREEINSTALLATION": "LẮP ĐẶT MIỄN PHÍ",
+        "MONEYBACK": "CHÍNH SÁCH HOÀN TRẢ TIỀN",
+        "HOME": "Trang chủ",
+        "LOGIN": "Đăng nhập"
+    },
+
+    "ROOM": {
+        "LIVINGROOM": "PHÒNG KHÁCH",
+        "KITCHEN": "PHÒNG BẾP",
+        "DINNINGROOM": "PHÒNG ĂN",
+        "BEDROOM": "PHÒNG NGỦ",
+        "BATHROOM": "PHÒNG TẮM",
+        "Living Room": "Phòng Khách",
+        "Kitchen": "Phòng Bếp",
+        "Dining Room": "Phòng Ăn",
+        "Bedroom": "Phòng Ngủ",
+        "Bathroom": "Phòng Tắm"
+    },
+
+    "LOGIN": {
+        "LOGIN": "ĐĂNG NHẬP",
+        "Email": "Email",
+        "Password": "Mật khẩu",
+        "Forgot": "Quên mật khẩu?",
+        "SIGN IN": "ĐĂNG NHẬP",
+        "Email is required": "Vui lòng nhập email",
+        "Password is required": "Vui lòng nhập password",
+        "FormatEmail": "Định dạng email không đúng (Ví dụ: tmtuan@gmail.com)",
+        "Recaptcha": "Bạn chưa xác thực captcha"
+    },
+
+    "REGISTER": {
+        "REGISTER": "ĐĂNG KÝ",
+        "FIRSTNAME": "Tên",
+        "LASTNAME": "Họ",
+        "MALE": "Nam",
+        "FEMALE": "Nữ",
+        "PHONE": "SDT",
+        "BIRTHDAY": "Ngày sinh",
+        "ADDRESS": "Địa chỉ",
+        "PASSWORD": "Mật khẩu",
+        "REPEATPASSWORD": "Nhập lại mật khẩu",
+        "REQUIREDEMAIL": "Vui lòng nhập email",
+        "FormatEmail": "Định dạng email không đúng (Ví dụ: tmtuan@gmail.com)",
+        "EXISTEMAIL": "Email đã tồn tại",
+        "REQUIREDFIRSTNAME": "Vui lòng nhập tên",
+        "REQUIREDLASTNAME": "Vui lòng nhập họ",
+        "REQUIREDGENDER": "Vui lòng chọn giới tính",
+        "REQUIREDPHONE": "Vui lòng nhập số điện thoại",
+        "PHONE10": "SDT phải là 10 số (VD: 0344425623)",
+        "REQUIREDADDRESS": "Vui lòng nhập địa chỉ",
+        "REQUIREDPASSWORD": "Vui lòng nhập mật khẩu",
+        "REQUIREDREPEATPASSWORD": "Vui lòng nhập lại mật khẩu",
+        "MATCHPASSWORD": "Mật khẩu không trùng nhau",
+        "CREATEACCOUNT": "TẠO TÀI KHOẢN"
+    },
+
+    "FORGOTPASSWORD": {
+        "HOME": "Trang chủ",
+        "RESETPASSWORD": "Lấy lại mật khẩu",
+        "REQUIREDEMAIL": "Vui lòng nhập email",
+        "FormatEmail": "Định dạng email không đúng (Ví dụ: tmtuan@gmail.com)",
+        "EmailNotExist": "Email không tồn tại",
+        "SEND": "GỬI LINK",
+        "Please check your email to change password...": "Vui lòng kiểm tra email của bạn!!!"
+    },
+
+    "RESETPASSWORD": {
+        "HOME": "Trang chủ",
+        "RESETPASSWORD": "Lấy lại mật khẩu",
+        "NEWPASSWORD": "MẬT KHẨU MỚI",
+        "NEWPASSWORD1": "Mật khẩu mới",
+        "NEWPASSWORDAGAIN": "Nhập lại mật khẩu mới",
+        "RIQUIREDNEWPASSWORD": "Vui lòng nhập mật khẩu mới",
+        "RIQUIREDNEWPASSWORDAGAIN": "Vui lòng nhập lại mật khẩu mới",
+        "MATCHPASSWORD": "Mật khẩu không trùng nhau",
+        "CHANGE": "THAY ĐỔI"
+    },
+
+    "CATEGORY": {
+        "CATEGORIES": "DANH MỤC HÀNG",
+        "SOFA": "GHẾ NIỆM",
+        "SIDE TABLE": "BÀN PHỤ",
+        "FLOOR LAMP": "ĐÈN BÀN",
+        "ARMCHAIR": "GHẾ NIỆM TỰA",
+        "WALL CLOCK": "ĐỒNG HỒ TREO TƯỜNG",
+        "PICTURE": "TRANH",
+        "FIREPLACE": "LÒ SƯỞI",
+        "Tủ Lạnh": "TỦ LẠNH"
+    },
+
+    "HOMEPRODUCT": {
+        "NEWPRODUCT": "SẢN PHẨM MỚI NHẤT",
+        "DISCOUNT": "SẢN PHẨM KHUYẾN MÃI",
+        "SPECIAL": "SẢN PHẨM ĐẶC BIỆT",
+        "NEW": "MỚI"
+    },
+
+    "PRODUCT": {
+        "SO-938 Sofa set 3-1-Don": "SO-938 Sofa set 3-1-Don",
+        "SO-920 Sofa Set 3-1": "SO-920 Sofa Set 3-1",
+        "SO-912 Sofa Set 3-2-1": "SO-912 Sofa Set 3-2-1",
+        "Sofa 3 chỗ Klosso phong cách Châu Âu KGB001": "Sofa 3 chỗ Klosso phong cách Châu Âu KGB001",
+        "SO-524 Corner Sofa": "SO-524 Corner Sofa",
+        "SO-529 Sofa Set 3-1": "SO-529 Sofa Set 3-1",
+        "European Style Klosso Single Sofa": "European Style Klosso Single Sofa",
+        "Sofa Đơn Klosso Phong Cách Châu Âu KSD003-C": "Sofa Đơn Klosso Phong Cách Châu Âu KSD003-C",
+        "Tủ lạnh Energy Star": "Tủ lạnh Energy Star",
+        "Tủ lạnh Smart Energy Star": "Tủ lạnh Smart Energy Star",
+        "Tủ lạnh đông đáy 22 Energy Star 9 Cu": "Tủ lạnh đông đáy 22 Energy Star 9 Cu",
+        "Tủ lạnh Ngôi sao Năng lượng Thông minh với Trung tâm gia đình": "Tủ lạnh Ngôi sao Năng lượng Thông minh với Trung tâm gia đình",
+        "Tủ lạnh 24 Top Freezer 10 cu. Ft.": "Tủ lạnh 24 Top Freezer 10 cu. Ft.",
+        "Tủ lạnh hai cửa 23 Tủ đông trên cùng 7,4 cu. Ft.": "Tủ lạnh hai cửa 23 Tủ đông trên cùng 7,4 cu. Ft.",
+        "Cosmo 22.5 Chân khối bằng thép không gỉ Tủ lạnh 4 cửa kiểu Pháp có tay cầm kéo": "Cosmo 22.5 Chân khối bằng thép không gỉ Tủ lạnh 4 cửa kiểu Pháp có tay cầm kéo"
+    },
+
+    "MESSAGE": {
+        "MESSAGE": "THÔNG BÁO",
+        "Email or Password is wrong!!!": "Email hoặc mật khẩu không đúng!!!",
+        "Register Account Successlly!!!": "ĐĂNG KÝ TÀI KHOẢN THÀNH CÔNG",
+        "Change password successly...": "THAY ĐỔI MẬT KHẨU THÀNH CÔNG"
+    },
+
+    "GRIDPRODUCT": {
+        "HOME": "Trang chủ",
+        "PRICE": "GIÁ",
+        "SEARCH": "TÌM KIẾM",
+        "BYCOLOR": "MÀU",
+        "SORT BY": "SẮP XẾP",
+        "NAMEAZ": "TÊN, A đến Z",
+        "NAMEZA": "TÊN, Z đến A",
+        "PRICEAZ": "GIÁ, Thấp đến Cao",
+        "PRICEZA": "GIÁ, Cao đến thấp",
+        "ADDTOCART": "THÊM GIỎ HÀNG",
+        "INSTOCK": "TRONG KHO"
+    },
+
+    "COLOR": {
+        "ĐEN": "ĐEN",
+        "XANH LÁ": "XANH LÁ",
+        "TÍM": "TÍM",
+        "XÁM": "XÁM",
+        "CAM": "CAM",
+        "TRẮNG": "TRẮNG",
+        "ĐỎ": "ĐỎ",
+        "VÀNG": "VÀNG"
+    },
+
+    "PRODUCTDESCRIPTION": {
+        "Bộ Sofa da Nhật Bản SO-938 có kích thước vừa phải, thích hợp cho phòng khách vừa và nhỏ, mang đậm nét sang trọng vốn có của nghệ thuật thiết kế nội thất Nhật Bản.": "Bộ Sofa da Nhật Bản SO-938 có kích thước vừa phải, thích hợp cho phòng khách vừa và nhỏ, mang đậm nét sang trọng vốn có của nghệ thuật thiết kế nội thất Nhật Bản.",
+        "Bộ Sofa da Nhật Bản SO-912 gồm 1 sofa 2 chỗ, 1 sofa 1 chỗ và 1 cục giữa  được sản xuất tại Nhật với thiết kế mang đậm nét sang trọng vốn có của nghệ thuật thiết kế nội thất Nhật Bản.": "Bộ Sofa da Nhật Bản SO-912 gồm 1 sofa 2 chỗ, 1 sofa 1 chỗ và 1 cục giữa được sản xuất tại Nhật với thiết kế mang đậm nét sang trọng vốn có của nghệ thuật thiết kế nội thất Nhật Bản.",
+        "Bộ Sofa da đa năng Nhật Bản SO-920 được điều khiển bằng cơ điện, có thể bật ra thành ghế thư giãn. Ghế ở giữa có thể gập xuống thành bàn, rất thích hợp cho nhu cầu nghỉ ngơi của gia đình.": "Bộ Sofa da đa năng Nhật Bản SO-920 được điều khiển bằng cơ điện, có thể bật ra thành ghế thư giãn. Ghế ở giữa có thể gập xuống thành bàn, rất thích hợp cho nhu cầu nghỉ ngơi của gia đình.",
+        "Bộ Sofa SO-524 được thiết kế với kích thước phù hợp với không gian vừa và nhỏ. Phần ghế bật điện thư giãn được điều khiển bằng điện, với nhiều chế độ rất tiện lợi tạo sự thoải mái cho người dùng": "Bộ Sofa SO-524 được thiết kế với kích thước phù hợp với không gian vừa và nhỏ. Phần ghế bật điện thư giãn được điều khiển bằng điện, với nhiều chế độ rất tiện lợi tạo sự thoải mái cho người dùng",
+        "Bộ Sofa da nhập khẩu Malaysia SO-529, được thiết kế độc đáo với tính năng điều khiển bằng cơ điện, có thể bật ra thành ghế thư giãn.": "Bộ Sofa da nhập khẩu Malaysia SO-529, được thiết kế độc đáo với tính năng điều khiển bằng cơ điện, có thể bật ra thành ghế thư giãn.",
+        "Khung gỗ kháng ẩm, kháng khuẩn. Mút D40 kháng khuẩn, độ bền cao, đàn hồi tốt. Được bọc lớp vải bố nhung mịn kháng khuẩn cao cấp": "Khung gỗ kháng ẩm, kháng khuẩn. Mút D40 kháng khuẩn, độ bền cao, đàn hồi tốt. Được bọc lớp vải bố nhung mịn kháng khuẩn cao cấp",
+        "Khung gỗ kháng ẩm, kháng khuẩn. Mút D40 kháng khuẩn, độ bền cao, đàn hồi tốt. Chân gỗ cao cấp, bền, chắc chắn. ": "Khung gỗ kháng ẩm, kháng khuẩn. Mút D40 kháng khuẩn, độ bền cao, đàn hồi tốt. Chân gỗ cao cấp, bền, chắc chắn.",
+        "Chiếc tủ lạnh này được thiết kế đẹp mắt với ngăn trưng bày tối thiểu, thiết kế hiện đại kết hợp tuyệt đẹp với căn bếp của bạn và lớp sơn hoàn thiện chống lại những vết ố hàng ngày.": "Chiếc tủ lạnh này được thiết kế đẹp mắt với ngăn trưng bày tối thiểu, thiết kế hiện đại kết hợp tuyệt đẹp với căn bếp của bạn và lớp sơn hoàn thiện chống lại những vết ố hàng ngày.",
+        "Tủ lạnh trung tâm gia đình được thiết kế đẹp mắt với ngăn phân phối tối thiểu và cửa cạnh kiểu dáng đẹp với tay cầm hiện đại.": "Tủ lạnh trung tâm gia đình được thiết kế đẹp mắt với ngăn phân phối tối thiểu và cửa cạnh kiểu dáng đẹp với tay cầm hiện đại.",
+        "Tủ lạnh này được Chứng nhận ENERGY STAR về hiệu quả sử dụng năng lượng quanh năm, được thiết kế để tiết kiệm năng lượng tối ưu và sử dụng dễ dàng, đáng tin cậy.": "Tủ lạnh này được Chứng nhận ENERGY STAR về hiệu quả sử dụng năng lượng quanh năm, được thiết kế để tiết kiệm năng lượng tối ưu và sử dụng dễ dàng, đáng tin cậy.",
+        "Tủ lạnh trung tâm gia đình của Samsung giúp bạn kết nối dễ dàng hơn với những gì quan trọng nhất đối với bạn: gia đình và ngôi nhà của bạn, mọi lúc mọi nơi. ": "Tủ lạnh trung tâm gia đình của Samsung giúp bạn kết nối dễ dàng hơn với những gì quan trọng nhất đối với bạn: gia đình và ngôi nhà của bạn, mọi lúc mọi nơi. ",
+        "Thêm một chút tinh tế cổ điển cho ngôi nhà của bạn với tủ lạnh gắn trên cùng phong cách retro của Galanz.": "Thêm một chút tinh tế cổ điển cho ngôi nhà của bạn với tủ lạnh gắn trên cùng phong cách retro của Galanz.",
+        "Một cấu hình hẹp và thiết kế kiểu dáng đẹp làm cho 7,4 cu này. ft. Tủ lạnh / Tủ đông màu trắng, thiết bị nhà bếp lý tưởng cho các căn hộ, nhà phố, chung cư hoặc bất kỳ ngôi nhà nào có không gian hạn chế.": "Một cấu hình hẹp và thiết kế kiểu dáng đẹp làm cho 7,4 cu này. ft. Tủ lạnh / Tủ đông màu trắng, thiết bị nhà bếp lý tưởng cho các căn hộ, nhà phố, chung cư hoặc bất kỳ ngôi nhà nào có không gian hạn chế.",
+        "Tủ lạnh cửa trên Pháp có kích thước 22,5 foot khối của Cosmo có kiểu dáng đẹp tối giản cao cấp và các tính năng sáng tạo, ấn tượng.": "Tủ lạnh cửa trên Pháp có kích thước 22,5 foot khối của Cosmo có kiểu dáng đẹp tối giản cao cấp và các tính năng sáng tạo, ấn tượng."
+    },
+
+    "PRODUCTDETAIL": {
+        "ADDTOCART": "THÊM GIỎ HÀNG",
+        "SIZE": "KÍCH THƯỚC",
+        "COLOR": "MÀU",
+        "OTHERCOLOR": "MÀU KHÁC",
+        "QTY": "SỐ LƯỢNG",
+        "OUTOFSTOCK": "HẾT HÀNG",
+        "IMAGE": "Hình ảnh",
+        "PRODUCTNAME": "Tên sản phẩm",
+        "PRICE": "GIÁ",
+        "PRODUCT DETAIL INFORMATION": "THÔNG TIN CHI TIẾT SẢN PHẨM"
+    },
+
+    "CART": {
+        "HOME": "Trang chủ",
+        "SHOPPINGCART": "Giỏ Hàng",
+        "SIZE": "KÍCH THƯỚC",
+        "COLOR": "MÀU",
+        "QTY": "SỐ LƯỢNG",
+        "TOTAL": "THÀNH TIỀN",
+        "There are": "Có ",
+        "Item": "sản phẩm trong giỏ hàng",
+        "TOTALPRODUCTS": "Tổng tiền: ",
+        "TOTALSHIP": "Giao hàng",
+        "FREE": "miễn phí",
+        "SECURITY": "Chính sách bảo mật",
+        "DELIVERY": "Chính sách giao hàng",
+        "RETURN": "Chính sách hoàn trả",
+        "CONTINUE": "TIẾP TỤC MUA HÀNG",
+        "CLEARCART": "XÓA GIỎ HÀNG",
+        "CHECKOUT": "ĐẶT HÀNG"
+    },
+
+    "ORDER": {
+        "HOME": "Trang chủ",
+        "ORDER": "Đặt hàng",
+        "INFORMATION": "THÔNG TIN NGƯỜI NHẬN",
+        "FIRSTNAME": "Tên",
+        "LASTNAME": "Họ",
+        "ADDRESS": "Địa chỉ",
+        "REQUIREDFIRSTNAME": "Vui lòng nhập tên người nhận",
+        "REQUIREDLASTNAME": "Vui lòng nhập họ người nhận",
+        "REQUIREDADDRESS": "Vui lòng nhập địa chỉ người nhận",
+        "REQUIREDPHONE": "Vui lòng nhập số điện thoại",
+        "PHONE10": "SDT phải là 10 số (VD: 0344425623)",
+        "ORDER1": "ĐẶT HÀNG",
+        "PRODUCT": "Sản phẩm",
+        "QTY": "Số lượng",
+        "TOTAL": "Thành tiền",
+        "NAME": "TÊN",
+        "PRICE": "GIÁ",
+        "SIZE": "KÍCH THƯỚC",
+        "COLOR": "MÀU",
+        "Cart Subtotal": "Tổng tiền",
+        "TOTALSHIP": "Giao hàng",
+        "FREE": "miễn phí"
+    },
+
+    "MYORDER": {
+        "HOME": "Trang chủ",
+        "Purchase": "Đơn Hàng",
+        "Unconfirmed": "Chưa xác nhận",
+        "Confirmed": "Xác nhận",
+        "Delivering": "Đang giao",
+        "Delivered": "Đã giao",
+        "Canceled": "Đã hủy",
+        "OrderDate": "Ngày đặt",
+        "Fullname": "Họ tên người nhận",
+        "Address": "Địa chỉ người nhận",
+        "Phone": "SDT người nhận",
+        "DeliveryDate": "Ngày giao",
+        "DeliveryEmployee": "Nhân viên giao",
+        "Action": "Chức năng",
+        "Cancel": "Hủy",
+        "Payment": "Thanh toán",
+        "Paymented": "Đã thanh toán"
+    },
+
+    "ACCOUNT": {
+        "HOME": "Trang chủ",
+        "MYACCOUNT": "Thông Tin Tài Khoản",
+        "MYNAME": "Họ Và Tên",
+        "GENDER": "Giới tính",
+        "BIRTHDAY": "Ngày sinh",
+        "ADDRESS": "Địa chỉ",
+        "PHONE": "Số điện thoại",
+        "Male": "Nam",
+        "Female": "Nữ",
+        "Edit": "SỬA THÔNG TIN"
+    }
+}

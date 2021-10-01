@@ -7,4 +7,5 @@ export class CartResponse {
     size!: string;
     colorId!: number;
     colorName!: string;
+    percent!: number;
 }

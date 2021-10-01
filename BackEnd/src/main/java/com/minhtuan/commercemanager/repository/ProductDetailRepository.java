@@ -16,18 +16,20 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, In
     Optional<ProductDetail> findByProductDetailId(Integer productDetailId);
 
     @Query(
-            value = "SELECT sp.productId, sp.productName, ctsp.productDetailId, ctsp.image, ctsp.price, sp.description, ctsp.size.sizeId, ctsp.color.id, s.size, c.colorName, c.colorId FROM ProductDetail ctsp " +
+            value = "SELECT sp.productId, sp.productName, ctsp.productDetailId, ctsp.price, sp.description, ctsp.size.sizeId, ctsp.color.id, s.size, c.colorName, c.colorId, ctsp.discount, sp.status, ctsp.quantity, r.name, ca.categoryName FROM ProductDetail ctsp " +
                     "INNER JOIN Product sp ON ctsp.product.productId = sp.productId " +
+                    "INNER JOIN Category ca ON sp.category.categoryId = ca.categoryId " +
+                    "INNER JOIN Room r ON ca.room.roomId = r.roomId " +
                     "INNER JOIN Size s ON ctsp.size.sizeId = s.sizeId " +
                     "INNER JOIN Color c ON ctsp.color.id = c.id " +
-                    "WHERE ctsp.product.productId = :productId AND ctsp.color.id = :colorId AND ctsp.size.sizeId = :sizeId AND sp.status = 1 "
+                    "WHERE ctsp.product.productId = :productId AND ctsp.color.id = :colorId AND ctsp.size.sizeId = :sizeId AND (sp.status = 1 OR sp.status = 2)"
     )
     List<Object[]> getProductDetailWithProductIdAndColorIdAndSizeId(@Param("productId") String productId, @Param("colorId") Integer colorId, @Param("sizeId") Integer sizeId);
 
     List<ProductDetail> findFirstBySize(Size size);
 
     @Query(
-            value = "SELECT ctsp.MACTSP, sp.MASP, sp.TENSP, ctsp.GIA, s.MAKT, s.TENKT, c.ID, c.TENMAU FROM ct_sanpham ctsp " +
+            value = "SELECT ctsp.MACTSP, sp.MASP, sp.TENSP, ctsp.GIA, s.MAKT, s.TENKT, c.ID, c.TENMAU, ctsp.KHUYENMAI FROM ct_sanpham ctsp " +
                     "INNER JOIN sanpham sp ON ctsp.MASP = sp.MASP " +
                     "INNER JOIN kichthuoc s ON ctsp.MAKT = s.MAKT " +
                     "INNER JOIN mau c ON ctsp.MAMAU = c.ID " +
@@ -35,6 +37,8 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, In
             , nativeQuery = true
     )
     List<Object[]> getProductDetailWithProductDetailId(@Param("productDetailId") Integer productDetailId);
-
     ProductDetail findProductDetailByProductAndSizeAndColor(Product product, Size size, Color color);
+    List<ProductDetail> findAllBySizeAndProductOrderByProductDetailIdDesc(Size size, Product product);
+    List<ProductDetail> findAllByColorAndProductOrderByProductDetailIdDesc(Color color, Product product);
+    List<ProductDetail> findAllBySizeAndColorAndProductOrderByProductDetailIdDesc( Size size, Color color, Product product);
 }

@@ -5,77 +5,67 @@
                 <h4 class="page-title"></h4>
             </div>
             <div class="col-sm-4 col-7 text-right m-b-30">
-                <a (click)="$event.preventDefault();toAddVoucher();" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add voucher</a>
+                <a (click)="$event.preventDefault();toAddVoucher();" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Thêm đơn nhập hàng</a>
             </div>
         </div>
-        <div class="row filter-row">
+        <div class="row filter-row justify-content-center">
             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                <label class="focus-label">* Code:</label>
-                <div class="form-group form-focus">
-                    <input type="text" class="form-control floating">
+                <label class="focus-label">* Mã:</label>
+                <div class="form-group">
+                    <input type="text" class="form-control floating" [(ngModel)]="PNId">
                 </div>
             </div>
             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                <label class="focus-label">* Firstname of employee: </label>
+                <label class="focus-label">* Họ tên nhân viên: </label>
                 <div class="form-group">
-                    <select class="select">
-                            <option>Cash</option>
-                            <option>Cheque</option>
+                    <select class="form-control" [(ngModel)]="employeeId">
+                        <option></option>
+                        <option *ngFor="let employee of employees" [ngValue]="employee.id">
+                            {{employee.lastname}} {{employee.firstname}}
+                          </option>
                         </select>
                 </div>
             </div>
             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                <label class="focus-label">* Lastname of employee:</label>
+                <label class="focus-label">* Ngày nhập (từ): </label>
                 <div class="form-group">
-                    <select class="select">
-                            <option>Cash</option>
-                            <option>Cheque</option>
-                        </select>
+                    <input class="form-control" type="date" name="input" max="{{today}}" style="width: 10.4rem;" [(ngModel)]="fromDate" required (change)="onChange()" />
                 </div>
             </div>
             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                <label class="focus-label">* Date of issue (from): </label>
+                <label class="focus-label">* Ngày nhập (đến): </label>
                 <div class="form-group">
-                    <div class="cal-icon">
-                        <input class="form-control floating datetimepicker" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                <label class="focus-label">* Date of issue (to): </label>
-                <div class="form-group">
-                    <div class="cal-icon">
-                        <input class="form-control floating datetimepicker" type="text">
-                    </div>
+                    <input *ngIf="disabled == true" class="form-control" type="date" name="input" style="width: 10.4rem;" [(ngModel)]="toDate" required disabled/>
+                    <input *ngIf="disabled == false" class="form-control" type="date" name="input" min={{fromDate}} max={{today}} style="width: 10.4rem;" [(ngModel)]="toDate" required />
                 </div>
             </div>
             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                 <label class="focus-label"></label>
                 <a href="#" class="btn btn-success btn-block" style="margin-top: 8px;
-                padding: 6px;min-height: 0px;"> Search </a>
+                padding: 6px;min-height: 0px;" (click)="$event.preventDefault();search(mymodal);"> Tìm kiếm </a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table mb-0 datatable">
+                    <table class="table table-striped custom-table mb-0">
                         <thead>
                             <tr>
-                                <th>Code</th>
-                                <th>Fullname of employee</th>
-                                <th>Date of issue</th>
-                                <th>Amount</th>
-                                <th class="text-right">Actions</th>
+                                <th>Mã</th>
+                                <th>Họ tên nhân viên</th>
+                                <th>Ngày nhập</th>
+                                <th>Tổng tiền</th>
+                                <th class="text-right">Chức năng</th>
                             </tr>
                         </thead>
-                        <tbody *ngFor="let warehouseReceipt of warehouseReceipts">
+                        <tbody *ngFor="let warehouseReceipt of warehouseReceipts | paginate: config">
                             <tr data-toggle="modal" data-target="#exampleModalCenter" (click)="showWarehouseReceiptDetail(warehouseReceipt.warehouseReceiptId)">
                                 <td>
                                     <strong>{{warehouseReceipt.warehouseReceiptId}}</strong>
                                 </td>
-                                <td>{{warehouseReceipt.lastname}} {{warehouseReceipt.firstname}}</td>
+                                <td>{{warehouseReceipt.employee.lastname}} {{warehouseReceipt.employee.firstname}}</td>
                                 <td>{{warehouseReceipt.dateOfIssue}}</td>
-                                <td>{{warehouseReceipt.amount}}</td>
+                                <td>{{warehouseReceipt.amount | currency: "VND"}}</td>
                                 <td class="text-right">
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -88,6 +78,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <pagination-controls (pageChange)="pageChanged($event)" style="text-align: right;"></pagination-controls>
                 </div>
             </div>
         </div>
@@ -98,14 +89,30 @@
         <div class="modal-content">
             <div class="modal-body text-center">
                 <img src="assets/admin/img/sent.png" alt="" width="50" height="46">
-                <h3>Are you sure want to delete this expense?</h3>
-                <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                <h3>Bạn có chắc chắn xóa đơn nhập hàng này?</h3>
+                <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Đóng</a>
+                    <button type="submit" class="btn btn-danger">Xóa</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Thông báo</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        {{message}}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+    </div>
+</ng-template>
+
 <!-- Begin Quick View | Modal Area -->
 <div class="modal fade modal-wrapper" id="exampleModalCenter">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -113,7 +120,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="text-center">INFORMATION DETAIL</h2>
+                        <h2 class="text-center">THÔNG TIN CHI TIẾT</h2>
                     </div>
                 </div>
                 <div class="row">
@@ -122,34 +129,48 @@
                             <table class="table table-striped custom-table mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Product Code</th>
-                                        <th>Size</th>
-                                        <th>Color</th>
-                                        <th class="text-center">Quantity</th>
-                                        <th>Price</th>
-                                        <th class="text-right">Actions</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Kích thước</th>
+                                        <th>Màu</th>
+                                        <th class="text-center">Số lượng</th>
+                                        <th>Giá</th>
+                                        <th class="text-right">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody *ngFor="let warehouseReceiptDetail of warehouseReceiptDetails">
                                     <tr>
                                         <td>
-                                            <strong>{{warehouseReceiptDetail.productId}}</strong>
+                                            <img style="height: 75px; width: 75px;" class="img-fluid" src="http://localhost:8080/api/image/imageProduct/{{warehouseReceiptDetail.productDetailId}}" alt="">
+                                        </td>
+                                        <td>
+                                            <strong>{{warehouseReceiptDetail.productName}}</strong>
                                         </td>
                                         <td>{{warehouseReceiptDetail.size}}</td>
                                         <td>{{warehouseReceiptDetail.color}}</td>
                                         <td class="text-center">{{warehouseReceiptDetail.quantity}}</td>
-                                        <td>{{warehouseReceiptDetail.price}}</td>
+                                        <td>{{warehouseReceiptDetail.price | currency: "VND"}}</td>
                                         <td class="text-right">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="edit-expense.html"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_expense"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                    <a class="dropdown-item" href="edit-expense.html"><i class="fa fa-pencil m-r-5"></i> Sửa</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_expense"><i class="fa fa-trash-o m-r-5"></i> Xóa</a>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-right">Tổng: </td>
+                                        <td>{{total | currency: "VND"}}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

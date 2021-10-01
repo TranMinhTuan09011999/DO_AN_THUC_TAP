@@ -282,6 +282,16 @@ export class UserService {
     return response$;
   }
 
+  doesNotEmailExist(email: string): Observable<boolean> {
+    let url = `${API_URL}customer/emailcheckNotExist`;
+
+    let content: any = {};
+    content.email = email;
+
+    let response$: Observable<boolean> = this.http.post<boolean>(url, content);
+    return response$;
+  }
+
   updateQuantityProduct(id: number, quantity: number): Observable<Product>{
     return this.http.put<Product>(API_URL + 'user/product/updateQuantity/' + id, {quantity})
               .pipe(

@@ -9,12 +9,12 @@
                     <ol>
                         <li>
                             <a href="#">
-                                <span>Home</span>
+                                <span>{{'CART.HOME' | translate}}</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <span>Shopping Cart</span>
+                                <span>{{'CART.SHOPPINGCART' | translate}}</span>
                             </a>
                         </li>
                     </ol>
@@ -27,12 +27,24 @@
                     <section id="main">
                         <div class="cart-grid row">
                             <div class="col-md-9 col-xs-12 check-info">
-                                <h1 class="title-page">Shopping Cart</h1>
+                                <h1 class="title-page">{{'CART.SHOPPINGCART' | translate}}</h1>
                                 <div class="cart-container">
                                     <div class="cart-overview js-cart">
                                         <ul class="cart-items">
                                             <li class="cart-item" *ngFor="let item of items">
-                                                <div class="product-line-grid row justify-content-between">
+                                                <div class="product-line-grid row justify-content-between" style="position: relative;">
+                                                    <img *ngIf="item.productDetail.percent > 0" class="promotion" src="assets/img/promotion.png" style="    position: absolute;
+                                                    left: -6%;
+                                                    top: -44%;
+                                                    height: 61%;
+                                                    width: 11%;
+                                                    z-index: 2;">
+                                                    <div *ngIf="item.productDetail.percent > 0" class="product-flags discount" style="position: absolute;
+                                                        left: -2%;
+                                                        top: -23%;
+                                                        font-size: 16px;
+                                                        font-weight: 500;
+                                                        z-index: 3;">-{{item.productDetail.percent}}%</div>
                                                     <!--  product left content: image-->
                                                     <div class="product-line-grid-left col-md-2">
                                                         <span class="product-image media-middle">
@@ -43,24 +55,29 @@
                                                     </div>
                                                     <div class="product-line-grid-body col-md-6">
                                                         <div class="product-line-info">
-                                                            <a class="label" href="product-detail.html" data-id_customization="0">{{item.productDetail?.productName}}</a>
+                                                            <a class="label" href="product-detail.html" data-id_customization="0">{{('PRODUCT.' + item.productDetail?.productName) | translate}}</a>
                                                         </div>
-                                                        <div class="product-line-info product-price">
-                                                            <span class="value">£{{item.productDetail?.price}}</span>
+                                                        <div class="product-line-info product-price" *ngIf="item.productDetail.percent > 0">
+                                                            <span class="value">{{item.productDetail.price - item.productDetail.price*item.productDetail.percent/100 | currency: "VND"}}</span>
+                                                            <del class="regular-price" style="margin-left: 0.5rem;
+                                                            color: #a99292;">{{item.productDetail?.price | currency: "VND"}}</del>
+                                                        </div>
+                                                        <div class="product-line-info product-price" *ngIf="item.productDetail.percent == 0">
+                                                            <span class="value">{{item.productDetail?.price | currency: "VND"}}</span>
                                                         </div>
                                                         <div class="product-line-info">
-                                                            <span class="label-atrr">Size:</span>
+                                                            <span class="label-atrr">{{'CART.SIZE' | translate}}:</span>
                                                             <span class="value">{{item.productDetail?.size}}</span>
                                                         </div>
                                                         <div class="product-line-info">
-                                                            <span class="label-atrr">Color:</span>
+                                                            <span class="label-atrr">{{'CART.COLOR' | translate}}:</span>
                                                             <span class="value">{{item.productDetail?.colorName}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="product-line-grid-right text-center product-line-actions col-md-4">
                                                         <div class="row">
                                                             <div class="col-md-5 col qty">
-                                                                <div class="label">Qty:</div>
+                                                                <div class="label">{{'CART.QTY' | translate}}:</div>
                                                                 <div class="quantity">
                                                                     <input type="text" name="qty" value="{{item.quantity}}" class="input-group form-control">
 
@@ -75,9 +92,12 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-5 col price">
-                                                                <div class="label">Total:</div>
-                                                                <div class="product-price total">
-                                                                    £{{item.productDetail.price*item.quantity}}
+                                                                <div class="label" style="width: 90px;">{{'CART.TOTAL' | translate}}:</div>
+                                                                <div class="product-price total" *ngIf="item.productDetail.percent == 0">
+                                                                    {{item.productDetail.price*item.quantity | currency: "VND"}}
+                                                                </div>
+                                                                <div class="product-price total" *ngIf="item.productDetail.percent > 0">
+                                                                    {{(item.productDetail.price - item.productDetail.price*item.productDetail.percent/100)*item.quantity | currency: "VND"}}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-2 col text-xs-right align-self-end">
@@ -96,67 +116,63 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <div class="p-2 bd-highlight">
-                                        <a href="product-checkout.html" class="continue btn btn-primary pull-xs-right text-left">
-                                            Continue
+                                        <a (click)="$event.preventDefault();toHome()" class=" continue btn btn-primary pull-xs-right text-left ">
+                                            {{'CART.CONTINUE' | translate}}
                                         </a>
                                     </div>
-                                    <div class="p-2 bd-highlight">
-                                        <a href="product-checkout.html" class="continue btn btn-primary pull-xs-right text-center">
-                                            Clear Cart
+                                    <div class="p-2 bd-highlight ">
+                                        <a class="continue btn btn-primary pull-xs-right text-center " (click)="$event.preventDefault();clearCart();">
+                                            {{'CART.CLEARCART' | translate}}
                                         </a>
                                     </div>
-                                    <div class="p-2 bd-highlight">
-                                        <a href="product-checkout.html" class="continue btn btn-primary pull-xs-right text-right" (click)="$event.preventDefault();toCheckOut();">
-                                            Checkout
+                                    <div class=" p-2 bd-highlight ">
+                                        <a class="continue btn btn-primary pull-xs-right text-right " (click)="$event.preventDefault();toCheckOut(); ">
+                                            {{'CART.CHECKOUT' | translate}}
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="cart-grid-right col-xs-12 col-lg-3">
-                                <div class="cart-summary">
-                                    <div class="cart-detailed-totals">
-                                        <div class="cart-summary-products">
-                                            <div class="summary-label">There are 3 item in your cart</div>
+                            <div class="cart-grid-right col-xs-12 col-lg-3 ">
+                                <div class="cart-summary ">
+                                    <div class="cart-detailed-totals ">
+                                        <div class="cart-summary-products ">
+                                            <div class="summary-label ">{{'CART.There are' | translate}} {{quantityItem}} {{'CART.Item' | translate}}</div>
                                         </div>
-                                        <div class="cart-summary-line" id="cart-subtotal-products">
-                                            <span class="label js-subtotal">
-                                                Total products:
+                                        <div class="cart-summary-line " id="cart-subtotal-products ">
+                                            <span class="label js-subtotal ">
+                                                {{'CART.TOTALPRODUCTS' | translate}}:
                                             </span>
-                                            <span class="value">£{{totalPrice}}</span>
+                                            <span class="value "> {{totalPrice | currency: "VND"}}</span>
                                         </div>
-                                        <div class="cart-summary-line" id="cart-subtotal-shipping">
-                                            <span class="label">
-                                                Total Shipping:
+                                        <div class="cart-summary-line " id="cart-subtotal-shipping ">
+                                            <span class="label ">
+                                                {{'CART.TOTALSHIP' | translate}}:
                                             </span>
-                                            <span class="value">Free</span>
+                                            <span class="value ">  {{'CART.FREE' | translate}}</span>
                                             <div>
-                                                <small class="value"></small>
+                                                <small class="value "></small>
                                             </div>
-                                        </div>
-                                        <div class="cart-summary-line cart-total">
-                                            <span class="label">Total:</span>
-                                            <span class="value">£200.00 (tax incl.)</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="block-reassurance">
+                                <div id="block-reassurance " style="margin-top: 2rem;">
                                     <ul>
-                                        <li>
-                                            <div class="block-reassurance-item">
-                                                <img src="assets/img/product/check1.png" alt="Security policy (edit with Customer reassurance module)">
-                                                <span>Security policy (edit with Customer reassurance module)</span>
+                                        <li style="margin-bottom: 0.5rem;">
+                                            <div class="block-reassurance-item ">
+                                                <img src="assets/img/product/check1.png " alt="Security policy (edit with Customer reassurance module) " style="margin-right: 0.5rem;">
+                                                <span>{{'CART.SECURITY' | translate}}</span>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="block-reassurance-item">
-                                                <img src="assets/img/product/check2.png" alt="Delivery policy (edit with Customer reassurance module)">
-                                                <span>Delivery policy (edit with Customer reassurance module)</span>
+                                        <li style="margin-bottom: 0.5rem;">
+                                            <div class="block-reassurance-item ">
+                                                <img src="assets/img/product/check2.png " alt="Delivery policy (edit with Customer reassurance module) " style="margin-right: 0.5rem;">
+                                                <span>{{'CART.DELIVERY' | translate}}</span>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="block-reassurance-item">
-                                                <img src="assets/img/product/check3.png" alt="Return policy (edit with Customer reassurance module)">
-                                                <span>Return policy (edit with Customer reassurance module)</span>
+                                        <li style="margin-bottom: 0.5rem;">
+                                            <div class="block-reassurance-item ">
+                                                <img src="assets/img/product/check3.png " alt="Return policy (edit with Customer reassurance module) " style="margin-right: 0.5rem;">
+                                                <span>{{'CART.RETURN' | translate}}</span>
                                             </div>
                                         </li>
                                     </ul>

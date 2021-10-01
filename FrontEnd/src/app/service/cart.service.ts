@@ -17,10 +17,6 @@ export class CartService {
 
   constructor() { }
 
-  getTotalItemQty():number{
-    return 0;
-  }
-
   add(productDetail: CartResponse, quantity: number){
     let local_storage;
     let itemsInCart = []

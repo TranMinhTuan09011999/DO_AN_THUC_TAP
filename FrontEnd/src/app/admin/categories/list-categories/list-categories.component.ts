@@ -21,6 +21,12 @@ export class ListCategoriesComponent implements OnInit {
   dataForm!: FormGroup;
   submitted = false;
   categories: Array<Category> = [];
+  config: any;
+  searchIdValue!: string;
+  searchCategoryNameValue!: string;
+  searchRoomValue!: string;
+  categoryId!: string;
+  category!: Category;
 
   constructor(private fb: FormBuilder, private userService: UserService, private tokenStorageService: TokenStorageService, private activeService: ActiveService, private roomService: RoomService, private categoryService: CategoryService) { }
 
@@ -32,8 +38,7 @@ export class ListCategoriesComponent implements OnInit {
   }
 
   getRoom(){
-    this.token = this.tokenStorageService.getToken();
-    this.roomService.getRoom(this.token)
+    this.roomService.getRoom()
       .subscribe(
         (data) => {
           this.rooms = data;
@@ -80,6 +85,79 @@ export class ListCategoriesComponent implements OnInit {
           (data: Category[]) => {
             this.categories = data;
             console.log(this.categories);
+          },
+          error => {
+            console.log(error);
+          });
+
+          this.config = {
+            itemsPerPage: 5,
+            currentPage: 1,
+            totalItems: this.categories.values.length
+        };
+  }
+
+  showEditCategory(categoryId: string){
+    this.token = this.tokenStorageService.getToken();
+    this.categoryId = categoryId;
+    this.categoryService.getCategoryByCategoryId(this.token, categoryId)
+        .subscribe(
+          (data: Category) => {
+            this.category = data;
+            this.patchValue();
+          },
+          error => {
+            console.log(error);
+          });
+  }
+
+  patchValue(){
+    this.dataForm.patchValue({
+      categoryName: this.category.categoryName,
+      room: this.category.room.roomId
+    })
+  }
+
+  pageChanged(event: any){
+    this.config.currentPage = event;
+  }
+
+  getCategoryId(){
+    this.infoForm();
+  }
+
+  onSubmit1(){
+    this.submitted = true;
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    if(this.dataForm.invalid){
+      console.log("aaa");
+      return;
+    }
+    this.updateCategory();
+  }
+
+  updateCategory(){
+    this.token = this.tokenStorageService.getToken();
+    this.categoryService.updateCategory(this.token, this.categoryId, this.dataForm.value)
+          .subscribe(
+            (data: Category) => {
+              this.reloadPage();
+            },
+            error => {
+              console.log(error);
+            });
+  }
+
+  getCategoryId1(categoryId: string){
+    this.categoryId = categoryId;
+  }
+
+  deleteCategory(){
+    this.token = this.tokenStorageService.getToken();
+    this.categoryService.deleteCategory(this.token, this.categoryId)
+        .subscribe(
+          (data) => {
+            this.reloadPage();
           },
           error => {
             console.log(error);
