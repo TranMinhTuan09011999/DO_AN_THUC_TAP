@@ -28,6 +28,7 @@ label i .fas {
 }
 
 #click:checked~label i .fas {
+    position: fixed;
     opacity: 1;
     pointer-events: auto;
     transform: translate(-50%, -50%) rotate(180deg);
@@ -35,6 +36,7 @@ label i .fas {
 
 #click:checked~label i .fab {
     opacity: 0;
+    position: fixed;
     pointer-events: none;
     transform: translate(-50%, -50%) rotate(180deg);
 }
