@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatbotService } from '../service/chatbot.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  message!: string;
+
+  constructor(private chatbotService: ChatbotService) { }
 
   ngOnInit(): void {
   }
 
+  sendMessage(){
+    this.message = "hello";
+    this.chatbotService.getMessage(this.message)
+        .subscribe(
+          (data) => {
+            console.log(data);
+          },
+          error => {
+            console.log(error);
+          });
+  }
 }

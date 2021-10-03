@@ -11,8 +11,7 @@ from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.models import load_model
 
 from flask import Flask, jsonify
-
-
+from flask_cors import CORS, cross_origin
 
 lemmatizer = WordNetLemmatizer()
 intents = json.loads(open('intents.json').read())
@@ -58,15 +57,11 @@ def get_response(intents_list, intents_json):
 
 print("GO! Bot is running")
 
-# while True:
-#     message = input("")
-#     ints = predict_class(message)
-#     res = get_response(ints, intents)
-#     print(res)
-
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/chatbot/<string:customerRequest>', methods=['GET'])
+@cross_origin()
 def index(customerRequest):
     message = customerRequest;
     ints = predict_class(message)
