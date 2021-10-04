@@ -188,56 +188,30 @@
 </label>
 <div class="wrapper">
     <div class="head-text">ChatBot</div>
-    <div class="box">
-        <div class="item">
-            <div class="icon">
-                <i class="fa fa-user"></i>
+    <div class="box" id="box">
+        <div *ngFor="let item of items">
+            <div class="item" *ngIf="item.chatBy == 'bot'">
+                <div class="icon">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="msg">
+                    <p style="margin: 0 0 0px; padding-bottom: 0px;">{{item.message}}</p>
+                    <span class="chat-time" style="margin-left: 10px">{{ item.dateTime | date:'shortTime' }} {{item.dateTime  | date: 'dd/MM/yyyy'}} </span>
+                </div>
             </div>
-            <div class="msg">
-                <p>Hello everyone, How are you?</p>
+            <br clear="both" *ngIf="item.chatBy == 'bot'">
+            <div class="item right" *ngIf="item.chatBy == 'me'">
+                <div class="msg">
+                    <p style="margin: 0 0 0px; padding-bottom: 0px;">{{item.message}}</p>
+                    <span class="chat-time" style="margin-left: 10px">{{ item.dateTime | date:'shortTime' }} {{item.dateTime  | date: 'dd/MM/yyyy'}} </span>
+                </div>
             </div>
-        </div>
-        <br clear="both">
-        <div class="item right">
-            <div class="msg">
-                <p>Nice</p>
-            </div>
-        </div>
-        <br clear="both">
-        <div class="item">
-            <div class="icon">
-                <i class="fa fa-user"></i>
-            </div>
-            <div class="msg">
-                <p>Hello everyone, How are you?</p>
-            </div>
-        </div>
-        <br clear="both">
-        <div class="item right">
-            <div class="msg">
-                <p>Nice</p>
-            </div>
-        </div>
-        <br clear="both">
-        <div class="item">
-            <div class="icon">
-                <i class="fa fa-user"></i>
-            </div>
-            <div class="msg">
-                <p>Hello everyone, How are you?</p>
-            </div>
-        </div>
-        <br clear="both">
-        <div class="item right">
-            <div class="msg">
-                <p>Nice</p>
-            </div>
+            <br clear="both" *ngIf="item.chatBy == 'me'">
         </div>
     </div>
-
     <div class="typing-area">
         <div class="input-field">
-            <input type="text" placeholder="Type your message" required>
+            <input type="text" placeholder="Type your message" [(ngModel)]="chatMessage" required>
             <button (click)="sendMessage()">Send</button>
         </div>
     </div>

@@ -73,10 +73,10 @@ label i .fas {
 
 .wrapper .box {
     border: 1px solid #efefef;
-    padding: 10px 15px;
+    padding: 10px 5px;
     min-height: 400px;
     max-height: 400px;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .wrapper .box .item {

@@ -1,7 +1,9 @@
+import { formatDate } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { ChatMessage } from '../chat-message';
 
 const API_URL = 'http://localhost:5000/chatbot/';
 
@@ -9,6 +11,9 @@ const API_URL = 'http://localhost:5000/chatbot/';
   providedIn: 'root'
 })
 export class ChatbotService {
+
+  items!: ChatMessage | null;
+  today = '';
 
   constructor(private http: HttpClient) { }
 
@@ -34,4 +39,38 @@ export class ChatbotService {
     return throwError(
       'Something bad happened; please try again later.');
   };
+
+  addMessage(message: String, chatBy: String){
+    let local_storage;
+    let itemsInCart = []
+    let today= Date.now();
+    this.items = {
+      message: message,
+      chatBy: chatBy,
+      dateTime: today
+    }
+    if(localStorage.getItem('chat')  == null){
+      local_storage =[];
+      console.log("LOCALSTORAGE NULL",JSON.parse(localStorage.getItem('chat')  || '{}'));
+      itemsInCart.push(this.items);
+      localStorage.setItem('chat', JSON.stringify(itemsInCart));
+      console.log('Pushed first Item: ', itemsInCart);
+    }else
+    {
+      local_storage = JSON.parse(localStorage.getItem('chat') || '{}');
+      console.log("LOCAL STORAGE HAS ITEMS",JSON.parse(localStorage.getItem('chat') || '{}'));
+      local_storage.forEach(function (item: any){
+        itemsInCart.push(item);
+      })
+      if(this.items){
+        itemsInCart.push(this.items);
+      }
+      localStorage.setItem('chat', JSON.stringify(itemsInCart));
+    }
+  }
+
+  getItems(){
+    console.log("Cart: ", JSON.parse(localStorage.getItem('cart') || '{}'));
+    return this.items = JSON.parse(localStorage.getItem('chat') || '{}');
+   }
 }
