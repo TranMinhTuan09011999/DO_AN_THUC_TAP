@@ -1,5 +1,5 @@
 export class ChatMessage {
-    message!: String;
+    message!: string;
     chatBy!: String
     dateTime!: number;
 }

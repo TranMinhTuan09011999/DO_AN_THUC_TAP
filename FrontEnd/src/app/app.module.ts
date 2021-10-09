@@ -38,6 +38,7 @@ import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
 import { SuccessPaypalComponent } from './user/success-paypal/success-paypal.component';
 import { CancedPaypalComponent } from './user/canced-paypal/canced-paypal.component';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 export function HttpLoaderFactory(http: HttpClient){
   return new TranslateHttpLoader(http);
@@ -64,6 +65,7 @@ export function HttpLoaderFactory(http: HttpClient){
     ResetPasswordComponent,
     SuccessPaypalComponent,
     CancedPaypalComponent,
+    SafeUrlPipe,
   ],
   imports: [
     BrowserModule,

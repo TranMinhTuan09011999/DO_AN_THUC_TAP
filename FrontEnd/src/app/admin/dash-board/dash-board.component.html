@@ -36,6 +36,15 @@
                         <li><a href="#" *ngIf="active != 1" (click)="$event.preventDefault();toInventory();">Nhập Hàng</a></li>
                     </ul>
                 </li>
+                <li class="submenu">
+                    <a href="#"><i class="fa fa-money"></i> <span> Chat </span> <span class="menu-arrow"></span></a>
+                    <ul style="display: none;">
+                        <li><a href="#" (click)="$event.preventDefault();toChat();">User1</a></li>
+                        <li><a href="#" (click)="$event.preventDefault();toChat();">User2</a></li>
+                        <li><a href="#" (click)="$event.preventDefault();toChat();">User3</a></li>
+                        <li><a href="#" (click)="$event.preventDefault();toChat();">User4</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

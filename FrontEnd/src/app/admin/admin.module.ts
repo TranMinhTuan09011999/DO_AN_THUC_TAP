@@ -36,6 +36,7 @@ import { SearchProviderNameFilterPipe } from './search-provider-name-filter.pipe
 import { SearchCategoryIdFilterPipe } from './search-category-id-filter.pipe';
 import { SearchCategoryNameFilterPipe } from './search-category-name-filter.pipe';
 import { SearchRoomFilterPipe } from './search-room-filter.pipe';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { SearchRoomFilterPipe } from './search-room-filter.pipe';
     SearchCategoryIdFilterPipe,
     SearchCategoryNameFilterPipe,
     SearchRoomFilterPipe,
+    ChatComponent,
   ],
   imports: [
     CommonModule,

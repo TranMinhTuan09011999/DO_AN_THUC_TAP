@@ -40,7 +40,7 @@ export class ChatbotService {
       'Something bad happened; please try again later.');
   };
 
-  addMessage(message: String, chatBy: String){
+  addMessage(message: string, chatBy: String){
     let local_storage;
     let itemsInCart = []
     let today= Date.now();

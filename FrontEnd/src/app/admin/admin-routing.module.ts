@@ -15,6 +15,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { CustomerComponent } from './customer/customer.component';
 import { HomeComponent } from './home/home.component';
 import { RevenueComponent } from './revenue/revenue.component';
+import { ChatComponent } from './chat/chat.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent, 
@@ -31,7 +32,8 @@ const routes: Routes = [
         {path: 'order', component: OrdersComponent },
         {path: 'employee', component: EmployeeComponent},
         {path: 'customer', component: CustomerComponent},
-        {path: 'revenue', component: RevenueComponent}
+        {path: 'revenue', component: RevenueComponent},
+        {path: 'chat', component: ChatComponent},
         // { path: '**', component: PageNotFoundComponent}
       ]}
 ];

@@ -189,30 +189,53 @@
 <div class="wrapper">
     <div class="head-text">ChatBot</div>
     <div class="box" id="box">
-        <div *ngFor="let item of items">
-            <div class="item" *ngIf="item.chatBy == 'bot'">
+        <div *ngFor="let chatMessage of webSocketService.chatMessages">
+            <div class="item" *ngIf="chatMessage.user == 'employee'">
                 <div class="icon">
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="msg">
-                    <p style="margin: 0 0 0px; padding-bottom: 0px;">{{item.message}}</p>
-                    <span class="chat-time" style="margin-left: 10px">{{ item.dateTime | date:'shortTime' }} {{item.dateTime  | date: 'dd/MM/yyyy'}} </span>
+                    <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chatMessage.message}}</p>
                 </div>
             </div>
-            <br clear="both" *ngIf="item.chatBy == 'bot'">
-            <div class="item right" *ngIf="item.chatBy == 'me'">
+            <br clear="both" *ngIf="chatMessage.user == 'employee'">
+            <div class="item right" *ngIf="chatMessage.user == 'me'">
                 <div class="msg">
-                    <p style="margin: 0 0 0px; padding-bottom: 0px;">{{item.message}}</p>
-                    <span class="chat-time" style="margin-left: 10px">{{ item.dateTime | date:'shortTime' }} {{item.dateTime  | date: 'dd/MM/yyyy'}} </span>
+                    <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chatMessage.message}}</p>
                 </div>
             </div>
-            <br clear="both" *ngIf="item.chatBy == 'me'">
+            <br clear="both" *ngIf="chatMessage.user == 'me'">
         </div>
     </div>
+    <!-- <div *ngFor="let item of items">
+        <div class="item" *ngIf="item.chatBy == 'bot'">
+            <div class="icon">
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="msg">
+                <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;" *ngIf="!checkLink(item.message)">{{item.message}}</p>
+                <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;" *ngIf="checkLink(item.message)">
+                    <a href="#" (click)="$event.preventDefault();sanitize(item.message)" style="color: #fff">{{item.message}}</a>
+                </p>
+                <span class="chat-time" style="margin-left: 10px">{{ item.dateTime | date:'shortTime' }} {{item.dateTime  | date: 'dd/MM/yyyy'}} </span>
+            </div>
+        </div>
+        <br clear="both" *ngIf="item.chatBy == 'bot'">
+        <div class="item right" *ngIf="item.chatBy == 'me'">
+            <div class="msg">
+                <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;" *ngIf="!checkLink(item.message)">{{item.message}}</p>
+                <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;" *ngIf="checkLink(item.message)">
+                    <a href="#" (click)="$event.preventDefault();sanitize(item.message)" style="color: #fff">{{item.message}}</a>
+                </p>
+                <span class="chat-time" style="margin-left: 10px">{{ item.dateTime | date:'shortTime' }} {{item.dateTime  | date: 'dd/MM/yyyy'}} </span>
+            </div>
+        </div>
+        <br clear="both" *ngIf="item.chatBy == 'me'">
+    </div> -->
     <div class="typing-area">
         <div class="input-field">
             <input type="text" placeholder="Type your message" [(ngModel)]="chatMessage" required>
-            <button (click)="sendMessage()">Send</button>
+            <button (click)="sendMessage1()">Send</button>
         </div>
     </div>
 </div>

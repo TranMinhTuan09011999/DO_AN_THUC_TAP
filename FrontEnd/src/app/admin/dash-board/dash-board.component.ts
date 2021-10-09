@@ -49,6 +49,10 @@ export class DashBoardComponent implements OnInit {
     this.router.navigate(['admin/customer']).then(this.reloadPage);
   }
 
+  toChat(){
+    this.router.navigate(['admin/chat']).then(this.reloadPage);
+  }
+
   toHome(){
     this.router.navigate(['admin']).then(this.reloadPage);
   }
