@@ -33,7 +33,7 @@ const routes: Routes = [
         {path: 'employee', component: EmployeeComponent},
         {path: 'customer', component: CustomerComponent},
         {path: 'revenue', component: RevenueComponent},
-        {path: 'chat', component: ChatComponent},
+        {path: 'chat/:userId', component: ChatComponent},
         // { path: '**', component: PageNotFoundComponent}
       ]}
 ];

@@ -70,6 +70,11 @@ public class Employee extends Auditable<String>{
     @ToString.Exclude
     private Collection<WarehouseReceipt> warehouseReceipts;
 
+    @OneToMany(mappedBy = "employeeChat", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Chat> chats;
+
     public Employee(String id, String firstname, String lastname, Integer gender, Date birthday, String address, String phone, String email, Integer status) {
         this.id = id;
         this.firstname = firstname;

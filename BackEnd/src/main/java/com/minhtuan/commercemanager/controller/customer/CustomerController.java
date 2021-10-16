@@ -45,7 +45,7 @@ public class CustomerController {
     }
 
     @GetMapping("/account/{customerId}")
-    @PreAuthorize("hasRole('CUSTOMER')")
+    @PreAuthorize("hasRole('CUSTOMER') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getOrderList(@PathVariable(value = "customerId") String customerId){
         CustomerDTO customerDTO = customerService.getCustomerByID(customerId);
         return ResponseEntity.status(HttpStatus.OK).body(customerDTO);

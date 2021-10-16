@@ -45,8 +45,5 @@ public class Product {
     @ToString.Exclude
     private Category category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Collection<ProductDetail> productDetails;
+
 }

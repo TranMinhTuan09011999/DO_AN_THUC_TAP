@@ -60,6 +60,16 @@ public class Customer extends Auditable<String>{
     @ToString.Exclude
     private Collection<Order> orders;
 
+    @OneToMany(mappedBy = "customerChat", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Chat> chats;
+
+    @OneToMany(mappedBy = "customerToChat", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Chat> toChats;
+
     public Customer(String id, String firstname, String lastname, Integer gender, Date birthday, String address, String phone, String email, Integer status) {
         this.id = id;
         this.firstname = firstname;

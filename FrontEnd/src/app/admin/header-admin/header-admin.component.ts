@@ -3,8 +3,10 @@ import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationEr
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { delay, map, switchMap } from 'rxjs/operators';
+import { Chat } from 'src/app/model/chat';
 import { Employee } from 'src/app/model/employee';
 import { AuthService } from 'src/app/service/auth.service';
+import { ChatbotService } from 'src/app/service/chatbot.service';
 import { EmployeeServiceService } from 'src/app/service/employee-service.service';
 import { TokenStorageService } from 'src/app/service/token-storage.service';
 import { UserService } from 'src/app/service/user.service';
@@ -22,8 +24,9 @@ export class HeaderAdminComponent implements OnInit {
   birthday1!:Date;
   submitted = false;
   role!: string;
+  messUserList: Array<Chat> = [];
 
-  constructor(private authService: AuthService, private userService: UserService, private fb: FormBuilder, private employeeService: EmployeeServiceService, private tokenStorageService: TokenStorageService, private router:Router) { }
+  constructor(private chatbotService: ChatbotService, private authService: AuthService, private userService: UserService, private fb: FormBuilder, private employeeService: EmployeeServiceService, private tokenStorageService: TokenStorageService, private router:Router) { }
 
   ngOnInit(): void {
     const user = this.tokenStorageService.getUser();
@@ -34,6 +37,7 @@ export class HeaderAdminComponent implements OnInit {
     }
     this.getCustomerById();
     this.infoForm();
+    this.getMessUsers();
   }
 
   infoForm(){
@@ -104,6 +108,23 @@ export class HeaderAdminComponent implements OnInit {
           error => {
             console.log(error);
           });
+  }
+
+  getMessUsers(){
+    this.token = this.tokenStorageService.getToken();
+    this.chatbotService.getMessUsers(this.token)
+        .subscribe(
+          (data: Chat[]) => {
+            this.messUserList = data;
+          },
+          error => {
+            console.log(error);
+          }
+        );
+  }
+
+  toChat(userId: string){
+    this.router.navigate(['admin/chat/' + userId]).then(this.reloadPage);
   }
 
   reloadPage(): void {

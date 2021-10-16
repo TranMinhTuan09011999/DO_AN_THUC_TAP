@@ -1,11 +1,14 @@
 import { formatDate } from '@angular/common';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { ChatMessage } from '../chat-message';
+import { Chat } from '../model/chat';
+import { ChatRequest } from '../model/chat-request';
 
 const API_URL = 'http://localhost:5000/chatbot/';
+const API_URL_ = 'http://localhost:8080/api/';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +24,23 @@ export class ChatbotService {
     return this.http.get(API_URL + message, {responseType: 'text'})
                   .pipe(
                     retry(3), 
+                    catchError(this.handleError));
+  }
+
+  addMessageChat(token: string, chatRequest: ChatRequest): Observable<any>{
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.post(API_URL_ + 'chatbot/addMessage', chatRequest, { headers: headers, responseType: 'text'})
+                  .pipe(
+                    retry(3), 
+                    catchError(this.handleError));
+  }
+
+  getMessageChatUser(token: string, userId: string): Observable<Chat[]>{
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.get<Chat[]>(API_URL_ + 'chatbot/chatUser/' + userId, { headers: headers})
+                  .pipe(
                     catchError(this.handleError));
   }
 
@@ -73,4 +93,12 @@ export class ChatbotService {
     console.log("Cart: ", JSON.parse(localStorage.getItem('cart') || '{}'));
     return this.items = JSON.parse(localStorage.getItem('chat') || '{}');
    }
+
+  getMessUsers(token: string){
+    let tokenStr = 'Bearer ' + token;
+    const headers = new HttpHeaders().set('Authorization', tokenStr);
+    return this.http.get<Chat[]>(API_URL_ + 'chatbot/userList', { headers: headers})
+                  .pipe(
+                    catchError(this.handleError));
+  }
 }
