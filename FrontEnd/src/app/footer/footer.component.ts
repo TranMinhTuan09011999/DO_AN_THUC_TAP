@@ -1,10 +1,14 @@
+import { formatDate } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { delay } from 'rxjs/operators';
 import { ChatMessage } from '../chat-message';
+import { Chat } from '../model/chat';
 import { ChatMessageDto } from '../model/chat-message-dto';
+import { ChatRequest } from '../model/chat-request';
 import { ChatbotService } from '../service/chatbot.service';
+import { TokenStorageService } from '../service/token-storage.service';
 import { WebSocketServiceService } from '../service/web-socket-service.service';
 
 @Component({
@@ -15,13 +19,19 @@ import { WebSocketServiceService } from '../service/web-socket-service.service';
 export class FooterComponent implements OnInit, OnDestroy {
 
   public items: Array<ChatMessage> = [];
+  public chats: Array<Chat> = [];
   message!: string;
   chatMessage!: string;
   out = document.getElementById("box");
+  token = "";
+  today = '';
+  dataForm!: FormGroup;
+  userIdChat = '';
 
-  constructor(private chatbotService: ChatbotService, private sanitizer:DomSanitizer, public webSocketService: WebSocketServiceService) { }
+  constructor(private fb: FormBuilder, private tokenStorageService: TokenStorageService, private chatbotService: ChatbotService, private sanitizer:DomSanitizer, public webSocketService: WebSocketServiceService) { }
 
   ngOnInit(): void {
+    this.getChatUser();
     this.webSocketService.openWebSocket();
     this.items = this.chatbotService.getItems();
     
@@ -29,6 +39,24 @@ export class FooterComponent implements OnInit, OnDestroy {
     console.log(this.out!.clientHeight);
     this.out!.scrollTop = this.out!.clientHeight - 0;
     console.log(this.out!.scrollTop);
+    
+  }
+
+  getChatUser(){
+    if(this.token != "{}"){
+      this.token = this.tokenStorageService.getToken();
+      const user = this.tokenStorageService.getUser();
+      this.userIdChat = user.id;
+      this.chatbotService.getMessageChatUser(this.token, user.id)
+            .subscribe(
+              (data: Chat[]) => {
+                console.log(data);
+                this.chats = data;
+              },
+              error => {
+                console.log(error);
+              });
+      }
   }
 
   sendMessage(){
@@ -83,14 +111,70 @@ reloadPage(): void {
   window.location.reload();
 }
 
+getChat(){
+  this.token = this.tokenStorageService.getToken();
+}
+
 //--------------- Socket -------------------
 ngOnDestroy(): void {
   this.webSocketService.closeWebSocket();
 }
 
 sendMessage1() {
-  const chatMessageDto = new ChatMessageDto('me', this.chatMessage);
-  this.webSocketService.sendMessage(chatMessageDto);
-  this.chatMessage = '';
+  this.token = this.tokenStorageService.getToken();
+  console.log(this.token);
+  if(this.token != "{}"){
+    const user = this.tokenStorageService.getUser();
+    let today= new Date();
+    const chatRequest = new ChatRequest(this.chatMessage, user.id, '', '', today);
+
+    this.chatbotService.addMessageChat(this.token, chatRequest)
+        .subscribe(
+          (data) => {
+            this.getMessageChatBot();
+          },
+          error => {
+            console.log(error);
+          });
+  }else{
+    this.getMessageChatBot();
+  }
+  
 }
+
+  getMessageChatBot(){
+    const user = this.tokenStorageService.getUser();
+    let today= Date.now();
+    const chatMessageDto = new ChatMessageDto('me', this.chatMessage, today);
+    this.webSocketService.sendMessage(chatMessageDto);
+    var chatMess = this.chatMessage;
+    this.chatMessage = '';
+    setTimeout(() => {
+      this.scroll();
+    }, 1000);
+    this.chatbotService.getMessage(chatMess)
+        .subscribe(
+          (data) => {
+            setTimeout(() => {
+              const chatMessageDto = new ChatMessageDto('bot', data, today);
+              this.webSocketService.sendMessage(chatMessageDto);
+              setTimeout(() => {
+                this.scroll();
+              }, 1000);
+              let today1= new Date();
+              const chatRequest = new ChatRequest(data, '', user.id, 'BOT', today1);
+              this.chatbotService.addMessageChat(this.token, chatRequest)
+              .subscribe(
+                (data) => {
+                  
+                },
+                error => {
+                  console.log(error);
+                });
+            }, 2000); 
+          },
+          error => {
+            console.log(error);
+          });
+  }
 }
