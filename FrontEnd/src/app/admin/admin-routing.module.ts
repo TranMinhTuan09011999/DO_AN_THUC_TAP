@@ -16,6 +16,9 @@ import { CustomerComponent } from './customer/customer.component';
 import { HomeComponent } from './home/home.component';
 import { RevenueComponent } from './revenue/revenue.component';
 import { ChatComponent } from './chat/chat.component';
+import { HotSellingProductsComponent } from './hot-selling-products/hot-selling-products.component';
+import { CountCustomerComponent } from './count-customer/count-customer.component';
+import { ProfitComponent } from './profit/profit.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent, 
@@ -34,6 +37,9 @@ const routes: Routes = [
         {path: 'customer', component: CustomerComponent},
         {path: 'revenue', component: RevenueComponent},
         {path: 'chat/:userId', component: ChatComponent},
+        {path: 'hotSellingProducts', component: HotSellingProductsComponent},  
+        {path: 'countCustomer', component: CountCustomerComponent},   
+        {path: 'profit', component: ProfitComponent},
         // { path: '**', component: PageNotFoundComponent}
       ]}
 ];

@@ -65,7 +65,7 @@ export function HttpLoaderFactory(http: HttpClient){
     ResetPasswordComponent,
     SuccessPaypalComponent,
     CancedPaypalComponent,
-    SafeUrlPipe,
+    SafeUrlPipe
   ],
   imports: [
     BrowserModule,

@@ -289,13 +289,13 @@
                                                                         </span>
                                                                     </div>
                                                                     <span class="add">
-                                                                        <button *ngIf="product.quantity == 0" class="btn btn-primary add-to-cart add-item" data-button-action="add-to-cart" type="submit" [disabled]="true">
+                                                                        <button *ngIf="product.quantity == 0" class="btn btn-primary add-to-cart add-item" data-button-action="add-to-cart" type="submit" [disabled]="true" (click)="addToCart()">
                                                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                                                     <span>{{'PRODUCTDETAIL.ADDTOCART' | translate}}</span>
                                                                     </button>
-                                                                    <button *ngIf="product.quantity > 0" class="btn btn-primary add-to-cart add-item" data-button-action="add-to-cart" type="submit">
+                                                                    <button *ngIf="product.quantity > 0" class="btn btn-primary add-to-cart add-item" data-button-action="add-to-cart" type="submit" (click)="addToCart()">
                                                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                                        <span (click)="addToCart()" >{{'PRODUCTDETAIL.ADDTOCART' | translate}}</span>
+                                                                        <span>{{'PRODUCTDETAIL.ADDTOCART' | translate}}</span>
                                                                     </button>
                                                                     </span>
                                                                 </div>

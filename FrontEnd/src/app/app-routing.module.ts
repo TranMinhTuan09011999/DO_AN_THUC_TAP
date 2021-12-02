@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'paypal/cancel', component: CancedPaypalComponent },
 
   //TODO: Add interceptor and Page Not Found Page
-  // { path: '**', component: PageNotFoundComponent},
+  { path: 'pageNotFound', component: PageNotFoundComponent},
   { path: '', redirectTo: 'admin', pathMatch: 'full' },
 ];
 

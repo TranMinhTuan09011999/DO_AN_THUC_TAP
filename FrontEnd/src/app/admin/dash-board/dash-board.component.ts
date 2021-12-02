@@ -57,9 +57,17 @@ export class DashBoardComponent implements OnInit {
     this.router.navigate(['admin']).then(this.reloadPage);
   }
 
+  toCountCustomer(){
+    this.router.navigate(['admin/countCustomer']).then(this.reloadPage);
+  }
+
+  toProfit(){
+    this.router.navigate(['admin/profit']).then(this.reloadPage);
+  }
+
   toRevenue(content: any){
     const user = this.tokenStorageService.getUser();
-    if(user.role == "ROLE_ADMIN"){
+    if(user.role == "ROLE_ADMIN" || user.role == "ROLE_EMPLOYEE"){
         this.router.navigate(['admin/revenue']).then(this.reloadPage);
     }else{
       this.message = 'Xin lỗi, bạn không có quyền để truy cập!!!';
@@ -72,6 +80,10 @@ export class DashBoardComponent implements OnInit {
       });
       return;
     }
+  }
+
+  toHotSelling(){
+    this.router.navigate(['admin/hotSellingProducts']).then(this.reloadPage);
   }
 
   private getDismissReason(reason: any): string {

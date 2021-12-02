@@ -1,14 +1,20 @@
 {"intents": [
   {
     "tag": "sofa",
-    "patterns": ["sofa"],
-    "responses": ["localhost:4200/prSoduct-grid/Living%20Room/SOFA?roomId=1&categoryId=DMH00001"],
+    "patterns": ["sofa", "ghế nệm"],
+    "responses": ["http://localhost:4200/product-grid/Living%20Room/SOFA?roomId=1&categoryId=DMH00001"],
     "context_set": ""
   },
   {
     "tag": "fridge",
-    "patterns": ["fridge", "refrigerator"],
+    "patterns": ["fridge", "refrigerator", "tủ lạnh"],
     "responses": ["http://localhost:4200/product-grid/Kitchen/T%E1%BB%A7%20L%E1%BA%A1nh?roomId=2&categoryId=DMH00009"],
+    "context_set": ""
+  },
+  {
+    "tag": "Greeting",
+    "patterns": ["xin chào", "chào", "hello", "hi"],
+    "responses": ["Chào bạn, tôi có thể giúp gì cho bạn!!!"],
     "context_set": ""
   },
   {

@@ -30,4 +30,11 @@ public interface WarehouseReceiptRepository extends JpaRepository<WarehouseRecei
                     "ORDER BY w.warehouseReceiptId DESC"
     )
     List<WarehouseReceipt> findWarehouseReceiptsOrderByWarehouseReceiptIdDescAndDate(@Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
+
+    @Query(
+            value = "SELECT SUM(pn.TONGTIEN) FROM phieunhap pn " +
+                    "WHERE pn.NGAYNHAP >= :fromDate AND pn.NGAYNHAP <= :toDate "
+            , nativeQuery = true
+    )
+    Double getProfitByTime(@Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
 }

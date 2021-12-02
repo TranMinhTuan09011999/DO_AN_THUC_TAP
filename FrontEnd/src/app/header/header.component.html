@@ -190,7 +190,7 @@
                         <div class="blockcart block-cart cart-preview tiva-toggle">
                             <div class="header-cart tiva-toggle-btn">
                                 <span class="cart-products-count">{{count}}</span>
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <a href="#" (click)="$event.preventDefault();toViewCart(mymodal);"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                             </div>
                             <div class="dropdown-content">
                                 <div class="cart-content">

@@ -55,20 +55,21 @@ export class LoginComponent implements OnInit {
   get f() { return this.dataForm.controls; }
 
   onSubmit(content: any): void {
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     this.submitted = true;
     if(this.dataForm.invalid){
       return;
     }
-    const response = grecaptcha.getResponse();
-    console.log(response);
-    if (response.length === 0) {
-      this.captchaError = true;
-      return;
-    }
+    //const response = grecaptcha.getResponse();
+    // console.log(response);
+    // if (response.length === 0) {
+    //   this.captchaError = true;
+    //   return;
+    // }
     let login = new LoginRequest();
     login.email = this.dataForm.controls.email.value;
     login.password = this.dataForm.controls.password.value;
-    login.recaptchaResponse = response;
+    // login.recaptchaResponse = response;
     this.authService.login(login).subscribe(
       data => {
         if(data.status === 200) {

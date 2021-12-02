@@ -1,5 +1,10 @@
 package com.minhtuan.commercemanager.controller;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,6 +28,8 @@ import com.minhtuan.commercemanager.security.jwt.JwtUtils;
 import com.minhtuan.commercemanager.security.services.UserDetailsImpl;
 import com.minhtuan.commercemanager.services.CaptchaService;
 import com.minhtuan.commercemanager.services.EmailService;
+import com.minhtuan.commercemanager.services.LoginService;
+import com.minhtuan.commercemanager.services.RequestService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -67,78 +74,214 @@ public class AuthController {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    RequestService requestService;
+
+    @Autowired
+    LoginService loginService;
+
+//    @PostMapping("/signin")
+//    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,  HttpServletRequest request) throws Exception {
+//
+//        try {
+//                Authentication authentication = authenticationManager.authenticate(
+//                        new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+//
+//                SecurityContextHolder.getContext().setAuthentication(authentication);
+//                String jwt = jwtUtils.generateJwtToken(authentication);
+//
+//                UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+//                List<String> roles = userDetails.getAuthorities().stream()
+//                        .map(item -> item.getAuthority())
+//                        .collect(Collectors.toList());
+//                String email = userDetails.getEmail();
+//                String role = roles.get(0);
+//                System.out.println(role);
+//
+//                if(role.equals("ROLE_ADMIN") || role.equals("ROLE_EMPLOYEE"))
+//                {
+//                    Employee employee = employeeRepository.findByEmail(email).get();
+//                    JwtResponse jwtResponse = new JwtResponse();
+//                    if(employee.getStatus() == 0){
+//                        jwtResponse.setMessage("Account don't exist");
+//                        jwtResponse.setStatus(400);
+//                        return ResponseEntity.ok(jwtResponse);
+//                    }
+////                    boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
+////                    if(!captchaVerified) {
+////                        jwtResponse.setMessage("Invalid captcha");
+////                        jwtResponse.setStatus(400);
+////                    }else {
+//                    jwtResponse.setMessage("Success");
+//                    jwtResponse.setStatus(200);
+//                    jwtResponse.setToken(jwt);
+//                    jwtResponse.setId(employee.getId());
+//                    jwtResponse.setEmail(employee.getEmail());
+//                    jwtResponse.setPhone(employee.getPhone());
+//                    jwtResponse.setAddress(employee.getAddress());
+//                    jwtResponse.setFirstname(employee.getFirstname());
+//                    jwtResponse.setLastname(employee.getLastname());
+//                    jwtResponse.setGender(employee.getGender());
+//                    jwtResponse.setBirthday(employee.getBirthday());
+//                    jwtResponse.setRole(role);
+////                    }
+//                    return ResponseEntity.ok(jwtResponse);
+//                }else {
+//                    Customer customer = customerRepository.findByEmail(email).get();
+//                    JwtResponse jwtResponse = new JwtResponse();
+//                    if(customer.getStatus() == 0){
+//                        jwtResponse.setMessage("Account don't exist");
+//                        jwtResponse.setStatus(400);
+//                        return ResponseEntity.ok(jwtResponse);
+//                    }
+////                    boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
+////                    if(!captchaVerified) {
+////                        jwtResponse.setMessage("Invalid captcha");
+////                        jwtResponse.setStatus(400);
+////                    }else {
+//                    jwtResponse.setMessage("Success");
+//                    jwtResponse.setStatus(200);
+//                    jwtResponse.setToken(jwt);
+//                    jwtResponse.setId(customer.getId());
+//                    jwtResponse.setEmail(customer.getEmail());
+//                    jwtResponse.setPhone(customer.getPhone());
+//                    jwtResponse.setAddress(customer.getAddress());
+//                    jwtResponse.setFirstname(customer.getFirstname());
+//                    jwtResponse.setLastname(customer.getLastname());
+//                    jwtResponse.setGender(customer.getGender());
+//                    jwtResponse.setBirthday(customer.getBirthday());
+//                    jwtResponse.setRole(role);
+////                    }
+//                    return ResponseEntity.ok(jwtResponse);
+//                }
+//        }catch (Exception e){
+//            JwtResponse jwtResponse = new JwtResponse();
+//            jwtResponse.setMessage("Account don't exist");
+//            jwtResponse.setStatus(400);
+//            return ResponseEntity.ok(jwtResponse);
+//        }
+//    }
+
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,  HttpServletRequest request) throws Exception {
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        String clientIp = requestService.getClientIp(request);
+        System.out.println(requestService.getURL(request));
+        try {
+            if(!loginService.blockIP(clientIp)){
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+                loginService.remove(clientIp);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-        String email = userDetails.getEmail();
-        String role = roles.get(0);
-        System.out.println(role);
-        if(role.equals("ROLE_ADMIN") || role.equals("ROLE_EMPLOYEE"))
-        {
-            Employee employee = employeeRepository.findByEmail(email).get();
-            JwtResponse jwtResponse = new JwtResponse();
-            if(employee.getStatus() == 0){
-                jwtResponse.setMessage("Account don't exist");
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                String jwt = jwtUtils.generateJwtToken(authentication);
+
+                UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+                List<String> roles = userDetails.getAuthorities().stream()
+                        .map(item -> item.getAuthority())
+                        .collect(Collectors.toList());
+                String email = userDetails.getEmail();
+                String role = roles.get(0);
+                System.out.println(role);
+
+                if(role.equals("ROLE_ADMIN") || role.equals("ROLE_EMPLOYEE"))
+                {
+                    Employee employee = employeeRepository.findByEmail(email).get();
+                    JwtResponse jwtResponse = new JwtResponse();
+                    if(employee.getStatus() == 0){
+                        loginService.loginFailed(clientIp);
+                        jwtResponse.setMessage("Account don't exist");
+                        jwtResponse.setStatus(400);
+                        return ResponseEntity.ok(jwtResponse);
+                    }
+//                    boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
+//                    if(!captchaVerified) {
+//                        jwtResponse.setMessage("Invalid captcha");
+//                        jwtResponse.setStatus(400);
+//                    }else {
+                        jwtResponse.setMessage("Success");
+                        jwtResponse.setStatus(200);
+                        jwtResponse.setToken(jwt);
+                        jwtResponse.setId(employee.getId());
+                        jwtResponse.setEmail(employee.getEmail());
+                        jwtResponse.setPhone(employee.getPhone());
+                        jwtResponse.setAddress(employee.getAddress());
+                        jwtResponse.setFirstname(employee.getFirstname());
+                        jwtResponse.setLastname(employee.getLastname());
+                        jwtResponse.setGender(employee.getGender());
+                        jwtResponse.setBirthday(employee.getBirthday());
+                        jwtResponse.setRole(role);
+//                    }
+                    return ResponseEntity.ok(jwtResponse);
+                }else {
+                    Customer customer = customerRepository.findByEmail(email).get();
+                    JwtResponse jwtResponse = new JwtResponse();
+                    if(customer.getStatus() == 0){
+                        jwtResponse.setMessage("Account don't exist");
+                        jwtResponse.setStatus(400);
+                        return ResponseEntity.ok(jwtResponse);
+                    }
+//                    boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
+//                    if(!captchaVerified) {
+//                        jwtResponse.setMessage("Invalid captcha");
+//                        jwtResponse.setStatus(400);
+//                    }else {
+                        jwtResponse.setMessage("Success");
+                        jwtResponse.setStatus(200);
+                        jwtResponse.setToken(jwt);
+                        jwtResponse.setId(customer.getId());
+                        jwtResponse.setEmail(customer.getEmail());
+                        jwtResponse.setPhone(customer.getPhone());
+                        jwtResponse.setAddress(customer.getAddress());
+                        jwtResponse.setFirstname(customer.getFirstname());
+                        jwtResponse.setLastname(customer.getLastname());
+                        jwtResponse.setGender(customer.getGender());
+                        jwtResponse.setBirthday(customer.getBirthday());
+                        jwtResponse.setRole(role);
+//                    }
+                    return ResponseEntity.ok(jwtResponse);
+                }
+            }else {
+                JwtResponse jwtResponse = new JwtResponse();
+                jwtResponse.setMessage("Account blocked");
                 jwtResponse.setStatus(400);
                 return ResponseEntity.ok(jwtResponse);
             }
-            boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
-            if(!captchaVerified) {
-                jwtResponse.setMessage("Invalid captcha");
-                jwtResponse.setStatus(400);
-            }else {
-                jwtResponse.setMessage("Success");
-                jwtResponse.setStatus(200);
-                jwtResponse.setToken(jwt);
-                jwtResponse.setId(employee.getId());
-                jwtResponse.setEmail(employee.getEmail());
-                jwtResponse.setPhone(employee.getPhone());
-                jwtResponse.setAddress(employee.getAddress());
-                jwtResponse.setFirstname(employee.getFirstname());
-                jwtResponse.setLastname(employee.getLastname());
-                jwtResponse.setGender(employee.getGender());
-                jwtResponse.setBirthday(employee.getBirthday());
-                jwtResponse.setRole(role);
-            }
-            return ResponseEntity.ok(jwtResponse);
-        }else {
-            Customer customer = customerRepository.findByEmail(email).get();
+        }catch (Exception e){
+            loginService.loginFailed(clientIp);
             JwtResponse jwtResponse = new JwtResponse();
-            if(customer.getStatus() == 0){
-                jwtResponse.setMessage("Account don't exist");
-                jwtResponse.setStatus(400);
-                return ResponseEntity.ok(jwtResponse);
-            }
-            boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
-            if(!captchaVerified) {
-                jwtResponse.setMessage("Invalid captcha");
-                jwtResponse.setStatus(400);
-            }else {
-                jwtResponse.setMessage("Success");
-                jwtResponse.setStatus(200);
-                jwtResponse.setToken(jwt);
-                jwtResponse.setId(customer.getId());
-                jwtResponse.setEmail(customer.getEmail());
-                jwtResponse.setPhone(customer.getPhone());
-                jwtResponse.setAddress(customer.getAddress());
-                jwtResponse.setFirstname(customer.getFirstname());
-                jwtResponse.setLastname(customer.getLastname());
-                jwtResponse.setGender(customer.getGender());
-                jwtResponse.setBirthday(customer.getBirthday());
-                jwtResponse.setRole(role);
-            }
+            jwtResponse.setMessage("Account don't exist");
+            jwtResponse.setStatus(400);
             return ResponseEntity.ok(jwtResponse);
         }
     }
+
+//    @PostMapping("/signin")
+//    public ResponseEntity<?> authenticateUser1(@RequestBody LoginRequest loginRequest,  HttpServletRequest request) throws Exception {
+//        String DB_URL = "jdbc:mysql://localhost:3306/db_furnituresale";
+//        String USER_NAME = "root";
+//        String PASSWORD = "minhtuan123";
+//        Account account= new Account();
+//        Connection conn = null;
+//
+//        String sql = "select * from taikhoan where EMAIL = '"+loginRequest.getEmail()+"' and PASSWORD = '" +loginRequest.getPassword() +"'";
+//        try{
+//            Class.forName("com.mysql.jdbc.Driver");
+//            conn = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
+//            PreparedStatement ps = conn.prepareStatement(sql);
+//            ResultSet rs = ps.executeQuery();
+//            if(rs.next()){
+//                account.setEmail((rs.getString("EMAIL")));
+//            }
+//        }catch (ClassNotFoundException | SQLException e){
+//            return ResponseEntity.ok("Fail");
+//        }
+//        if(account.getEmail() == null){
+//            return ResponseEntity.ok("Fail");
+//		}else{
+//            return ResponseEntity.ok("Success");
+//		}
+//    }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {

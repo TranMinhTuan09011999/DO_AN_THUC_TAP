@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
@@ -30,23 +30,9 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("/customer/emailcheck")
-    public ResponseEntity<?> emailCheck(@RequestBody Map<String, Object> inputData) {
-        String email = (String)inputData.get("email");
-        Boolean bool = emailExistedValidator.emailExists(email);
-        return ResponseEntity.status(HttpStatus.OK).body(bool);
-    }
-
-    @PostMapping("/customer/emailcheckNotExist")
-    public ResponseEntity<?> emailCheckNotExist(@RequestBody Map<String, Object> inputData) {
-        String email = (String)inputData.get("email");
-        Boolean bool = emailNotExistedValidator.emailExists(email);
-        return ResponseEntity.status(HttpStatus.OK).body(bool);
-    }
-
     @GetMapping("/account/{customerId}")
     @PreAuthorize("hasRole('CUSTOMER') or hasRole('EMPLOYEE')")
-    public ResponseEntity<?> getOrderList(@PathVariable(value = "customerId") String customerId){
+    public ResponseEntity<?> getCustomer(@PathVariable(value = "customerId") String customerId){
         CustomerDTO customerDTO = customerService.getCustomerByID(customerId);
         return ResponseEntity.status(HttpStatus.OK).body(customerDTO);
     }
@@ -66,5 +52,19 @@ public class CustomerController {
         jwtResponse.setBirthday(customerDTO.getBirthday());
         jwtResponse.setRole(role);
         return ResponseEntity.status(HttpStatus.OK).body(jwtResponse);
+    }
+
+    @PostMapping("/customer/emailcheck")
+    public ResponseEntity<?> emailCheck(@RequestBody Map<String, Object> inputData) {
+        String email = (String)inputData.get("email");
+        Boolean bool = emailExistedValidator.emailExists(email);
+        return ResponseEntity.status(HttpStatus.OK).body(bool);
+    }
+
+    @PostMapping("/customer/emailcheckNotExist")
+    public ResponseEntity<?> emailCheckNotExist(@RequestBody Map<String, Object> inputData) {
+        String email = (String)inputData.get("email");
+        Boolean bool = emailNotExistedValidator.emailExists(email);
+        return ResponseEntity.status(HttpStatus.OK).body(bool);
     }
 }

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import random
 import json
 import pickle
@@ -13,7 +15,12 @@ from tensorflow.keras.layers import Dense, Activation,Dropout
 from tensorflow.keras.optimizers import SGD
 
 lemmatizer = WordNetLemmatizer()
-intents = json.loads(open('intents.json').read())
+#intents = json.loads(open('intents.json').read())
+
+with open('intents.json', encoding='utf-8') as fh:
+    intents = json.load(fh)
+
+print(intents)
 
 words = []
 classes = []
@@ -22,13 +29,16 @@ ignore_letters = ['?', '!', '.', ',']
 
 for intent in intents['intents']:
     for pattern in intent['patterns']:
+        # take each word and tokenize it
         word_list = nltk.word_tokenize(pattern)
         words.extend(word_list)
+        # adding documents
         documents.append((word_list, intent['tag']))
+        # adding classes to our class list
         if intent['tag'] not in classes:
             classes.append(intent['tag'])
 
-words = [lemmatizer.lemmatize(word) for word in words if word not in ignore_letters]
+words = [lemmatizer.lemmatize(word.lower()) for word in words if word not in ignore_letters]
 words = sorted(set(words))
 
 classes = sorted(set(classes))
@@ -36,24 +46,28 @@ classes = sorted(set(classes))
 pickle.dump(words, open('words.pkl', 'wb'))
 pickle.dump(classes, open('classes.pkl', 'wb'))
 
+# initializing training data
 training = []
 output_empty = [0] * len(classes)
 
 for document in documents:
+    # initializing bag of words
     bag = []
+    # list of tokenized words for the pattern
     word_patterns = document[0]
-    # Error Happens Here
+    # lemmatize each word - create base word, in attempt to represent related words
     word_patterns = [lemmatizer.lemmatize(word.lower()) for word in word_patterns]
+    # create our bag of words array with 1, if word match found in current pattern
     for word in words:
         bag.append(1) if word in word_patterns else bag.append(0)
-
+    # output is a '0' for each tag and '1' for current tag (for each pattern)
     output_row = list(output_empty)
     output_row[classes.index(document[1])] = 1
     training.append([bag, output_row])
-
+# shuffle our features and turn into np.array
 random.shuffle(training)
 training = np.array(training, dtype="object")
-
+# create train and test lists. X - patterns, Y - intents
 train_x = list(training[:, 0])
 train_y = list(training[:, 1])
 
@@ -67,7 +81,9 @@ model.add(Dense(len(train_y[0]), activation='softmax'))
 sgd = SGD(learning_rate=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
+#fitting and saving the model
 hist = model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-model.save('chatbot_model.model', hist)
+#model.save('chatbot_model.model')
+model.save('chatbotmodel.h5', hist)
 print("Done")
 

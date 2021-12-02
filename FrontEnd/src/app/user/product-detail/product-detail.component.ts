@@ -134,6 +134,7 @@ export class ProductDetailComponent implements OnInit {
 
   addToCart(): void{
     let productInfo = new CartResponse();
+    console.log("aaaaaa");
     console.log(this.product);
     console.log(this.product.productDetailId);
     this.productDetailService.getProductDetailByProductDetailId(this.product.productDetailId)

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Order } from 'src/app/model/order';
 import { OrderDetail } from 'src/app/model/order-detail';
 import { OrderResponse } from 'src/app/response/order-response';
@@ -32,7 +33,7 @@ export class PurchaseOrderComponent implements OnInit {
   config3: any;
   config4: any;
 
-  constructor(private checkoutService: CheckoutService, private pageService: PageService, private purchaseService: PurchaseService, private tokenStorageService: TokenStorageService) { }
+  constructor(private router:Router, private checkoutService: CheckoutService, private pageService: PageService, private purchaseService: PurchaseService, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.pageService.changePage(this.page);
@@ -90,6 +91,7 @@ export class PurchaseOrderComponent implements OnInit {
           },
           error => {
             console.log(error);
+            this.router.navigate(['/login']).then(this.reloadPage);
           });
     
           this.config = {
@@ -97,6 +99,10 @@ export class PurchaseOrderComponent implements OnInit {
             currentPage: 1,
             totalItems: this.unconfirmOrders.values.length
         };
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 
   pageChanged(event: any){

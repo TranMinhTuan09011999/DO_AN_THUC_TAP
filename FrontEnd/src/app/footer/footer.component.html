@@ -195,7 +195,8 @@
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="msg">
-                    <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chat.message}}</p>
+                    <p *ngIf="!checkLink(chat.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chat.message}}</p>
+                    <p *ngIf="checkLink(chat.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;"><a href="{{chat.message}}" style="color: #fff">{{chat.message}}</a></p>
                     <span class="chat-time" style="margin-left: 10px">{{ chat.time | date:'shortTime' }} {{chat.time  | date: 'dd/MM/yyyy'}} </span>
                 </div>
             </div>
@@ -205,14 +206,16 @@
                     <i class="fa fa-android" aria-hidden="true"></i>
                 </div>
                 <div class="msg">
-                    <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chat.message}}</p>
+                    <p *ngIf="!checkLink(chat.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chat.message}}</p>
+                    <p *ngIf="checkLink(chat.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;"><a href="{{chat.message}}" style="color: #fff">{{chat.message}}</a></p>
                     <span class="chat-time" style="margin-left: 10px">{{ chat.time | date:'shortTime' }} {{chat.time  | date: 'dd/MM/yyyy'}} </span>
                 </div>
             </div>
             <br clear="both" *ngIf="chat.employeeChat?.id == 'BOT'">
             <div class="item right" *ngIf="chat.customerChat?.id == userIdChat">
                 <div class="msg">
-                    <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chat.message}}</p>
+                    <p *ngIf="!checkLink(chat.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chat.message}}</p>
+                    <p *ngIf="checkLink(chat.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;"><a href="{{chat.message}}" style="color: #fff">{{chat.message}}</a></p>
                     <span class="chat-time" style="margin-left: 10px">{{ chat.time | date:'shortTime' }} {{chat.time  | date: 'dd/MM/yyyy'}} </span>
                 </div>
             </div>
@@ -225,7 +228,8 @@
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="msg">
-                    <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chatMessage.message}}</p>
+                    <p *ngIf="!checkLink(chatMessage.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chatMessage.message}}</p>
+                    <p *ngIf="checkLink(chatMessage.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;"><a href="{{chatMessage.message}}" style="color: #fff">{{chatMessage.message}}</a></p>
                     <span class="chat-time" style="margin-left: 10px">{{ chatMessage.dateTime | date:'shortTime' }} {{chatMessage.dateTime  | date: 'dd/MM/yyyy'}} </span>
                 </div>
             </div>
@@ -235,14 +239,16 @@
                     <i class="fa fa-android" aria-hidden="true"></i>
                 </div>
                 <div class="msg">
-                    <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chatMessage.message}}</p>
+                    <p *ngIf="!checkLink(chatMessage.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chatMessage.message}}</p>
+                    <p *ngIf="checkLink(chatMessage.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;"><a href="{{chatMessage.message}}" style="color: #fff">{{chatMessage.message}}</a></p>
                     <span class="chat-time" style="margin-left: 10px">{{ chatMessage.dateTime | date:'shortTime' }} {{chatMessage.dateTime  | date: 'dd/MM/yyyy'}} </span>
                 </div>
             </div>
             <br clear="both" *ngIf="chatMessage.user == 'bot'">
             <div class="item right" *ngIf="chatMessage.user == 'me'">
                 <div class="msg">
-                    <p style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chatMessage.message}}</p>
+                    <p *ngIf="!checkLink(chatMessage.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;">{{chatMessage.message}}</p>
+                    <p *ngIf="checkLink(chatMessage.message)" style="margin: 0 0 0px; padding-bottom: 0px; word-wrap: break-word;"><a href="{{chatMessage.message}}" style="color: #fff">{{chatMessage.message}}</a></p>
                     <span class="chat-time" style="margin-left: 10px">{{ chatMessage.dateTime | date:'shortTime' }} {{chatMessage.dateTime  | date: 'dd/MM/yyyy'}} </span>
                 </div>
             </div>

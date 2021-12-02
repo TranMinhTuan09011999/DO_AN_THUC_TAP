@@ -93,8 +93,8 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   checkLink(message: String): boolean{
-    var str = message.substring(0,14);
-    if(str == "localhost:4200"){
+    var str = message.substring(0,21);
+    if(str == "http://localhost:4200"){
       return true
     }
     return false;

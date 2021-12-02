@@ -1,0 +1,127 @@
+<div class="page-wrapper">
+    <div class="main-content" id="cart" style="padding-top: 3rem;">
+        <!-- main -->
+        <div id="wrapper-site">
+            <div class="page">
+                <div class="section-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <ul class="nav nav-tabs page-header-tab">
+                                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Month">Tháng</a></li>
+                                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Quarter">Quý</a></li>
+                                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Year">Năm</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-body mt-3">
+                    <div class="container-fluid">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="Month" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-1" style="text-align: center; padding: 9px 0px;">
+                                        <label>FROM: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" type="month" id="monthFrom" name="monthFrom" [(ngModel)]="monthFrom">
+                                    </div>
+                                    <div class="col-md-1" style="text-align: center; padding: 9px 0px;">
+                                        <label>TO: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" type="month" id="monthTo" name="monthTo" [(ngModel)]="monthTo">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-success btn-block" type="submit" (click)="search()">Tìm kiếm</button>
+                                    </div>
+                                </div>
+                                <ejs-accumulationchart [title]='chartTitle' [legendSettings]='legend' [tooltip]='tooltipSettings' innerRadius='40%' [enableAnimation]='enableAnimation' [center]='center' style="margin-top: 1rem;" width='92%'>
+                                    <e-accumulation-series-collection>
+                                        <e-accumulation-series type='Pie' [dataSource]='hotSellingList' xName='name' yName='value' [dataLabel]='chartLabel' [startAngle]="startAngle" [endAngle]="endAngle" radius="70%" [explode]='explode' explodeOffset='10%' [explodeIndex]='0'>
+                                        </e-accumulation-series>
+                                    </e-accumulation-series-collection>
+                                </ejs-accumulationchart>
+                            </div>
+                            <div class="tab-pane fade" id="Quarter" role="tabpanel">
+                                <div class="row">
+                                    <div style="text-align: center; padding: 9px 9px;">
+                                        <label>FROM: </label>
+                                    </div>
+                                    <div>
+                                        <select class="form-control" [(ngModel)]="quarter1">
+                                            <option [value]="1">Quý 1 (1-3)</option>
+                                            <option [value]="2">Quý 2 (4-6)</option>
+                                            <option [value]="3">Quý 3 (7-9)</option>
+                                            <option [value]="4">Quý 4 (10-12)</option>
+                                        </select>
+                                    </div>
+                                    <div style="text-align: center; padding: 9px 0px; margin-left: 10px;">
+                                        <label>NĂM: </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" type="number" min="1900" max="2099" step="1" value="2020" [(ngModel)]="yearFrom" />
+                                    </div>
+                                    <div style="text-align: center; padding: 9px 9px;">
+                                        <label>TO: </label>
+                                    </div>
+                                    <div>
+                                        <select class="form-control" [(ngModel)]="quarter2">
+                                            <option [value]="11">Quý 1 (1-3)</option>
+                                            <option [value]="22">Quý 2 (4-6)</option>
+                                            <option [value]="33">Quý 3 (7-9)</option>
+                                            <option [value]="44">Quý 4 (10-12)</option>
+                                        </select>
+                                    </div>
+                                    <div style="text-align: center; padding: 9px 0px; margin-left: 10px;">
+                                        <label>NĂM: </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" type="number" min="1900" max="2099" step="1" value="2020" [(ngModel)]="yearTo" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-success btn-block" type="submit" (click)="searchQuater()">Tìm kiếm</button>
+                                    </div>
+                                </div>
+                                <ejs-accumulationchart [title]='chartTitle1' [legendSettings]='legend1' [tooltip]='tooltipSettings1' innerRadius='40%' [enableAnimation]='enableAnimation1' [center]='center1' style="margin-top: 1rem;" width='92%'>
+                                    <e-accumulation-series-collection>
+                                        <e-accumulation-series type='Pie' [dataSource]='hotSellingList1' xName='name' yName='value' [dataLabel]='chartLabel1' [startAngle]="startAngle1" [endAngle]="endAngle1" radius="70%" [explode]='explode1' explodeOffset='10%' [explodeIndex]='0'>
+                                        </e-accumulation-series>
+                                    </e-accumulation-series-collection>
+                                </ejs-accumulationchart>
+                            </div>
+                            <div class="tab-pane fade" id="Year" role="tabpanel">
+                                <div class="row">
+                                    <div style="text-align: center; padding: 9px 9px;">
+                                        <label>FROM: </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" type="number" min="1900" max="2099" step="1" value="2020" [(ngModel)]="yearFrom1" />
+                                    </div>
+                                    <div style="text-align: center; padding: 9px 9px;">
+                                        <label>TO: </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" type="number" min="1900" max="2099" step="1" value="2020" [(ngModel)]="yearTo1" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-success btn-block" type="submit" (click)="searchYear()">Tìm kiếm</button>
+                                    </div>
+                                </div>
+                                <ejs-accumulationchart [title]='chartTitle2' [legendSettings]='legend2' [tooltip]='tooltipSettings2' innerRadius='40%' [enableAnimation]='enableAnimation2' [center]='center2' style="margin-top: 1rem;" width='92%'>
+                                    <e-accumulation-series-collection>
+                                        <e-accumulation-series type='Pie' [dataSource]='hotSellingList2' xName='name' yName='value' [dataLabel]='chartLabel2' [startAngle]="startAngle2" [endAngle]="endAngle2" radius="70%" [explode]='explode2' explodeOffset='10%' [explodeIndex]='0'>
+                                        </e-accumulation-series>
+                                    </e-accumulation-series-collection>
+                                </ejs-accumulationchart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

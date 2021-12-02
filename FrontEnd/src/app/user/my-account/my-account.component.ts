@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { delay, map, switchMap } from 'rxjs/operators';
 import { Customer } from 'src/app/model/customer';
@@ -22,7 +23,7 @@ export class MyAccountComponent implements OnInit {
   birthday1!:Date;
   submitted = false;
 
-  constructor(private userService: UserService, private fb: FormBuilder, private pageService: PageService, private customerService: CustomerService, private tokenStorageService: TokenStorageService) { }
+  constructor(private router: Router, private userService: UserService, private fb: FormBuilder, private pageService: PageService, private customerService: CustomerService, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.pageService.changePage(this.page);
@@ -42,6 +43,7 @@ export class MyAccountComponent implements OnInit {
           },
           error => {
             console.log(error);
+            this.router.navigate(['../pageNotFound']).then(this.reloadPage);
           });
   }
 

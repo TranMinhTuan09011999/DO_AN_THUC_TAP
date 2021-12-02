@@ -15,7 +15,7 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class PaymentController {
