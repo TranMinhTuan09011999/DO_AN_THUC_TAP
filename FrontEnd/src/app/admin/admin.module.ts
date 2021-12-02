@@ -37,6 +37,9 @@ import { SearchCategoryIdFilterPipe } from './search-category-id-filter.pipe';
 import { SearchCategoryNameFilterPipe } from './search-category-name-filter.pipe';
 import { SearchRoomFilterPipe } from './search-room-filter.pipe';
 import { ChatComponent } from './chat/chat.component';
+import { HotSellingProductsComponent } from './hot-selling-products/hot-selling-products.component';
+import { CountCustomerComponent } from './count-customer/count-customer.component';
+import { ProfitComponent } from './profit/profit.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +69,9 @@ import { ChatComponent } from './chat/chat.component';
     SearchCategoryNameFilterPipe,
     SearchRoomFilterPipe,
     ChatComponent,
+    HotSellingProductsComponent,
+    CountCustomerComponent,
+    ProfitComponent,
   ],
   imports: [
     CommonModule,
